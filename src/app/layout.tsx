@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Bricolage_Grotesque } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { ProgressBarProvider } from '@/components/ProgressBar'
 import ClientLayout from '@/components/ClientLayout'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import { ThemeProvider } from '@/contexts/ThemeContext'
@@ -11,11 +12,14 @@ import SmoothScrollProvider from '@/components/providers/SmoothScrollProvider'
 import './globals.css'
 
 
-const bricolageGrotesque = Bricolage_Grotesque({ 
+const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700', '800'],
   variable: '--font-bricolage-grotesque',
-  display: 'swap',
+  display: 'swap', // Ensures text is visible during font load
+  preload: true, // Preload font files for faster loading
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'], // Fallback fonts
+  adjustFontFallback: true, // Reduce layout shift by adjusting fallback font metrics
 })
 
 export const viewport = {
@@ -28,7 +32,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://tayyabmanan.com'),
   applicationName: 'Tayyab Manan',
   title: {
-    default: 'Tayyab Manan - AI Engineering Student | ML & Computer Vision Portfolio',
+    default: 'Tayyab Manan | AI Engineering Student & ML Developer',
     template: '%s | Tayyab Manan'
   },
   description: 'AI Engineering graduate student specializing in Computer Vision, NLP, and Geospatial AI. Building production ML systems with PyTorch, TensorFlow, and LangChain. Portfolio showcasing machine learning projects, deep learning applications, and AI-powered solutions. Seeking Summer 2026 ML/AI internships.',
@@ -116,12 +120,12 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
   openGraph: {
-    title: 'Tayyab Manan - AI Engineering Student | ML & Computer Vision Portfolio',
+    title: 'Tayyab Manan | AI Engineering Student & ML Developer',
     description: 'AI Engineering graduate student specializing in Computer Vision, NLP, and Geospatial AI. Building production ML systems with PyTorch, TensorFlow & LangChain. Portfolio showcasing innovative machine learning projects and AI-powered applications. Seeking Summer 2026 ML/AI internships.',
     url: 'https://tayyabmanan.com',
     siteName: 'Tayyab Manan',
     locale: 'en_US',
-    type: 'website',
+    type: 'profile',
     images: [
       {
         url: '/images/profile-picture.webp',
@@ -133,7 +137,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tayyab Manan - AI Engineering Student | ML & Computer Vision',
+    title: 'Tayyab Manan | AI Engineering Student',
     description: 'AI Engineering graduate student building ML systems with PyTorch, TensorFlow & LangChain. Specializing in Computer Vision, NLP & Geospatial AI. View portfolio of ML projects.',
     images: ['/images/profile-picture.webp'],
     creator: '@tayyabmanan',
@@ -177,9 +181,20 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': 'https://tayyabmanan.com/#person',
     name: 'Tayyab Manan',
+    alternateName: 'Muhammad Tayyab Manan',
+    givenName: 'Tayyab',
+    familyName: 'Manan',
     url: 'https://tayyabmanan.com',
-    image: 'https://tayyabmanan.com/images/profile-picture.webp',
+    mainEntityOfPage: 'https://tayyabmanan.com',
+    image: {
+      '@type': 'ImageObject',
+      url: 'https://tayyabmanan.com/images/profile-picture.webp',
+      width: 1200,
+      height: 630,
+      caption: 'Tayyab Manan - AI Engineering Student & ML Developer'
+    },
     sameAs: [
       'https://www.linkedin.com/in/muhammad-tayyab-3962a2373',
       'https://github.com/TayyabManan',
@@ -307,18 +322,41 @@ const jsonLd = [
     '@type': 'WebSite',
     '@id': 'https://tayyabmanan.com/#website',
     url: 'https://tayyabmanan.com',
-    name: 'Tayyab Manan',
-    alternateName: 'Tayyab Manan - AI Engineering Student Portfolio',
+    name: 'Tayyab Manan | AI Engineering Student & ML Developer',
+    alternateName: 'Tayyab Manan Portfolio',
     description: 'AI Engineering graduate student portfolio showcasing machine learning projects, computer vision applications, NLP systems, deep learning implementations, and geospatial AI solutions built with PyTorch, TensorFlow, and LangChain.',
+    about: {
+      '@id': 'https://tayyabmanan.com/#person'
+    },
     publisher: {
-      '@type': 'Person',
-      name: 'Tayyab Manan'
+      '@id': 'https://tayyabmanan.com/#person'
+    },
+    author: {
+      '@id': 'https://tayyabmanan.com/#person'
     },
     inLanguage: 'en-US',
     potentialAction: {
       '@type': 'SearchAction',
-      target: 'https://tayyabmanan.com/projects?q={search_term_string}',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://tayyabmanan.com/projects?q={search_term_string}'
+      },
       'query-input': 'required name=search_term_string'
+    }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    '@id': 'https://tayyabmanan.com/#profilepage',
+    url: 'https://tayyabmanan.com',
+    name: 'Tayyab Manan | AI Engineering Student & ML Developer',
+    description: 'Professional portfolio and profile of Tayyab Manan, AI Engineering graduate student specializing in Machine Learning, Computer Vision, and Natural Language Processing.',
+    mainEntity: {
+      '@id': 'https://tayyabmanan.com/#person'
+    },
+    inLanguage: 'en-US',
+    isPartOf: {
+      '@id': 'https://tayyabmanan.com/#website'
     }
   },
   {
@@ -431,10 +469,17 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Font optimization - preconnect to Google Fonts for faster loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        {/* DNS prefetch for analytics */}
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
       </head>
       <body className={bricolageGrotesque.className} suppressHydrationWarning>
+        {/* Page transition progress bar */}
+        <ProgressBarProvider />
         {/* Skip to main content link for screen readers */}
         <a
           href="#main-content"

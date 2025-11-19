@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { MapPinIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
+import { MapPinIcon, EnvelopeIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import { Github, Linkedin } from 'lucide-react'
 
 const UpworkIcon = ({ className }: { className?: string }) => (
@@ -70,8 +70,9 @@ export default function Footer() {
                     Contact
                   </Link>
                   <span className="text-[var(--text-tertiary)]">•</span>
-                  <a href="/resume" className="text-sm text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors" target="_blank" rel="noopener noreferrer">
+                  <a href="/resume" className="inline-flex items-center gap-1 text-sm text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors" target="_blank" rel="noopener noreferrer">
                     Resume
+                    <ArrowTopRightOnSquareIcon className="h-3 w-3" />
                   </a>
                 </div>
               </div>
@@ -167,8 +168,9 @@ export default function Footer() {
               <Link href="/contact" className="block text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors">
                 Contact
               </Link>
-              <a href="/resume" className="block text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors" target="_blank" rel="noopener noreferrer">
+              <a href="/resume" className="inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors" target="_blank" rel="noopener noreferrer">
                 Resume
+                <ArrowTopRightOnSquareIcon className="h-4 w-4" />
               </a>
             </div>
             </div>

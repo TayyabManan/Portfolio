@@ -78,7 +78,6 @@ ${validatedData.message}`;
 
     // Send ntfy notification
     const ntfyUrl = `https://ntfy.sh/${ntfyTopic}`;
-    console.log('Sending notification to:', ntfyUrl);
     
     const ntfyResponse = await fetch(ntfyUrl, {
       method: 'POST',
@@ -99,9 +98,6 @@ ${validatedData.message}`;
         { status: 500 }
       );
     }
-    
-    const successResponse = await ntfyResponse.json();
-    console.log('ntfy.sh success:', successResponse);
 
     return NextResponse.json(
       { message: 'Message sent successfully' },

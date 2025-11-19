@@ -15,10 +15,16 @@ import {
   SunIcon,
   NewspaperIcon,
 } from '@heroicons/react/24/outline'
-import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { toast } from '@/components/ui/Toast'
 import { useTheme } from '@/contexts/ThemeContext'
+
+// Custom navigation function using browser history API
+function navigateTo(path: string) {
+  window.history.pushState({}, '', path)
+  // Trigger a popstate event so Next.js detects the navigation
+  window.dispatchEvent(new PopStateEvent('popstate'))
+}
 
 interface CommandItem {
   id: string
@@ -38,10 +44,10 @@ interface CommandPaletteProps {
 }
 
 export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: CommandPaletteProps) {
-  const router = useRouter()
   const { toggleTheme, actualTheme } = useTheme()
   const [search, setSearch] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
+  const [recentCommands, setRecentCommands] = useState<string[]>([])
   const listRef = React.useRef<HTMLUListElement>(null)
 
   const defaultCommands: CommandItem[] = useMemo(() => [
@@ -51,7 +57,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Navigate to the homepage',
       icon: HomeIcon,
       action: () => {
-        router.push('/')
+        navigateTo('/')
         onClose()
       },
       keywords: ['home', 'main', 'index'],
@@ -64,7 +70,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Browse all projects',
       icon: BriefcaseIcon,
       action: () => {
-        router.push('/projects')
+        navigateTo('/projects')
         onClose()
       },
       keywords: ['work', 'portfolio', 'gis'],
@@ -77,7 +83,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Browse blog posts and articles',
       icon: NewspaperIcon,
       action: () => {
-        router.push('/blog')
+        navigateTo('/blog')
         onClose()
       },
       keywords: ['blog', 'articles', 'posts', 'writing'],
@@ -90,7 +96,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Learn more about my background',
       icon: UserIcon,
       action: () => {
-        router.push('/about')
+        navigateTo('/about')
         onClose()
       },
       keywords: ['bio', 'background', 'experience'],
@@ -103,7 +109,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Download or view my resume',
       icon: DocumentTextIcon,
       action: () => {
-        router.push('/resume')
+        navigateTo('/resume')
         onClose()
       },
       keywords: ['cv', 'download', 'pdf'],
@@ -116,7 +122,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Get in touch',
       icon: EnvelopeIcon,
       action: () => {
-        router.push('/contact')
+        navigateTo('/contact')
         onClose()
       },
       keywords: ['email', 'message', 'reach'],
@@ -151,7 +157,30 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       category: 'External',
       shortcut: 'Alt+G',
     },
-  ], [router, onClose, toggleTheme, actualTheme])
+  ], [onClose, toggleTheme, actualTheme])
+
+  // Load recent commands from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('recentCommands')
+    if (saved) {
+      try {
+        setRecentCommands(JSON.parse(saved))
+      } catch (e) {
+        console.error('Failed to parse recent commands', e)
+      }
+    }
+  }, [])
+
+  // Update recent commands when a command is executed
+  const executeCommand = useCallback((command: CommandItem) => {
+    // Update recent commands
+    const updated = [command.id, ...recentCommands.filter(id => id !== command.id)].slice(0, 5)
+    setRecentCommands(updated)
+    localStorage.setItem('recentCommands', JSON.stringify(updated))
+
+    // Execute the command action
+    command.action()
+  }, [recentCommands])
 
   const allCommands = useMemo(() => {
     return [...defaultCommands, ...additionalCommands]
@@ -173,17 +202,34 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
 
   const groupedCommands = useMemo(() => {
     const groups: Record<string, CommandItem[]> = {}
-    
+
+    // Add recent commands as the first group if no search and recent commands exist
+    if (!search && recentCommands.length > 0) {
+      const recentCommandItems = recentCommands
+        .map(id => allCommands.find(cmd => cmd.id === id))
+        .filter(Boolean) as CommandItem[]
+
+      if (recentCommandItems.length > 0) {
+        groups['Recent'] = recentCommandItems
+      }
+    }
+
+    // Group remaining commands
     filteredCommands.forEach(command => {
+      // Skip if already in recent commands
+      if (!search && recentCommands.includes(command.id)) {
+        return
+      }
+
       const category = command.category || 'Other'
       if (!groups[category]) {
         groups[category] = []
       }
       groups[category].push(command)
     })
-    
+
     return groups
-  }, [filteredCommands])
+  }, [filteredCommands, search, recentCommands, allCommands])
 
   const scrollToItem = useCallback((index: number) => {
     requestAnimationFrame(() => {
@@ -229,9 +275,9 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
     } else if (e.key === 'Enter' && filteredCommands[selectedIndex]) {
       e.preventDefault()
       e.stopPropagation()
-      filteredCommands[selectedIndex].action()
+      executeCommand(filteredCommands[selectedIndex])
     }
-  }, [filteredCommands, selectedIndex, isOpen, scrollToItem, onClose])
+  }, [filteredCommands, selectedIndex, isOpen, scrollToItem, onClose, executeCommand])
 
   useEffect(() => {
     if (isOpen) {
@@ -248,6 +294,18 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
     if (isOpen) {
       setSearch('')
       setSelectedIndex(0)
+    }
+  }, [isOpen])
+
+  // Lock body scroll when command palette is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
     }
   }, [isOpen])
 
@@ -331,7 +389,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
                                   ? 'bg-[var(--primary)] text-white'
                                   : 'hover:bg-[var(--background-secondary)]'
                               )}
-                              onClick={command.action}
+                              onClick={() => executeCommand(command)}
                               onMouseEnter={() => setSelectedIndex(currentIndex)}
                             >
                               <div className="flex items-center gap-3">
@@ -365,7 +423,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
                               <div className="flex items-center gap-2">
                                 {command.shortcut && (
                                   <kbd className={cn(
-                                    'px-1.5 py-0.5 text-xs rounded',
+                                    'hidden sm:inline-block px-1.5 py-0.5 text-xs rounded',
                                     isSelected
                                       ? 'bg-white/20 text-white'
                                       : 'bg-[var(--background-tertiary)] text-[var(--text-secondary)]'
@@ -394,11 +452,13 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
                     aria-hidden="true"
                   />
                   <p className="mt-4 font-medium text-[var(--text)]">
-                    No commands found
+                    {search ? `No results for "${search}"` : 'No commands found'}
                   </p>
-                  <p className="mt-2 text-[var(--text-secondary)]">
-                    Try searching for something else.
-                  </p>
+                  {search && (
+                    <p className="mt-2 text-xs text-[var(--text-secondary)]">
+                      Try searching for: projects, about, resume, or theme
+                    </p>
+                  )}
                 </div>
               )}
 

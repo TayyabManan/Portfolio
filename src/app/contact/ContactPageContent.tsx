@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   EnvelopeIcon,
   MapPinIcon,
+  ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/24/outline";
 import { Github, Linkedin } from "lucide-react";
 
@@ -41,8 +42,19 @@ export default function ContactPageContent() {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
-  } = useForm<ContactForm>();
+  } = useForm<ContactForm>({
+    mode: 'onBlur',
+  });
+
+  // Auto-dismiss success message after 5 seconds
+  useEffect(() => {
+    if (submitStatus === 'success') {
+      const timer = setTimeout(() => setSubmitStatus('idle'), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [submitStatus]);
 
   const onSubmit = async (data: ContactForm) => {
     setIsSubmitting(true);
@@ -155,30 +167,33 @@ export default function ContactPageContent() {
                   href="https://www.linkedin.com/in/muhammad-tayyab-3962a2373/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-all text-[var(--primary)] hover:text-[var(--primary-hover)]"
+                  className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-[border-color,color] text-[var(--primary)] hover:text-[var(--primary-hover)]"
                   title="LinkedIn"
                 >
                   <Linkedin className="h-6 w-6" />
+                  <ArrowTopRightOnSquareIcon className="absolute -top-1 -right-1 h-3 w-3 bg-[var(--background)] rounded" />
                 </a>
                 <a
                   href="https://github.com/TayyabManan"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-all text-[var(--text)] hover:text-[var(--text-secondary)]"
+                  className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-[border-color,color] text-[var(--text)] hover:text-[var(--text-secondary)]"
                   title="GitHub"
                 >
                   <Github className="h-6 w-6" />
+                  <ArrowTopRightOnSquareIcon className="absolute -top-1 -right-1 h-3 w-3 bg-[var(--background)] rounded" />
                 </a>
                 <a
                   href="https://www.upwork.com/users/~0155edcc7d42fc5b51"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-all text-[var(--success)] hover:text-[var(--success)]/80"
+                  className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-[border-color,color] text-[var(--success)] hover:text-[var(--success)]/80"
                   title="Upwork"
                 >
                   <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-2.539 0-4.51 1.649-5.31 4.366-1.22-1.834-2.148-4.036-2.687-5.892H7.828v7.112c-.002 1.406-1.141 2.546-2.547 2.548-1.405-.002-2.543-1.143-2.545-2.548V3.492H0v7.112c0 2.914 2.37 5.303 5.281 5.303 2.913 0 5.283-2.389 5.283-5.303v-1.19c.529 1.107 1.182 2.229 1.974 3.221l-1.673 7.873h2.797l1.213-5.71c1.063.679 2.285 1.109 3.686 1.109 3 0 5.439-2.452 5.439-5.45 0-3-2.439-5.439-5.439-5.439z"/>
                   </svg>
+                  <ArrowTopRightOnSquareIcon className="absolute -top-1 -right-1 h-3 w-3 bg-[var(--background)] rounded" />
                 </a>
               </div>
             </div>
@@ -316,6 +331,15 @@ export default function ContactPageContent() {
                     className="w-full px-4 py-3 border border-[var(--border)] dark:border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] dark:bg-[var(--background-tertiary)] text-[var(--text)]"
                     placeholder="Tell me about your project, opportunity, or question... (minimum 10 characters)"
                   />
+                  <div className="flex justify-between text-xs mt-1">
+                    <span className={`${
+                      (watch('message')?.length || 0) >= 10
+                        ? 'text-[var(--success)]'
+                        : 'text-[var(--text-tertiary)]'
+                    }`}>
+                      {watch('message')?.length || 0} / 10 minimum
+                    </span>
+                  </div>
                   {errors.message && (
                     <p className="mt-1 text-sm text-[var(--error)]">
                       {errors.message.message}
@@ -335,8 +359,14 @@ export default function ContactPageContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[var(--primary)] text-white px-6 py-3 rounded-lg font-medium hover:bg-[var(--primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full bg-[var(--primary)] text-white px-6 py-3 rounded-lg font-medium hover:bg-[var(--primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 active:scale-95 transition-[colors,transform]"
                 >
+                  {isSubmitting && (
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                    </svg>
+                  )}
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </button>
               </form>

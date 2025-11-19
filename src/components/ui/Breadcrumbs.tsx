@@ -2,7 +2,6 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { ChevronRightIcon, HomeIcon } from '@heroicons/react/24/outline'
 import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
@@ -35,8 +34,9 @@ export function Breadcrumbs({
   size = 'md',
   animated = true,
 }: BreadcrumbsProps) {
-  const pathname = usePathname()
-  
+  // Get pathname directly without reactive tracking - component remounts on navigation anyway
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '/'
+
   // Auto-generate breadcrumbs from pathname if items not provided
   const breadcrumbItems = items || generateBreadcrumbsFromPath(pathname, showHome)
   
@@ -225,7 +225,7 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
 // Mobile-optimized breadcrumbs with dropdown
 export function MobileBreadcrumbs({ items, ...props }: BreadcrumbsProps) {
   const [isOpen, setIsOpen] = React.useState(false)
-  const pathname = usePathname()
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '/'
   const breadcrumbItems = items || generateBreadcrumbsFromPath(pathname, true)
   
   if (breadcrumbItems.length <= 2) {

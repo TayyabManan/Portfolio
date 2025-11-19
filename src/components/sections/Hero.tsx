@@ -30,28 +30,28 @@ export default function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-[calc(100vh-64px)] flex flex-col overflow-hidden bg-[var(--hero-background)]">
+    <section className="relative min-h-[600px] sm:min-h-[calc(100vh-64px)] flex flex-col overflow-hidden bg-[var(--hero-background)]">
       {/* Animated GIS Background Pattern */}
       <div className="fixed inset-0 overflow-hidden">
         {/* Base gradient background - similar to About page */}
         <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary-light)] via-[var(--background)] to-[var(--accent)] opacity-30" />
 
-        {/* Floating orbs - use CSS animation on mobile or reduced motion for better performance */}
+        {/* Phase 5: Optimized floating orbs - static on mobile, reduced duration on desktop */}
         {isMobile || prefersReducedMotion ? (
           <>
-            <div className="absolute top-[20%] left-[10%] w-96 h-96 bg-[var(--primary)] rounded-full blur-3xl opacity-20" />
-            <div className="absolute bottom-[20%] right-[10%] w-80 h-80 bg-[var(--accent)] rounded-full blur-3xl opacity-20" />
+            <div className="absolute top-[20%] left-[10%] w-64 h-64 sm:w-96 sm:h-96 bg-[var(--primary)] rounded-full blur-3xl opacity-15" />
+            <div className="absolute bottom-[20%] right-[10%] w-48 h-48 sm:w-80 sm:h-80 bg-[var(--accent)] rounded-full blur-3xl opacity-15" />
           </>
         ) : (
           <>
             <motion.div
               className="absolute top-[20%] left-[10%] w-96 h-96 bg-[var(--primary)] rounded-full blur-3xl opacity-20"
               animate={{
-                x: [0, 100, 0],
-                y: [0, -50, 0],
+                x: [0, 50, 0],
+                y: [0, -30, 0],
               }}
               transition={{
-                duration: 30,
+                duration: 15, // Reduced from 30s for better performance
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
@@ -59,11 +59,11 @@ export default function Hero() {
             <motion.div
               className="absolute bottom-[20%] right-[10%] w-80 h-80 bg-[var(--accent)] rounded-full blur-3xl opacity-20"
               animate={{
-                x: [0, -80, 0],
-                y: [0, 50, 0],
+                x: [0, -40, 0],
+                y: [0, 30, 0],
               }}
               transition={{
-                duration: 35,
+                duration: 18, // Reduced from 35s for better performance
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
@@ -116,18 +116,18 @@ export default function Hero() {
                   </div>
                 </div>
 
-                <div className="mt-8 flex flex-row items-center gap-3 sm:gap-4 flex-wrap">
+                <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                   <a
                     href="#projects"
                     onClick={scrollToProjects}
-                    className="bg-[var(--primary)] px-4 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-white shadow-lg hover:bg-[var(--primary-hover)] hover:shadow-xl rounded-lg transition-all duration-200 transform hover:scale-105 cursor-pointer inline-flex items-center gap-2 whitespace-nowrap"
+                    className="bg-[var(--primary)] px-4 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-white shadow-lg hover:bg-[var(--primary-hover)] hover:shadow-xl rounded-lg transition-all duration-200 transform hover:scale-105 cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto"
                   >
                     View Projects
                     <span aria-hidden="true">→</span>
                   </a>
                   <a
                     href="/contact"
-                    className="text-sm sm:text-base font-semibold leading-6 text-[var(--text)] hover:text-[var(--primary)] transition-all duration-200 group border-2 border-[var(--border)] hover:border-[var(--primary)] px-4 sm:px-8 py-3 sm:py-4 rounded-lg bg-[var(--background-secondary)] hover:bg-[var(--background-tertiary)] inline-flex items-center gap-2 whitespace-nowrap"
+                    className="text-sm sm:text-base font-semibold leading-6 text-[var(--text)] hover:text-[var(--primary)] transition-all duration-200 group border-2 border-[var(--border)] hover:border-[var(--primary)] px-4 sm:px-8 py-3 sm:py-4 rounded-lg bg-[var(--background-secondary)] hover:bg-[var(--background-tertiary)] flex items-center justify-center gap-2 w-full sm:w-auto"
                   >
                     Get in touch
                     <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1">→</span>

@@ -58,17 +58,17 @@ export default function BlogPageContent({ posts }: BlogPageContentProps) {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="mb-12">
           <h1 className="text-4xl font-bold tracking-tight text-[var(--text)] sm:text-5xl md:text-6xl">
             Blog
           </h1>
-          <p className="mt-4 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-[var(--text-secondary)] max-w-3xl">
             Sharing my learning journey in AI Engineering, insights from ML projects, and experiences with Computer Vision, NLP, and Deep Learning.
           </p>
         </div>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap gap-2 justify-center mb-12">
+        <div className="flex flex-wrap gap-2 mb-12">
           {categories.map((category) => (
             <button
               key={category}

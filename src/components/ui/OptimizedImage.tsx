@@ -19,7 +19,7 @@ export function OptimizedImage({
   fallback,
   aspectRatio,
   showSkeleton = true,
-  blurDataURL,
+  blurDataURL = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQ3NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjFmNWY5Ii8+PC9zdmc+",
   priority = false,
   ...props
 }: OptimizedImageProps) {

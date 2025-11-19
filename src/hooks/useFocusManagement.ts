@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, useState } from 'react'
 
 // Hook to manage focus restoration
 export function useFocusRestore() {
@@ -320,26 +320,26 @@ export function useRovingTabIndex(
 // Utility function to check if element is focusable
 export function isFocusable(element: HTMLElement): boolean {
   if (element.tabIndex < 0) return false
-  
+
   // Check if element has disabled property (form elements)
   if ('disabled' in element && (element as HTMLButtonElement | HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement).disabled) {
     return false
   }
-  
+
   const focusableTags = ['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'IFRAME', 'OBJECT', 'EMBED']
-  
+
   if (focusableTags.includes(element.tagName)) {
     return true
   }
-  
+
   if (element.hasAttribute('contenteditable')) {
     return true
   }
-  
+
   if (element.hasAttribute('tabindex')) {
     return true
   }
-  
+
   return false
 }
 
@@ -348,12 +348,10 @@ export function getFocusableElements(container: HTMLElement = document.body): HT
   const elements = container.querySelectorAll<HTMLElement>(
     'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"]), [contenteditable]'
   )
-  
-  return Array.from(elements).filter(el => 
-    !el.hasAttribute('disabled') && 
+
+  return Array.from(elements).filter(el =>
+    !el.hasAttribute('disabled') &&
     !el.getAttribute('aria-hidden') &&
     el.offsetParent !== null // Check if element is visible
   )
 }
-
-import { useState } from 'react'

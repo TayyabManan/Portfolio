@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowTopRightOnSquareIcon, CodeBracketIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
+import { CodeBracketIcon, ChevronDownIcon, ChevronUpIcon, LinkIcon } from '@heroicons/react/24/outline'
 
 interface Project {
   slug: string
@@ -22,10 +22,37 @@ interface ProjectCardProps {
 
 const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [canExpand, setCanExpand] = useState(false)
+  const textRef = useRef<HTMLParagraphElement>(null)
+
+  useEffect(() => {
+    const checkTextClamping = () => {
+      if (textRef.current && !isExpanded) {
+        // Only check when collapsed to determine if expand button is needed
+        const isClamped = textRef.current.scrollHeight > textRef.current.clientHeight
+        setCanExpand(isClamped)
+      }
+    }
+
+    checkTextClamping()
+    // Re-check on window resize
+    window.addEventListener('resize', checkTextClamping)
+    return () => window.removeEventListener('resize', checkTextClamping)
+  }, [project.description, isExpanded])
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.currentTarget.style.willChange = 'transform, box-shadow'
+  }
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.currentTarget.style.willChange = 'auto'
+  }
 
   return (
     <div
-      className="group relative bg-[var(--background)] dark:bg-[var(--background-secondary)] rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-[var(--border)]"
+      className="group relative bg-[var(--background)] dark:bg-[var(--background-secondary)] rounded-xl shadow-sm hover:shadow-xl transition-[transform,box-shadow] duration-300 overflow-hidden border border-[var(--border)] hover:-translate-y-1"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="aspect-video relative overflow-hidden bg-[var(--border)] dark:bg-[var(--background-tertiary)]">
         {project.image ? (
@@ -35,6 +62,8 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            placeholder="blur"
+            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQ3NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjFmNWY5Ii8+PC9zdmc+"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-[var(--text-tertiary)]">
@@ -66,10 +95,13 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
         </h3>
 
         <div className="mb-4">
-          <p className={`text-[var(--text-secondary)] transition-all duration-300 ${isExpanded ? '' : 'line-clamp-2'}`}>
+          <p
+            ref={textRef}
+            className={`text-[var(--text-secondary)] transition-all duration-300 ${isExpanded ? '' : 'line-clamp-2'}`}
+          >
             {project.description}
           </p>
-          {project.description.length > 100 && (
+          {canExpand && (
             <button
               onClick={(e) => {
                 e.stopPropagation()
@@ -109,42 +141,38 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
           )}
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          {project.demoUrl && (
+            <a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center p-2 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors"
+              title="Live Demo"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <LinkIcon className="h-5 w-5" />
+            </a>
+          )}
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center p-2 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors"
+              title="Source Code"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <CodeBracketIcon className="h-5 w-5" />
+            </a>
+          )}
           <Link
             href={`/projects/${project.slug}`}
-            className="text-[var(--primary)] hover:text-[var(--primary-hover)] font-medium text-sm inline-flex items-center gap-1"
+            className="ml-auto text-[var(--primary)] hover:text-[var(--primary-hover)] transition-colors text-sm font-medium"
             onClick={(e) => e.stopPropagation()}
           >
-            View Project
-            <ArrowTopRightOnSquareIcon className="h-4 w-4" />
+            View Details →
           </Link>
-
-          <div className="flex items-center gap-3">
-            {project.demoUrl && (
-              <a
-                href={project.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] transition-colors"
-                title="Live Demo"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <ArrowTopRightOnSquareIcon className="h-5 w-5" />
-              </a>
-            )}
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] transition-colors"
-                title="Source Code"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <CodeBracketIcon className="h-5 w-5" />
-              </a>
-            )}
-          </div>
         </div>
       </div>
     </div>
