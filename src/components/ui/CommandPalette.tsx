@@ -226,6 +226,15 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
     return groups
   }, [filteredCommands, search, recentCommands, allCommands])
 
+  // Flat array of commands in display order for keyboard navigation
+  const displayOrderCommands = useMemo(() => {
+    const commands: CommandItem[] = []
+    Object.values(groupedCommands).forEach(group => {
+      commands.push(...group)
+    })
+    return commands
+  }, [groupedCommands])
+
   const scrollToItem = useCallback((index: number) => {
     requestAnimationFrame(() => {
       const selectedElement = document.querySelector(`[data-command-index="${index}"]`) as HTMLElement
@@ -246,7 +255,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!isOpen) return
-    
+
     if (e.key === 'Escape') {
       e.preventDefault()
       e.stopPropagation()
@@ -255,7 +264,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       e.preventDefault()
       e.stopPropagation()
       setSelectedIndex(prev => {
-        const newIndex = prev < filteredCommands.length - 1 ? prev + 1 : 0
+        const newIndex = prev < displayOrderCommands.length - 1 ? prev + 1 : 0
         scrollToItem(newIndex)
         return newIndex
       })
@@ -263,16 +272,16 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       e.preventDefault()
       e.stopPropagation()
       setSelectedIndex(prev => {
-        const newIndex = prev > 0 ? prev - 1 : filteredCommands.length - 1
+        const newIndex = prev > 0 ? prev - 1 : displayOrderCommands.length - 1
         scrollToItem(newIndex)
         return newIndex
       })
-    } else if (e.key === 'Enter' && filteredCommands[selectedIndex]) {
+    } else if (e.key === 'Enter' && displayOrderCommands[selectedIndex]) {
       e.preventDefault()
       e.stopPropagation()
-      executeCommand(filteredCommands[selectedIndex])
+      executeCommand(displayOrderCommands[selectedIndex])
     }
-  }, [filteredCommands, selectedIndex, isOpen, scrollToItem, onClose, executeCommand])
+  }, [displayOrderCommands, selectedIndex, isOpen, scrollToItem, onClose, executeCommand])
 
   useEffect(() => {
     if (isOpen) {
