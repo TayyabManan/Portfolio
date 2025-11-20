@@ -18,7 +18,12 @@ export default function TableOfContents({ content, variant = 'both' }: TableOfCo
   const [activeId, setActiveId] = useState<string>('')
   const [isOpen, setIsOpen] = useState(false)
   const [hasOverflow, setHasOverflow] = useState(false)
+  const [isFixed, setIsFixed] = useState(false)
+  const [isAbsolute, setIsAbsolute] = useState(false)
+  const [absoluteTop, setAbsoluteTop] = useState(0)
   const navRef = useRef<HTMLElement>(null)
+  const tocContainerRef = useRef<HTMLDivElement>(null)
+  const asideRef = useRef<HTMLElement>(null)
 
   // Extract headings from markdown content
   const tocItems = useMemo(() => {
@@ -171,6 +176,85 @@ export default function TableOfContents({ content, variant = 'both' }: TableOfCo
     })
   }, [activeId, tocItems.length])
 
+  // Handle sticky behavior with article boundary protection
+  useEffect(() => {
+    if (tocItems.length === 0) return
+    if (!tocContainerRef.current || !asideRef.current) return
+
+    const handleScroll = () => {
+      if (!tocContainerRef.current || !asideRef.current) return
+
+      const containerRect = tocContainerRef.current.getBoundingClientRect()
+      const asideRect = asideRef.current.getBoundingClientRect()
+      const offsetTop = 96 // 6rem = 96px
+      const tocHeight = asideRect.height
+      const buffer = 100 // Larger buffer to prevent footer overlap
+
+      // Find the article element and footer
+      const article = document.querySelector('article')
+      const footerWrapper = document.querySelector('footer')?.parentElement
+
+      // Check if we should be fixed
+      if (containerRect.top > offsetTop) {
+        // Haven't scrolled enough - stay relative
+        setIsFixed(false)
+        setIsAbsolute(false)
+      } else {
+        // Would be in sticky zone
+        const tocBottomIfFixed = offsetTop + tocHeight
+        let stopPosition = null
+
+        // Check article boundary
+        if (article) {
+          const articleRect = article.getBoundingClientRect()
+          const articleBottom = articleRect.bottom
+
+          if (tocBottomIfFixed >= articleBottom - buffer) {
+            stopPosition = window.scrollY + articleBottom - tocHeight - buffer
+          }
+        }
+
+        // Also check footer boundary (use the earlier stop position)
+        if (footerWrapper) {
+          const footerRect = footerWrapper.getBoundingClientRect()
+          const footerTop = footerRect.top
+
+          if (tocBottomIfFixed >= footerTop - buffer) {
+            const footerStopPosition = window.scrollY + footerTop - tocHeight - buffer
+            // Use whichever stop position comes first
+            if (stopPosition === null || footerStopPosition < stopPosition) {
+              stopPosition = footerStopPosition
+            }
+          }
+        }
+
+        if (stopPosition !== null) {
+          // Stop here with absolute positioning
+          setIsFixed(false)
+          setIsAbsolute(true)
+          setAbsoluteTop(stopPosition)
+        } else {
+          // Normal sticky behavior
+          setIsFixed(true)
+          setIsAbsolute(false)
+        }
+      }
+    }
+
+    // Listen to scroll events
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll, { passive: true })
+
+    // Initial check
+    handleScroll()
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+    }
+  }, [tocItems.length])
+
+
   const scrollToHeading = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
@@ -242,8 +326,20 @@ export default function TableOfContents({ content, variant = 'both' }: TableOfCo
 
       {/* Desktop TOC - Sticky Sidebar */}
       {(variant === 'desktop' || variant === 'both') && (
-      <aside className="hidden lg:block sticky top-24" aria-label="Table of contents">
-        <div className="p-5 bg-[var(--background-secondary)] rounded-xl border border-[var(--border)] shadow-sm max-h-[calc(100vh-7rem)] flex flex-col">
+      <div ref={tocContainerRef} className="hidden lg:block self-start">
+        <aside
+          ref={asideRef}
+          className={`transition-all duration-200 ${
+            isFixed
+              ? 'fixed top-[6rem] w-[300px] z-10'
+              : isAbsolute
+              ? 'absolute w-[300px] z-10'
+              : 'relative'
+          }`}
+          style={isAbsolute ? { top: `${absoluteTop}px` } : undefined}
+          aria-label="Table of contents"
+        >
+          <div className="p-5 bg-[var(--background-secondary)] rounded-xl border border-[var(--border)] shadow-sm max-h-[calc(100vh-7.5rem)] flex flex-col">
             <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[var(--border)] flex-shrink-0">
               <ListBulletIcon className="h-4 w-4 text-[var(--primary)]" />
               <h3 className="text-sm font-semibold text-[var(--text)] uppercase tracking-wide">
@@ -296,7 +392,8 @@ export default function TableOfContents({ content, variant = 'both' }: TableOfCo
               </ul>
             </nav>
           </div>
-      </aside>
+        </aside>
+      </div>
       )}
     </>
   )

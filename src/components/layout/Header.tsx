@@ -2,6 +2,7 @@
 
 import { useState, useEffect, lazy, Suspense } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Bars3Icon, XMarkIcon, ChatBubbleLeftRightIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import Logo from '@/components/ui/Logo'
 import { ThemeSelector } from '@/components/ui/ThemeSelector'
@@ -23,6 +24,17 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const { isOpen, open: openCommandPalette, close: closeCommandPalette } = useCommandPalette()
+
+  // Use Next.js usePathname hook - this updates on navigation
+  const pathname = usePathname()
+
+  // Check if a navigation item is active
+  const isActive = (href: string) => {
+    if (href === '/') {
+      return pathname === '/'
+    }
+    return pathname.startsWith(href)
+  }
 
   // Simplified scroll behavior - just track if scrolled past threshold
   useEffect(() => {
@@ -94,23 +106,34 @@ export default function Header() {
 
           <div className={`hidden md:flex items-center ${styles.navItemsContainer} md:space-x-2 lg:space-x-4`}>
             <div className={`flex items-center ${isScrolled ? 'md:space-x-1 lg:space-x-2' : 'md:space-x-2 lg:space-x-4'}`}>
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`font-medium transition-all duration-300 flex items-center relative group text-[var(--text-secondary)] hover:text-[var(--primary)] ${
-                    isScrolled
-                      ? `${styles.navItemScrolled} md:px-2 lg:px-3 py-1.5 md:text-xs lg:text-sm h-8`
-                      : `${styles.navItem} md:px-3 lg:px-4 py-2 md:text-sm lg:text-base`
-                  }`}
-                >
-                  {item.name}
-                  <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-[var(--background-tertiary)] text-[var(--text)] text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 border border-[var(--border)]">
-                    {item.shortcut}
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-4 border-transparent" style={{ borderBottomColor: 'var(--background-tertiary)' }}></div>
-                  </div>
-                </Link>
-              ))}
+              {navigationItems.map((item) => {
+                const active = isActive(item.href)
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`font-medium transition-all duration-300 flex items-center relative group ${
+                      active
+                        ? 'text-[var(--primary)] font-semibold'
+                        : 'text-[var(--text-secondary)] hover:text-[var(--primary)]'
+                    } ${
+                      isScrolled
+                        ? `${styles.navItemScrolled} md:px-2 lg:px-3 py-1.5 md:text-xs lg:text-sm h-8`
+                        : `${styles.navItem} md:px-3 lg:px-4 py-2 md:text-sm lg:text-base`
+                    }`}
+                    aria-current={active ? 'page' : undefined}
+                  >
+                    {item.name}
+                    {active && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--primary)] rounded-full" />
+                    )}
+                    <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-[var(--background-tertiary)] text-[var(--text)] text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 border border-[var(--border)]">
+                      {item.shortcut}
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-4 border-transparent" style={{ borderBottomColor: 'var(--background-tertiary)' }}></div>
+                    </div>
+                  </Link>
+                )
+              })}
             </div>
 
             {/* Command Palette Search Button - Phase 2 improvement */}
@@ -183,16 +206,24 @@ export default function Header() {
             {/* Menu content */}
             <div className="md:hidden absolute top-full left-0 right-0 mt-2 mx-4 z-[60]">
               <div className="bg-[var(--background)] rounded-lg shadow-lg border border-[var(--border)] px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block px-4 py-3 text-base font-medium min-h-[44px] flex items-center text-[var(--text-secondary)] hover:text-[var(--primary)]"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navigationItems.map((item) => {
+                const active = isActive(item.href)
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`block px-4 py-3 text-base font-medium min-h-[44px] flex items-center rounded-md transition-colors ${
+                      active
+                        ? 'text-[var(--primary)] bg-[var(--primary)]/10 font-semibold'
+                        : 'text-[var(--text-secondary)] hover:text-[var(--primary)] hover:bg-[var(--background-secondary)]'
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    aria-current={active ? 'page' : undefined}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              })}
               <Link
                 href="/resume"
                 className="relative bg-[var(--primary)] text-white block px-4 py-3 rounded-md text-base font-medium hover:bg-[var(--primary-hover)] mt-4 min-h-[44px] flex items-center justify-center"

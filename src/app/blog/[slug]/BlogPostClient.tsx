@@ -96,7 +96,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
         </div>
 
         {/* Two-column layout: Content + TOC */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 lg:gap-12">
           {/* Main Content */}
           <article className="min-w-0">
             {/* Header */}
