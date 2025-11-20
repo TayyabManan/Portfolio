@@ -18,13 +18,7 @@ import {
 import { cn } from '@/lib/utils'
 import { toast } from '@/components/ui/Toast'
 import { useTheme } from '@/contexts/ThemeContext'
-
-// Custom navigation function using browser history API
-function navigateTo(path: string) {
-  window.history.pushState({}, '', path)
-  // Trigger a popstate event so Next.js detects the navigation
-  window.dispatchEvent(new PopStateEvent('popstate'))
-}
+import { useRouter } from 'next/navigation'
 
 interface CommandItem {
   id: string
@@ -44,6 +38,7 @@ interface CommandPaletteProps {
 }
 
 export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: CommandPaletteProps) {
+  const router = useRouter()
   const { toggleTheme, actualTheme } = useTheme()
   const [search, setSearch] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -57,7 +52,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Navigate to the homepage',
       icon: HomeIcon,
       action: () => {
-        navigateTo('/')
+        router.push('/')
         onClose()
       },
       keywords: ['home', 'main', 'index'],
@@ -70,7 +65,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Browse all projects',
       icon: BriefcaseIcon,
       action: () => {
-        navigateTo('/projects')
+        router.push('/projects')
         onClose()
       },
       keywords: ['work', 'portfolio', 'gis'],
@@ -83,7 +78,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Browse blog posts and articles',
       icon: NewspaperIcon,
       action: () => {
-        navigateTo('/blog')
+        router.push('/blog')
         onClose()
       },
       keywords: ['blog', 'articles', 'posts', 'writing'],
@@ -96,7 +91,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Learn more about my background',
       icon: UserIcon,
       action: () => {
-        navigateTo('/about')
+        router.push('/about')
         onClose()
       },
       keywords: ['bio', 'background', 'experience'],
@@ -109,7 +104,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Download or view my resume',
       icon: DocumentTextIcon,
       action: () => {
-        navigateTo('/resume')
+        router.push('/resume')
         onClose()
       },
       keywords: ['cv', 'download', 'pdf'],
@@ -122,7 +117,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Get in touch',
       icon: EnvelopeIcon,
       action: () => {
-        navigateTo('/contact')
+        router.push('/contact')
         onClose()
       },
       keywords: ['email', 'message', 'reach'],
@@ -157,7 +152,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       category: 'External',
       shortcut: 'Alt+G',
     },
-  ], [onClose, toggleTheme, actualTheme])
+  ], [router, onClose, toggleTheme, actualTheme])
 
   // Load recent commands from localStorage
   useEffect(() => {
@@ -307,6 +302,29 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
     return () => {
       document.body.style.overflow = ''
     }
+  }, [isOpen])
+
+  // Prevent background scroll when scrolling inside command palette
+  useEffect(() => {
+    const list = listRef.current
+    if (!list || !isOpen) return
+
+    const handleWheel = (e: WheelEvent) => {
+      const atTop = list.scrollTop === 0
+      const atBottom = list.scrollTop + list.clientHeight >= list.scrollHeight - 1
+
+      // If scrolling up and at top, or scrolling down and at bottom, prevent it
+      // Otherwise, stop propagation to prevent background scroll
+      if ((e.deltaY < 0 && atTop) || (e.deltaY > 0 && atBottom)) {
+        e.preventDefault()
+      } else {
+        e.stopPropagation()
+      }
+    }
+
+    list.addEventListener('wheel', handleWheel, { passive: false })
+
+    return () => list.removeEventListener('wheel', handleWheel)
   }, [isOpen])
 
   let currentIndex = -1
