@@ -78,13 +78,24 @@ export function useGlobalKeyboardShortcuts() {
   const router = useRouter()
   const { toggleTheme, actualTheme } = useTheme()
 
+  const navigate = useCallback((path: string) => {
+    // Use startTransition for smoother navigation
+    router.push(path)
+    // Force a small delay to ensure navigation completes
+    setTimeout(() => {
+      if (window.location.pathname !== path) {
+        window.location.href = path
+      }
+    }, 100)
+  }, [router])
+
   const shortcuts: ShortcutConfig[] = [
     // Navigation shortcuts using Alt key to avoid browser conflicts
     {
       key: 'h',
       alt: true,
       action: () => {
-        router.push('/')
+        navigate('/')
         toast.info('Navigated to Home')
       },
       description: 'Go to Home',
@@ -93,7 +104,7 @@ export function useGlobalKeyboardShortcuts() {
       key: 'p',
       alt: true,
       action: () => {
-        router.push('/projects')
+        navigate('/projects')
         toast.info('Navigated to Projects')
       },
       description: 'Go to Projects',
@@ -102,7 +113,7 @@ export function useGlobalKeyboardShortcuts() {
       key: 'b',
       alt: true,
       action: () => {
-        router.push('/blog')
+        navigate('/blog')
         toast.info('Navigated to Blog')
       },
       description: 'Go to Blog',
@@ -111,7 +122,7 @@ export function useGlobalKeyboardShortcuts() {
       key: 'a',
       alt: true,
       action: () => {
-        router.push('/about')
+        navigate('/about')
         toast.info('Navigated to About')
       },
       description: 'Go to About',
@@ -120,7 +131,7 @@ export function useGlobalKeyboardShortcuts() {
       key: 'r',
       alt: true,
       action: () => {
-        router.push('/resume')
+        navigate('/resume')
         toast.info('Navigated to Resume')
       },
       description: 'Go to Resume',
@@ -129,7 +140,7 @@ export function useGlobalKeyboardShortcuts() {
       key: 'c',
       alt: true,
       action: () => {
-        router.push('/contact')
+        navigate('/contact')
         toast.info('Navigated to Contact')
       },
       description: 'Go to Contact',

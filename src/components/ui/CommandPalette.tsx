@@ -45,6 +45,17 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
   const [recentCommands, setRecentCommands] = useState<string[]>([])
   const listRef = React.useRef<HTMLUListElement>(null)
 
+  const navigate = useCallback((path: string) => {
+    // Use router.push for smooth navigation
+    router.push(path)
+    // Add fallback to ensure navigation completes
+    setTimeout(() => {
+      if (window.location.pathname !== path) {
+        window.location.href = path
+      }
+    }, 100)
+  }, [router])
+
   const defaultCommands: CommandItem[] = useMemo(() => [
     {
       id: 'home',
@@ -52,7 +63,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Navigate to the homepage',
       icon: HomeIcon,
       action: () => {
-        router.push('/')
+        navigate('/')
         onClose()
       },
       keywords: ['home', 'main', 'index'],
@@ -65,7 +76,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Browse all projects',
       icon: BriefcaseIcon,
       action: () => {
-        router.push('/projects')
+        navigate('/projects')
         onClose()
       },
       keywords: ['work', 'portfolio', 'gis'],
@@ -78,7 +89,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Browse blog posts and articles',
       icon: NewspaperIcon,
       action: () => {
-        router.push('/blog')
+        navigate('/blog')
         onClose()
       },
       keywords: ['blog', 'articles', 'posts', 'writing'],
@@ -91,7 +102,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Learn more about my background',
       icon: UserIcon,
       action: () => {
-        router.push('/about')
+        navigate('/about')
         onClose()
       },
       keywords: ['bio', 'background', 'experience'],
@@ -104,7 +115,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Download or view my resume',
       icon: DocumentTextIcon,
       action: () => {
-        router.push('/resume')
+        navigate('/resume')
         onClose()
       },
       keywords: ['cv', 'download', 'pdf'],
@@ -117,7 +128,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       description: 'Get in touch',
       icon: EnvelopeIcon,
       action: () => {
-        router.push('/contact')
+        navigate('/contact')
         onClose()
       },
       keywords: ['email', 'message', 'reach'],
@@ -152,7 +163,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       category: 'External',
       shortcut: 'Alt+G',
     },
-  ], [router, onClose, toggleTheme, actualTheme])
+  ], [navigate, onClose, toggleTheme, actualTheme])
 
   // Load recent commands from localStorage
   useEffect(() => {
