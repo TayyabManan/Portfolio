@@ -342,7 +342,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-50"
+        className="relative z-[120]"
         onClose={onClose}
         onKeyDown={(e: React.KeyboardEvent) => {
           if (e.key === 'Escape') {

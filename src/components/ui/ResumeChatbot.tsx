@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { XMarkIcon, ChatBubbleLeftRightIcon, MinusIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
+import { toast } from '@/components/ui/Toast'
 
 interface Message {
   id: string
@@ -123,11 +124,17 @@ export default function ResumeChatbot() {
       // Check for rate limiting
       const error = err as { status?: number; message?: string }
       if (error?.status === 429 || error?.message?.includes('429')) {
-        setError('Too many messages. Please wait a moment before sending another.')
+        const errorMsg = 'Too many messages. Please wait a moment before sending another.'
+        setError(errorMsg)
+        toast.warning('Rate limit exceeded', errorMsg)
       } else if (error?.status === 503 || error?.message?.includes('503')) {
-        setError('Chat service is temporarily unavailable. Please try again later.')
+        const errorMsg = 'Chat service is temporarily unavailable. Please try again later.'
+        setError(errorMsg)
+        toast.error('Service unavailable', errorMsg)
       } else {
-        setError('Failed to get response. Please try again.')
+        const errorMsg = 'Failed to get response. Please try again.'
+        setError(errorMsg)
+        toast.error('Chat error', errorMsg)
       }
     } finally {
       setIsLoading(false)

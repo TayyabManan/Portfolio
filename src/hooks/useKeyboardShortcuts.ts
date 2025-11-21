@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useCallback, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { toast } from '@/components/ui/Toast'
 import { useTheme } from '@/contexts/ThemeContext'
 
@@ -73,14 +74,8 @@ export function useKeyboardShortcuts(shortcuts: ShortcutConfig[]) {
   }, [])
 }
 
-// Custom navigation function using browser history API
-function navigateTo(path: string) {
-  window.history.pushState({}, '', path)
-  // Trigger a popstate event so Next.js detects the navigation
-  window.dispatchEvent(new PopStateEvent('popstate'))
-}
-
 export function useGlobalKeyboardShortcuts() {
+  const router = useRouter()
   const { toggleTheme, actualTheme } = useTheme()
 
   const shortcuts: ShortcutConfig[] = [
@@ -89,7 +84,7 @@ export function useGlobalKeyboardShortcuts() {
       key: 'h',
       alt: true,
       action: () => {
-        navigateTo('/')
+        router.push('/')
         toast.info('Navigated to Home')
       },
       description: 'Go to Home',
@@ -98,7 +93,7 @@ export function useGlobalKeyboardShortcuts() {
       key: 'p',
       alt: true,
       action: () => {
-        navigateTo('/projects')
+        router.push('/projects')
         toast.info('Navigated to Projects')
       },
       description: 'Go to Projects',
@@ -107,7 +102,7 @@ export function useGlobalKeyboardShortcuts() {
       key: 'b',
       alt: true,
       action: () => {
-        navigateTo('/blog')
+        router.push('/blog')
         toast.info('Navigated to Blog')
       },
       description: 'Go to Blog',
@@ -116,7 +111,7 @@ export function useGlobalKeyboardShortcuts() {
       key: 'a',
       alt: true,
       action: () => {
-        navigateTo('/about')
+        router.push('/about')
         toast.info('Navigated to About')
       },
       description: 'Go to About',
@@ -125,7 +120,7 @@ export function useGlobalKeyboardShortcuts() {
       key: 'r',
       alt: true,
       action: () => {
-        navigateTo('/resume')
+        router.push('/resume')
         toast.info('Navigated to Resume')
       },
       description: 'Go to Resume',
@@ -134,7 +129,7 @@ export function useGlobalKeyboardShortcuts() {
       key: 'c',
       alt: true,
       action: () => {
-        navigateTo('/contact')
+        router.push('/contact')
         toast.info('Navigated to Contact')
       },
       description: 'Go to Contact',

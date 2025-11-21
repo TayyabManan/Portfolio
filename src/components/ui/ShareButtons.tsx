@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ShareIcon, CheckIcon } from '@heroicons/react/24/outline'
+import { toast } from '@/components/ui/Toast'
 
 interface ShareButtonsProps {
   title: string
@@ -26,9 +27,11 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
     try {
       await navigator.clipboard.writeText(url)
       setCopied(true)
+      toast.success('Link copied!', 'The link has been copied to your clipboard.')
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
       console.error('Failed to copy link:', err)
+      toast.error('Failed to copy link', 'Please try copying the link manually.')
     }
   }
 

@@ -8,6 +8,7 @@ import {
   ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/24/outline";
 import { Github, Linkedin } from "lucide-react";
+import { toast } from "@/components/ui/Toast";
 
 interface ContactForm {
   name: string;
@@ -76,9 +77,11 @@ export default function ContactPageContent() {
       }
 
       setSubmitStatus("success");
+      toast.success("Message sent successfully!", "Thank you for reaching out. I'll get back to you soon.");
       reset();
-    } catch {
+    } catch (error) {
       setSubmitStatus("error");
+      toast.error("Failed to send message", "Please try again or contact me directly at m.tayyab.manan@gmail.com");
     } finally {
       setIsSubmitting(false);
     }

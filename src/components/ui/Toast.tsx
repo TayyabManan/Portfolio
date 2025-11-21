@@ -15,7 +15,7 @@ const ToastViewport = React.forwardRef<
   <ToastPrimitives.Viewport
     ref={ref}
     className={cn(
-      'fixed top-20 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]',
+      'fixed bottom-0 right-0 z-[100] flex max-h-screen w-full flex-col gap-2 p-4 sm:max-w-[420px]',
       className
     )}
     {...props}
@@ -24,16 +24,16 @@ const ToastViewport = React.forwardRef<
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName
 
 const toastVariants = cva(
-  'group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-6 pr-8 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full',
+  'group pointer-events-auto relative flex w-full items-center justify-between space-x-3 overflow-hidden rounded-lg border-2 p-4 pr-10 shadow-xl backdrop-blur-sm transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-bottom-full data-[state=open]:fade-in-0',
   {
     variants: {
       variant: {
-        default: 'border bg-background text-foreground',
+        default: 'border-gray-300 bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 dark:border-gray-600',
         destructive:
-          'destructive group border-destructive bg-destructive text-destructive-foreground',
-        success: 'border-green-200 bg-green-50 dark:bg-green-900/20 text-green-900 dark:text-green-100',
-        warning: 'border-yellow-200 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-900 dark:text-yellow-100',
-        info: 'border-blue-200 bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-100',
+          'border-red-500 bg-red-50/95 dark:bg-red-950/95 text-red-900 dark:text-red-100',
+        success: 'border-green-500 bg-green-50/95 dark:bg-green-950/95 text-green-900 dark:text-green-100',
+        warning: 'border-yellow-500 bg-yellow-50/95 dark:bg-yellow-950/95 text-yellow-900 dark:text-yellow-100',
+        info: 'border-blue-500 bg-blue-50/95 dark:bg-blue-950/95 text-blue-900 dark:text-blue-100',
       },
     },
     defaultVariants: {
@@ -79,7 +79,7 @@ const ToastClose = React.forwardRef<
   <ToastPrimitives.Close
     ref={ref}
     className={cn(
-      'absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600',
+      'absolute right-2 top-2 rounded-md p-1.5 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 opacity-70 hover:opacity-100 transition-all hover:bg-gray-200/50 dark:hover:bg-gray-700/50 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-400',
       className
     )}
     toast-close=""
@@ -96,7 +96,7 @@ const ToastTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Title
     ref={ref}
-    className={cn('text-sm font-semibold', className)}
+    className={cn('text-sm font-semibold leading-tight', className)}
     {...props}
   />
 ))
@@ -108,7 +108,7 @@ const ToastDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Description
     ref={ref}
-    className={cn('text-sm opacity-90', className)}
+    className={cn('text-sm opacity-95 leading-snug', className)}
     {...props}
   />
 ))
@@ -293,7 +293,7 @@ toast.success = (message: string, description?: string) => {
     title: message,
     description,
     variant: 'success',
-    icon: <CheckCircle className="h-4 w-4" />,
+    icon: <CheckCircle className="h-5 w-5" />,
   })
 }
 
@@ -302,7 +302,7 @@ toast.error = (message: string, description?: string) => {
     title: message,
     description,
     variant: 'destructive',
-    icon: <AlertCircle className="h-4 w-4" />,
+    icon: <AlertCircle className="h-5 w-5" />,
   })
 }
 
@@ -311,7 +311,7 @@ toast.warning = (message: string, description?: string) => {
     title: message,
     description,
     variant: 'warning',
-    icon: <AlertTriangle className="h-4 w-4" />,
+    icon: <AlertTriangle className="h-5 w-5" />,
   })
 }
 
@@ -320,7 +320,7 @@ toast.info = (message: string, description?: string) => {
     title: message,
     description,
     variant: 'info',
-    icon: <Info className="h-4 w-4" />,
+    icon: <Info className="h-5 w-5" />,
   })
 }
 
@@ -331,7 +331,7 @@ toast.loading = (message: string, description?: string) => {
     variant: 'default',
     duration: 0, // Don't auto-dismiss loading toasts
     icon: (
-      <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+      <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
     ),
   })
 }
@@ -365,9 +365,9 @@ function Toaster() {
       {toasts.map(function ({ id, title, description, action, variant, icon, ...props }) {
         return (
           <Toast key={id} variant={variant} {...props}>
-            <div className="flex gap-3">
-              {icon && <div className="flex-shrink-0">{icon}</div>}
-              <div className="grid gap-1">
+            <div className="flex gap-3 items-start w-full">
+              {icon && <div className="flex-shrink-0 mt-0.5">{icon}</div>}
+              <div className="grid gap-1 flex-1 min-w-0">
                 {title && <ToastTitle>{title}</ToastTitle>}
                 {description && (
                   <ToastDescription>{description}</ToastDescription>

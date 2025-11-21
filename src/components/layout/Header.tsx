@@ -3,11 +3,10 @@
 import { useState, useEffect, lazy, Suspense } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Bars3Icon, XMarkIcon, ChatBubbleLeftRightIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, MagnifyingGlassIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline'
 import Logo from '@/components/ui/Logo'
 import { ThemeSelector } from '@/components/ui/ThemeSelector'
 import { useCommandPalette } from '@/components/ui/CommandPalette'
-import styles from '@/styles/Header.module.css'
 
 // Lazy load the CommandPalette component for better performance
 const CommandPalette = lazy(() => import('@/components/ui/CommandPalette').then(mod => ({ default: mod.CommandPalette })))
@@ -25,7 +24,6 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const { isOpen, open: openCommandPalette, close: closeCommandPalette } = useCommandPalette()
 
-  // Use Next.js usePathname hook - this updates on navigation
   const pathname = usePathname()
 
   // Check if a navigation item is active
@@ -36,217 +34,420 @@ export default function Header() {
     return pathname.startsWith(href)
   }
 
-  // Simplified scroll behavior - just track if scrolled past threshold
+  // Enhanced scroll detection for mobile (especially iOS)
   useEffect(() => {
+    let ticking = false
+    let lastScroll = 0
+
     const handleScroll = () => {
-      const scrolled = window.scrollY > 100
-      if (scrolled !== isScrolled) {
-        setIsScrolled(scrolled)
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop
+
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = currentScroll > 20
+          if (isScrolled !== scrolled) {
+            setIsScrolled(scrolled)
+          }
+          lastScroll = currentScroll
+          ticking = false
+        })
+        ticking = true
       }
     }
 
-    // Use passive listener for better scroll performance
+    // Initial check
+    handleScroll()
+
+    // Listen to scroll with passive for better performance
     window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll() // Check initial state
+
+    // Also listen to touchmove for iOS
+    window.addEventListener('touchmove', handleScroll, { passive: true })
 
     return () => {
       window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('touchmove', handleScroll)
     }
   }, [isScrolled])
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll when mobile menu is open (iOS compatible)
   useEffect(() => {
     if (mobileMenuOpen) {
+      const scrollY = window.scrollY
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.width = '100%'
       document.body.style.overflow = 'hidden'
     } else {
+      const scrollY = document.body.style.top
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
       document.body.style.overflow = ''
-    }
-    return () => {
-      document.body.style.overflow = ''
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+      }
     }
   }, [mobileMenuOpen])
 
+  // Close mobile menu on ESC key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false)
+      }
+    }
+
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [mobileMenuOpen])
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false)
+  }, [pathname])
+
   return (
     <>
-    <header
-      className={`fixed top-0 left-0 right-0 z-[60] transition-colors duration-300 ${
-        !isScrolled ? 'bg-[var(--background)] border-b border-[var(--border)] shadow-sm' : 'md:bg-transparent'
-      }`}
-    >
+      {/* Desktop Navbar */}
       <nav
-        className={`mx-auto transition-all duration-300 ${
+        className={`hidden md:block fixed top-0 left-0 right-0 z-[100] mx-auto transition-all duration-300 ${
           isScrolled
-            ? `${styles.navScrolled}`
+            ? 'mt-3 px-4 max-w-[95vw] sm:max-w-[90vw] md:max-w-4xl lg:max-w-5xl'
             : 'px-4 sm:px-6 lg:px-8 max-w-7xl'
         }`}
         role="navigation"
         aria-label="Main navigation"
+        style={{
+          WebkitTransform: 'translateZ(0)',
+          transform: 'translateZ(0)',
+          willChange: 'transform'
+        }}
       >
         <div
           className={`flex items-center justify-between transition-all duration-300 ${
             isScrolled
-              ? `${styles.containerScrolled}`
-              : 'h-16 px-4 sm:px-6'
+              ? 'h-14 px-4 sm:px-6 rounded-full backdrop-blur-md shadow-lg border'
+              : 'h-16'
           }`}
+          style={{
+            backgroundColor: isScrolled ? 'var(--background)' : 'transparent',
+            borderColor: isScrolled ? 'var(--border)' : 'transparent',
+            opacity: isScrolled ? 0.95 : 1
+          }}
         >
-          <div className="flex items-center">
-            <Link href="/" className={`flex items-center gap-2 sm:gap-3 font-bold text-[var(--text)] transition-all duration-300 ${
-              isScrolled ? 'mr-2 md:mr-3 lg:mr-6' : ''
-            }`}>
-              <Logo className={`text-[var(--primary)] transition-all duration-300 ${
-                isScrolled ? 'w-5 h-5 md:w-5 md:h-5 lg:w-6 lg:h-6' : 'w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8'
-              }`} />
-              <span className={`whitespace-nowrap transition-all duration-300 ${
-                isScrolled
-                  ? 'text-sm md:text-sm lg:text-base'
-                  : 'text-base md:text-lg lg:text-xl'
-              }`}>Tayyab Manan</span>
-            </Link>
-          </div>
-
-          <div className={`hidden md:flex items-center ${styles.navItemsContainer} md:space-x-2 lg:space-x-4`}>
-            <div className={`flex items-center ${isScrolled ? 'md:space-x-1 lg:space-x-2' : 'md:space-x-2 lg:space-x-4'}`}>
-              {navigationItems.map((item) => {
-                const active = isActive(item.href)
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={`font-medium transition-all duration-300 flex items-center relative group ${
-                      active
-                        ? 'text-[var(--primary)] font-semibold'
-                        : 'text-[var(--text-secondary)] hover:text-[var(--primary)]'
-                    } ${
-                      isScrolled
-                        ? `${styles.navItemScrolled} md:px-2 lg:px-3 py-1.5 md:text-xs lg:text-sm h-8`
-                        : `${styles.navItem} md:px-3 lg:px-4 py-2 md:text-sm lg:text-base`
-                    }`}
-                    aria-current={active ? 'page' : undefined}
-                  >
-                    {item.name}
-                    {active && (
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--primary)] rounded-full" />
-                    )}
-                    <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-[var(--background-tertiary)] text-[var(--text)] text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 border border-[var(--border)]">
-                      {item.shortcut}
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-4 border-transparent" style={{ borderBottomColor: 'var(--background-tertiary)' }}></div>
-                    </div>
-                  </Link>
-                )
-              })}
+          {/* Logo */}
+          <Link
+            href="/"
+            className="flex items-center gap-2 sm:gap-3 font-bold transition-all duration-300 hover:opacity-80"
+          >
+            <div style={{ color: 'var(--primary)' }}>
+              <Logo
+                className={`transition-all duration-300 ${
+                  isScrolled ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-6 h-6 sm:w-7 sm:h-7'
+                }`}
+              />
             </div>
+            <span
+              className={`whitespace-nowrap transition-all duration-300 ${
+                isScrolled ? 'text-sm sm:text-base' : 'text-base sm:text-lg'
+              }`}
+              style={{ color: 'var(--text)' }}
+            >
+              Tayyab Manan
+            </span>
+          </Link>
 
-            {/* Command Palette Search Button - Phase 2 improvement */}
+          {/* Desktop Navigation */}
+          <div className="flex items-center gap-1 lg:gap-2">
+            {navigationItems.map((item) => {
+              const active = isActive(item.href)
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`relative px-3 lg:px-4 py-2 font-medium transition-all duration-200 group ${
+                    isScrolled ? 'text-sm' : 'text-sm lg:text-base'
+                  }`}
+                  style={{
+                    color: active ? 'var(--primary)' : 'var(--text-secondary)',
+                    backgroundColor: 'transparent'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!active) {
+                      e.currentTarget.style.color = 'var(--primary)'
+                      e.currentTarget.style.backgroundColor = 'var(--background-secondary)'
+                    } else {
+                      e.currentTarget.style.backgroundColor = 'transparent'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                    if (!active) {
+                      e.currentTarget.style.color = 'var(--text-secondary)'
+                    }
+                  }}
+                  aria-current={active ? 'page' : undefined}
+                >
+                  {item.name}
+                  {active && (
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 rounded-full" style={{ backgroundColor: 'var(--primary)' }} />
+                  )}
+                  {/* Tooltip */}
+                  <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50" style={{ backgroundColor: 'var(--background-tertiary)', color: 'var(--text)', border: '1px solid var(--border)' }}>
+                    {item.shortcut}
+                  </div>
+                </Link>
+              )
+            })}
+
+            {/* Search Button */}
             <button
               onClick={openCommandPalette}
               type="button"
-              className="relative hidden lg:block p-1.5 lg:p-2 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors group"
-              aria-label="Open command palette (Ctrl/Cmd + K)"
+              className="p-2 rounded-lg transition-all duration-200 group"
+              style={{ color: 'var(--text-secondary)' }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'var(--primary)'
+                e.currentTarget.style.backgroundColor = 'var(--background-secondary)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'var(--text-secondary)'
+                e.currentTarget.style.backgroundColor = 'transparent'
+              }}
+              aria-label="Open command palette"
             >
-              <MagnifyingGlassIcon className="h-5 w-5 lg:h-6 lg:w-6" />
-              <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-[var(--background-tertiary)] text-[var(--text)] text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 border border-[var(--border)]">
-                Search ⌘K
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-4 border-transparent" style={{ borderBottomColor: 'var(--background-tertiary)' }}></div>
+              <MagnifyingGlassIcon className="h-5 w-5" />
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50" style={{ backgroundColor: 'var(--background-tertiary)', color: 'var(--text)', border: '1px solid var(--border)' }}>
+                ⌘K
               </div>
             </button>
 
-            {/* Enhanced Theme Selector with dropdown */}
+            {/* Theme Selector */}
             <ThemeSelector isCompact={isScrolled} />
-            
+
+            {/* Resume Button */}
             <Link
               href="/resume"
-              className={`relative bg-[var(--primary)] text-white font-medium hover:bg-[var(--primary-hover)] transition-all duration-300 flex items-center group ${
-                isScrolled
-                  ? `${styles.resumeButtonScrolled} md:px-3 lg:px-4 py-1.5 rounded-full md:text-xs lg:text-sm h-8`
-                  : `${styles.resumeButton} md:px-4 lg:px-5 py-2.5 rounded-lg md:text-sm lg:text-base`
+              className={`ml-2 px-4 lg:px-5 py-2 text-white font-medium rounded-lg transition-all duration-200 flex items-center gap-2 ${
+                isScrolled ? 'text-sm' : 'text-sm lg:text-base'
               }`}
+              style={{ backgroundColor: 'var(--primary)' }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--primary-hover)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--primary)'
+              }}
             >
-              <span className="flex items-center md:gap-1 lg:gap-2">
-                Resume
-                <ChatBubbleLeftRightIcon className={`${isScrolled ? 'md:h-3 md:w-3 lg:h-4 lg:w-4' : 'md:h-4 md:w-4 lg:h-5 lg:w-5'}`} />
-              </span>
-              <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-[var(--background-tertiary)] text-[var(--text)] text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 border border-[var(--border)]">
-                Alt+R
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-4 border-transparent" style={{ borderBottomColor: 'var(--background-tertiary)' }}></div>
-              </div>
+              Resume
+              <ChatBubbleLeftRightIcon className={`${isScrolled ? 'h-3.5 w-3.5' : 'h-4 w-4'}`} />
             </Link>
           </div>
+        </div>
+      </nav>
 
-          <div className="md:hidden flex items-center space-x-2">
-            {/* Mobile Theme Selector */}
-            <ThemeSelector isCompact={isScrolled} />
-            
-            <button
-              type="button"
-              className="text-[var(--text-secondary)] hover:text-[var(--text)] p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle mobile menu"
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? (
-                <XMarkIcon className="h-6 w-6" />
-              ) : (
-                <Bars3Icon className="h-6 w-6" />
-              )}
-            </button>
+      {/* Mobile Navbar - iOS Optimized */}
+      <div
+        className="md:hidden fixed top-0 left-0 right-0 z-[100]"
+        style={{
+          position: 'fixed',
+          WebkitTransform: 'translate3d(0,0,0)',
+          transform: 'translate3d(0,0,0)',
+          WebkitBackfaceVisibility: 'hidden',
+          backfaceVisibility: 'hidden',
+          WebkitPerspective: '1000',
+          perspective: '1000',
+          willChange: 'auto'
+        }}
+      >
+        {/* Mobile Navbar Container */}
+        <div
+          className={`transition-all duration-300 ease-out ${
+            isScrolled ? 'p-3' : 'p-0'
+          }`}
+        >
+          {/* Mobile Nav Bar */}
+          <div
+            className={`transition-all duration-300 ease-out ${
+              isScrolled
+                ? 'rounded-full backdrop-blur-md shadow-lg border'
+                : ''
+            }`}
+            style={{
+              WebkitTransform: 'translateZ(0)',
+              transform: 'translateZ(0)',
+              backgroundColor: isScrolled ? 'var(--background)' : 'transparent',
+              borderColor: isScrolled ? 'var(--border)' : 'transparent',
+              opacity: isScrolled ? 0.95 : 1
+            }}
+          >
+            <div className="flex items-center justify-between h-16 px-4">
+              {/* Logo */}
+              <Link
+                href="/"
+                className="flex items-center gap-2 font-bold transition-all duration-300 hover:opacity-80 z-10"
+              >
+                <div style={{ color: 'var(--primary)' }}>
+                  <Logo
+                    className={`transition-all duration-300 ${
+                      isScrolled ? 'w-5 h-5' : 'w-6 h-6'
+                    }`}
+                  />
+                </div>
+                <span
+                  className={`whitespace-nowrap transition-all duration-300 ${
+                    isScrolled ? 'text-sm' : 'text-base'
+                  }`}
+                  style={{ color: 'var(--text)' }}
+                >
+                  Tayyab Manan
+                </span>
+              </Link>
+
+              {/* Mobile Controls */}
+              <div className="flex items-center gap-2 z-10">
+                {/* Mobile Search */}
+                <button
+                  onClick={openCommandPalette}
+                  type="button"
+                  className="p-2 transition-colors rounded-lg"
+                  style={{ color: 'var(--text-secondary)' }}
+                  onTouchStart={(e) => {
+                    e.currentTarget.style.color = 'var(--primary)'
+                    e.currentTarget.style.backgroundColor = 'var(--background-secondary)'
+                  }}
+                  onTouchEnd={(e) => {
+                    e.currentTarget.style.color = 'var(--text-secondary)'
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                  }}
+                  aria-label="Open search"
+                >
+                  <MagnifyingGlassIcon className="h-5 w-5" />
+                </button>
+
+                {/* Theme Selector */}
+                <ThemeSelector isCompact={true} />
+
+                {/* Hamburger Menu */}
+                <button
+                  type="button"
+                  className="p-2 transition-colors rounded-lg"
+                  style={{ color: 'var(--text-secondary)' }}
+                  onTouchStart={(e) => {
+                    e.currentTarget.style.color = 'var(--text)'
+                    e.currentTarget.style.backgroundColor = 'var(--background-secondary)'
+                  }}
+                  onTouchEnd={(e) => {
+                    e.currentTarget.style.color = 'var(--text-secondary)'
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                  }}
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  aria-label="Toggle mobile menu"
+                  aria-expanded={mobileMenuOpen}
+                >
+                  {mobileMenuOpen ? (
+                    <XMarkIcon className="h-6 w-6" />
+                  ) : (
+                    <Bars3Icon className="h-6 w-6" />
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <>
-            {/* Backdrop */}
-            <div
-              className={`md:hidden fixed left-0 right-0 bottom-0 bg-black/20 backdrop-blur-sm z-40 ${
-                isScrolled ? 'top-[calc(3.5rem+0.5rem)]' : 'top-16'
-              }`}
-              onClick={() => setMobileMenuOpen(false)}
-              aria-hidden="true"
-            />
-            {/* Menu content */}
-            <div className="md:hidden absolute top-full left-0 right-0 mt-2 mx-4 z-[60]">
-              <div className="bg-[var(--background)] rounded-lg shadow-lg border border-[var(--border)] px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        {/* Mobile Menu Overlay */}
+        <div
+          className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${
+            mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+          style={{
+            top: isScrolled ? 'calc(4rem + 1.5rem)' : '4rem',
+            zIndex: 90
+          }}
+          onClick={() => setMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+
+        {/* Mobile Menu Dropdown */}
+        <div
+          className={`fixed left-3 right-3 transition-all duration-300 ease-out ${
+            mobileMenuOpen
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 -translate-y-4 pointer-events-none'
+          }`}
+          style={{
+            top: isScrolled ? 'calc(4rem + 2rem)' : '4.75rem',
+            zIndex: 95,
+            WebkitTransform: mobileMenuOpen ? 'translate3d(0,0,0)' : 'translate3d(0,-1rem,0)',
+            transform: mobileMenuOpen ? 'translate3d(0,0,0)' : 'translate3d(0,-1rem,0)',
+          }}
+        >
+          <div className="rounded-2xl shadow-2xl border overflow-hidden" style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)' }}>
+            <div className="p-2 space-y-1">
               {navigationItems.map((item) => {
                 const active = isActive(item.href)
                 return (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`block px-4 py-3 text-base font-medium min-h-[44px] flex items-center rounded-md transition-colors ${
-                      active
-                        ? 'text-[var(--primary)] bg-[var(--primary)]/10 font-semibold'
-                        : 'text-[var(--text-secondary)] hover:text-[var(--primary)] hover:bg-[var(--background-secondary)]'
-                    }`}
+                    className="flex items-center justify-between px-4 py-3 rounded-xl font-medium transition-all duration-200 active:scale-95"
+                    style={{
+                      backgroundColor: 'transparent',
+                      color: active ? 'var(--primary)' : 'var(--text)'
+                    }}
+                    onTouchStart={(e) => {
+                      if (!active) {
+                        e.currentTarget.style.backgroundColor = 'var(--background-secondary)'
+                      } else {
+                        e.currentTarget.style.backgroundColor = 'transparent'
+                      }
+                    }}
+                    onTouchEnd={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent'
+                    }}
                     onClick={() => setMobileMenuOpen(false)}
                     aria-current={active ? 'page' : undefined}
                   >
-                    {item.name}
+                    <span>{item.name}</span>
+                    <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+                      {item.shortcut}
+                    </span>
                   </Link>
                 )
               })}
+
+              {/* Resume Button */}
               <Link
                 href="/resume"
-                className="relative bg-[var(--primary)] text-white block px-4 py-3 rounded-md text-base font-medium hover:bg-[var(--primary-hover)] mt-4 min-h-[44px] flex items-center justify-center"
+                className="flex items-center justify-center px-4 py-3 mt-2 text-white font-medium rounded-xl transition-all duration-200 active:scale-95 gap-2"
+                style={{ backgroundColor: 'var(--primary)' }}
+                onTouchStart={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--primary-hover)'
+                }}
+                onTouchEnd={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--primary)'
+                }}
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <span className="flex items-center gap-2">
-                  Resume
-                  <ChatBubbleLeftRightIcon className="h-4 w-4" />
-                </span>
+                Resume
+                <ChatBubbleLeftRightIcon className="h-4 w-4" />
               </Link>
-              </div>
             </div>
-          </>
-        )}
-      </nav>
-    </header>
+          </div>
+        </div>
+      </div>
 
-    {/* Command Palette - Lazy loaded for performance */}
-    {isOpen && (
-      <Suspense fallback={<div className="fixed inset-0 z-50 bg-black/50" />}>
-        <CommandPalette isOpen={isOpen} onClose={closeCommandPalette} />
-      </Suspense>
-    )}
-  </>
+      {/* Spacer to prevent content from hiding under fixed header */}
+      <div className="h-16" />
+
+      {/* Command Palette */}
+      {isOpen && (
+        <Suspense fallback={<div className="fixed inset-0 z-[110] bg-black/50" />}>
+          <CommandPalette isOpen={isOpen} onClose={closeCommandPalette} />
+        </Suspense>
+      )}
+    </>
   )
 }

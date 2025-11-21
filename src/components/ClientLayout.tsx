@@ -20,7 +20,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     <>
       <div className="bg-[var(--background)] min-h-screen transition-colors">
         <Header />
-        <main id="main-content" className="min-h-screen pt-16 focus:outline-none">
+        <main id="main-content" className="min-h-screen focus:outline-none">
           {children}
         </main>
         <Footer />

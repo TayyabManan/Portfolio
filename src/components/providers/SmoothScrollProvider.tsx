@@ -5,9 +5,18 @@ import Lenis from 'lenis'
 
 export default function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Detect Safari or macOS - use native smooth scroll for better performance
+    // Detect mobile devices
+    const isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+
+    // Detect Safari or macOS
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
     const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform)
+
+    // Disable smooth scroll entirely on mobile to prevent fixed positioning issues
+    if (isMobile) {
+      // Use default browser scroll behavior on mobile
+      return
+    }
 
     // Use native smooth scroll on Safari/Mac for better performance
     if (isSafari || isMac) {

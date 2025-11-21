@@ -2,21 +2,50 @@
 @import "lenis/dist/lenis.css";
 @import "../styles/tokens.css";
 
-/* Prevent horizontal scrolling on mobile */
-html,
-body {
-  overflow-x: hidden;
+/* Reset and base styles */
+html {
+  /* Prevent horizontal scrolling */
+  overflow-x: clip;
   max-width: 100vw;
+  /* Ensure no transform that might break fixed positioning */
+  -webkit-transform: none !important;
+  transform: none !important;
+  /* Ensure proper scroll */
+  overflow-y: auto;
+  height: 100%;
 }
 
-/* Safari-specific scroll optimizations */
-@supports (-webkit-backdrop-filter: blur(1px)) {
-  html {
-    /* Use native smooth scroll on Safari for better performance */
-    scroll-behavior: smooth;
-    /* Hardware acceleration for scroll */
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
+body {
+  /* Prevent horizontal scrolling */
+  overflow-x: clip;
+  max-width: 100vw;
+  /* Critical: NO transform or will-change on body */
+  -webkit-transform: none !important;
+  transform: none !important;
+  will-change: auto !important;
+  /* Ensure proper positioning context */
+  position: relative;
+  min-height: 100%;
+}
+
+/* iOS-specific fixes for fixed positioning */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari needs these specific fixes */
+  html, body {
+    /* Don't use overflow hidden on iOS - it breaks fixed positioning */
+    overflow-x: clip;
+  }
+
+  /* Force hardware acceleration for fixed elements on iOS */
+  .fixed {
+    -webkit-transform: translate3d(0,0,0) !important;
+    transform: translate3d(0,0,0) !important;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+    /* Critical for iOS */
+    position: fixed !important;
   }
 }
 
