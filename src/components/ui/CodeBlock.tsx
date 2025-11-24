@@ -18,8 +18,8 @@ export default function CodeBlock({ children, className }: CodeBlockProps) {
       await navigator.clipboard.writeText(code)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    } catch (err) {
-      console.error('Failed to copy code:', err)
+    } catch {
+      // Silently fail - clipboard API may not be available
     }
   }
 

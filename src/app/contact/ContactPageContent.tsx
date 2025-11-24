@@ -46,7 +46,7 @@ export default function ContactPageContent() {
     watch,
     formState: { errors },
   } = useForm<ContactForm>({
-    mode: 'onBlur',
+    mode: 'onChange',
   });
 
   // Auto-dismiss success message after 5 seconds
@@ -252,9 +252,11 @@ export default function ContactPageContent() {
                     {...register("name", { required: "Name is required" })}
                     className="w-full px-4 py-3 border border-[var(--border)] dark:border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] dark:bg-[var(--background-tertiary)] text-[var(--text)]"
                     placeholder="Your full name"
+                    aria-invalid={errors.name ? "true" : "false"}
+                    aria-describedby={errors.name ? "name-error" : undefined}
                   />
                   {errors.name && (
-                    <p className="mt-1 text-sm text-[var(--error)]">
+                    <p id="name-error" role="alert" className="mt-1 text-sm text-[var(--error)]">
                       {errors.name.message}
                     </p>
                   )}
@@ -279,9 +281,11 @@ export default function ContactPageContent() {
                     })}
                     className="w-full px-4 py-3 border border-[var(--border)] dark:border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] dark:bg-[var(--background-tertiary)] text-[var(--text)]"
                     placeholder="your.email@example.com"
+                    aria-invalid={errors.email ? "true" : "false"}
+                    aria-describedby={errors.email ? "email-error" : undefined}
                   />
                   {errors.email && (
-                    <p className="mt-1 text-sm text-[var(--error)]">
+                    <p id="email-error" role="alert" className="mt-1 text-sm text-[var(--error)]">
                       {errors.email.message}
                     </p>
                   )}
@@ -306,9 +310,11 @@ export default function ContactPageContent() {
                     })}
                     className="w-full px-4 py-3 border border-[var(--border)] dark:border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] dark:bg-[var(--background-tertiary)] text-[var(--text)]"
                     placeholder="What would you like to discuss?"
+                    aria-invalid={errors.subject ? "true" : "false"}
+                    aria-describedby={errors.subject ? "subject-error" : undefined}
                   />
                   {errors.subject && (
-                    <p className="mt-1 text-sm text-[var(--error)]">
+                    <p id="subject-error" role="alert" className="mt-1 text-sm text-[var(--error)]">
                       {errors.subject.message}
                     </p>
                   )}
@@ -333,6 +339,8 @@ export default function ContactPageContent() {
                     })}
                     className="w-full px-4 py-3 border border-[var(--border)] dark:border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] dark:bg-[var(--background-tertiary)] text-[var(--text)]"
                     placeholder="Tell me about your project, opportunity, or question... (minimum 10 characters)"
+                    aria-invalid={errors.message ? "true" : "false"}
+                    aria-describedby={errors.message ? "message-error" : undefined}
                   />
                   <div className="flex justify-between text-xs mt-1">
                     <span className={`${
@@ -344,7 +352,7 @@ export default function ContactPageContent() {
                     </span>
                   </div>
                   {errors.message && (
-                    <p className="mt-1 text-sm text-[var(--error)]">
+                    <p id="message-error" role="alert" className="mt-1 text-sm text-[var(--error)]">
                       {errors.message.message}
                     </p>
                   )}

@@ -171,8 +171,8 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
     if (saved) {
       try {
         setRecentCommands(JSON.parse(saved))
-      } catch (e) {
-        console.error('Failed to parse recent commands', e)
+      } catch {
+        // Invalid JSON in localStorage - ignore and use empty array
       }
     }
   }, [])
@@ -365,10 +365,10 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       >
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-300"
+          enter="ease-out duration-150"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="ease-in duration-200"
+          leave="ease-in duration-100"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
@@ -378,10 +378,10 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
         <div className="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20">
           <Transition.Child
             as={Fragment}
-            enter="ease-out duration-300"
+            enter="ease-out duration-150"
             enterFrom="opacity-0 scale-95"
             enterTo="opacity-100 scale-100"
-            leave="ease-in duration-200"
+            leave="ease-in duration-100"
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >

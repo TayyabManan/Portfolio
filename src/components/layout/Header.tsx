@@ -205,7 +205,7 @@ export default function Header() {
             <button
               onClick={openCommandPalette}
               type="button"
-              className="p-2 rounded-lg transition-all duration-200 group"
+              className="p-2 min-h-[44px] min-w-[44px] rounded-lg transition-all duration-200 group flex items-center justify-center"
               style={{ color: 'var(--text-secondary)' }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.color = 'var(--primary)'
@@ -311,7 +311,7 @@ export default function Header() {
                 <button
                   onClick={openCommandPalette}
                   type="button"
-                  className="p-2 transition-colors rounded-lg"
+                  className="p-2 min-h-[44px] min-w-[44px] transition-colors rounded-lg flex items-center justify-center"
                   style={{ color: 'var(--text-secondary)' }}
                   onTouchStart={(e) => {
                     e.currentTarget.style.color = 'var(--primary)'
@@ -332,7 +332,7 @@ export default function Header() {
                 {/* Hamburger Menu */}
                 <button
                   type="button"
-                  className="p-2 transition-colors rounded-lg"
+                  className="p-2 min-h-[44px] min-w-[44px] transition-colors rounded-lg flex items-center justify-center"
                   style={{ color: 'var(--text-secondary)' }}
                   onTouchStart={(e) => {
                     e.currentTarget.style.color = 'var(--text)'
@@ -343,8 +343,9 @@ export default function Header() {
                     e.currentTarget.style.backgroundColor = 'transparent'
                   }}
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  aria-label="Toggle mobile menu"
+                  aria-label={mobileMenuOpen ? "Close mobile menu" : "Open mobile menu"}
                   aria-expanded={mobileMenuOpen}
+                  aria-controls="mobile-menu-dropdown"
                 >
                   {mobileMenuOpen ? (
                     <XMarkIcon className="h-6 w-6" />
@@ -372,6 +373,7 @@ export default function Header() {
 
         {/* Mobile Menu Dropdown */}
         <div
+          id="mobile-menu-dropdown"
           className={`fixed left-3 right-3 transition-all duration-300 ease-out ${
             mobileMenuOpen
               ? 'opacity-100 translate-y-0'
@@ -383,6 +385,8 @@ export default function Header() {
             WebkitTransform: mobileMenuOpen ? 'translate3d(0,0,0)' : 'translate3d(0,-1rem,0)',
             transform: mobileMenuOpen ? 'translate3d(0,0,0)' : 'translate3d(0,-1rem,0)',
           }}
+          role="menu"
+          aria-label="Mobile navigation menu"
         >
           <div className="rounded-2xl shadow-2xl border overflow-hidden" style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)' }}>
             <div className="p-2 space-y-1">

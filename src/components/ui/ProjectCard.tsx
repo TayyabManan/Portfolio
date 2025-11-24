@@ -40,19 +40,20 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
     return () => window.removeEventListener('resize', checkTextClamping)
   }, [project.description, isExpanded])
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
     e.currentTarget.style.willChange = 'transform, box-shadow'
   }
 
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
     e.currentTarget.style.willChange = 'auto'
   }
 
   return (
-    <div
+    <article
       className="group relative bg-[var(--background)] dark:bg-[var(--background-secondary)] rounded-xl shadow-sm hover:shadow-xl transition-[transform,box-shadow] duration-300 overflow-hidden border border-[var(--border)] hover:-translate-y-1"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      aria-label={`${project.title} - ${project.category} project`}
     >
       <div className="aspect-video relative overflow-hidden bg-[var(--border)] dark:bg-[var(--background-tertiary)]">
         {project.image ? (
@@ -147,8 +148,8 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
               href={project.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center p-2 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors"
-              title="Live Demo"
+              className="inline-flex items-center justify-center p-2 min-h-[44px] min-w-[44px] text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors"
+              aria-label={`View live demo of ${project.title}`}
               onClick={(e) => e.stopPropagation()}
             >
               <LinkIcon className="h-5 w-5" />
@@ -159,8 +160,8 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center p-2 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors"
-              title="Source Code"
+              className="inline-flex items-center justify-center p-2 min-h-[44px] min-w-[44px] text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors"
+              aria-label={`View source code of ${project.title} on GitHub`}
               onClick={(e) => e.stopPropagation()}
             >
               <CodeBracketIcon className="h-5 w-5" />
@@ -170,12 +171,13 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
             href={`/projects/${project.slug}`}
             className="ml-auto text-[var(--primary)] hover:text-[var(--primary-hover)] transition-colors text-sm font-medium"
             onClick={(e) => e.stopPropagation()}
+            aria-label={`View details of ${project.title} project`}
           >
             View Details →
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   )
 })
 

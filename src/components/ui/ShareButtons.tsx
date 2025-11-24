@@ -29,8 +29,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
       setCopied(true)
       toast.success('Link copied!', 'The link has been copied to your clipboard.')
       setTimeout(() => setCopied(false), 2000)
-    } catch (err) {
-      console.error('Failed to copy link:', err)
+    } catch {
       toast.error('Failed to copy link', 'Please try copying the link manually.')
     }
   }
