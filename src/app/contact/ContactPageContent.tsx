@@ -79,7 +79,7 @@ export default function ContactPageContent() {
       setSubmitStatus("success");
       toast.success("Message sent successfully!", "Thank you for reaching out. I'll get back to you soon.");
       reset();
-    } catch (error) {
+    } catch {
       setSubmitStatus("error");
       toast.error("Failed to send message", "Please try again or contact me directly at m.tayyab.manan@gmail.com");
     } finally {

@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const nextConfig: NextConfig = {
   // Enable React strict mode for better error handling
   reactStrictMode: true,
@@ -72,11 +74,10 @@ const nextConfig: NextConfig = {
           {
             key: 'Content-Security-Policy',
             // Note: 'unsafe-inline' is needed for inline styles and Next.js hydration
-            // Consider implementing nonces or hashes for better security in future
-            // 'unsafe-eval' has been removed as it's not required for production
+            // 'unsafe-eval' is conditionally added in development for React Fast Refresh
             value: `
               default-src 'self';
-              script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://vercel.live https://va.vercel-scripts.com;
+              script-src 'self' 'unsafe-inline' ${isDev ? "'unsafe-eval'" : ''} https://www.googletagmanager.com https://www.google-analytics.com https://vercel.live https://va.vercel-scripts.com;
               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
               font-src 'self' https://fonts.gstatic.com data:;
               img-src 'self' data: https: blob:;

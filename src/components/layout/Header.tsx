@@ -37,7 +37,6 @@ export default function Header() {
   // Enhanced scroll detection for mobile (especially iOS)
   useEffect(() => {
     let ticking = false
-    let lastScroll = 0
 
     const handleScroll = () => {
       const currentScroll = window.pageYOffset || document.documentElement.scrollTop
@@ -48,7 +47,6 @@ export default function Header() {
           if (isScrolled !== scrolled) {
             setIsScrolled(scrolled)
           }
-          lastScroll = currentScroll
           ticking = false
         })
         ticking = true
