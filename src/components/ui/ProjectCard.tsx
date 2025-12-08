@@ -169,7 +169,7 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
           )}
           <Link
             href={`/projects/${project.slug}`}
-            className="ml-auto text-[var(--primary)] hover:text-[var(--primary-hover)] transition-colors text-sm font-medium"
+            className="ml-auto px-3 py-2 min-h-[44px] inline-flex items-center text-[var(--primary)] hover:text-[var(--primary-hover)] hover:bg-[var(--primary)]/10 rounded-lg transition-all text-sm font-medium"
             onClick={(e) => e.stopPropagation()}
             aria-label={`View details of ${project.title} project`}
           >

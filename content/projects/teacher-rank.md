@@ -17,6 +17,8 @@ date: "2025-01-06"
 ## Overview
 TeacherRank is a modern web application that revolutionizes how students evaluate and discover teachers. The platform provides a transparent, user-friendly system for rating educators based on multiple criteria including teaching quality, communication skills, and course difficulty. With real-time data synchronization and a responsive interface, TeacherRank helps students make informed decisions about their education while providing valuable feedback to educational institutions.
 
+**[Read the full technical deep-dive →](/blog/building-teacherrank)**
+
 ## Key Features
 - **Comprehensive Rating System**: Multi-dimensional evaluation across teaching quality, communication, helpfulness, and course difficulty
 - **Advanced Search & Filtering**: Find teachers by name, subject, institution, or rating with real-time search

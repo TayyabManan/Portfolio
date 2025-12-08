@@ -251,6 +251,14 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
                             {children}
                           </strong>
                         ),
+                        a: ({ href, children }) => (
+                          <a
+                            href={href}
+                            className="text-[var(--primary)] hover:text-[var(--primary-hover)] underline underline-offset-2 transition-colors"
+                          >
+                            {children}
+                          </a>
+                        ),
                       }}
                     >
                       {project.content}

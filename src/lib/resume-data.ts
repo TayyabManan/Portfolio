@@ -219,6 +219,20 @@ export const resumeData: ResumeData = {
 
   projects: [
     {
+      name: "Face Expression Detection",
+      description: "Deep learning system for facial expression recognition in group photos using ensemble models",
+      technologies: ["PyTorch", "Flask", "MTCNN", "ResNet-18", "OpenCV", "Docker", "Hugging Face"],
+      url: "https://huggingface.co/spaces/TayyabManan/face-expression-detection",
+      urlText: "Live Demo",
+      github: "https://github.com/TayyabManan/Face-Expression-Detection",
+      githubText: "GitHub",
+      highlights: [
+        "Built emotion classification model achieving 80% accuracy on RAF-DB dataset across 7 emotion classes",
+        "Implemented ensemble learning combining ResNet-18 and EfficientNet-B2 to handle severe class imbalance",
+        "Deployed Flask web application with MTCNN face detection on Hugging Face Spaces using Docker"
+      ]
+    },
+    {
       name: "Wheat Yield Prediction using Machine Learning",
       description: "ML regression model for agricultural yield forecasting using satellite imagery and climate data",
       technologies: ["Scikit-learn", "Python", "NumPy", "Pandas", "Google Earth Engine", "Feature Engineering"],

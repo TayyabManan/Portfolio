@@ -2,7 +2,7 @@
 slug: "building-teacherrank"
 title: "Building TeacherRank: A Student-Driven Teacher Review Platform"
 description: "Technical deep-dive into building a comprehensive teacher rating platform using React, TypeScript, and Supabase. Implementation details for full-stack development, real-time databases, and performance optimization."
-date: "2025-01-15"
+date: "2025-06-15"
 author: "Tayyab Manan"
 category: "Web Development"
 tags: ["React", "TypeScript", "Supabase", "Full-Stack", "Web Development", "Technical"]

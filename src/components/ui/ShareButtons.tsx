@@ -43,7 +43,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-colors font-medium cursor-pointer"
+        className="inline-flex items-center gap-2 px-4 py-2 min-h-[44px] bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-colors font-medium cursor-pointer"
         aria-label="Share this post"
       >
         <ShareIcon className="h-5 w-5" />

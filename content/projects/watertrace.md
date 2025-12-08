@@ -17,6 +17,8 @@ date: "2025-01-09"
 ## Overview
 WaterTrace is an advanced machine learning system for groundwater prediction and monitoring, designed to address Pakistan's critical water crisis through AI-driven insights. By leveraging 22 years of satellite data from NASA's GRACE mission (2002-2017) and GLDAS land surface models (2018-2024), this geospatial AI platform provides predictive analytics for groundwater depletion patterns across 145 districts, enabling data-driven water resource management through time-series forecasting and regression modeling.
 
+**[Read the full technical deep-dive →](/blog/building-watertrace)**
+
 ## Key Features
 - **Geospatial AI Integration**: Advanced ML models combining GRACE gravity anomaly data and GLDAS soil moisture measurements
 - **District-Level ML Predictions**: AI-powered analysis across all 145 districts of Pakistan

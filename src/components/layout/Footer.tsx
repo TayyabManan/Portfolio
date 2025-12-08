@@ -156,19 +156,19 @@ export default function Footer() {
             <div>
             <h3 className="text-lg font-semibold mb-4 text-[var(--text)]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>Quick Links</h3>
             <div className="space-y-0.5">
-              <Link href="/projects" className="block text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors">
+              <Link href="/projects" className="block text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors">
                 Projects
               </Link>
-              <Link href="/blog" className="block text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors">
+              <Link href="/blog" className="block text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors">
                 Blog
               </Link>
-              <Link href="/about" className="block text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors">
+              <Link href="/about" className="block text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors">
                 About
               </Link>
-              <Link href="/contact" className="block text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors">
+              <Link href="/contact" className="block text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors">
                 Contact
               </Link>
-              <a href="/resume" className="inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors" target="_blank" rel="noopener noreferrer">
+              <a href="/resume" className="inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors" target="_blank" rel="noopener noreferrer">
                 Resume
                 <ArrowTopRightOnSquareIcon className="h-4 w-4" />
               </a>
@@ -219,7 +219,7 @@ export default function Footer() {
       {/* Large Name Display - positioned at the very bottom */}
       <div className="absolute bottom-0 left-0 right-0 flex items-end justify-center pb-1 sm:pb-2 md:pb-3 px-4 sm:px-6 md:px-8 pointer-events-none z-0">
         <div className="relative pr-4 sm:pr-8">
-          <h1 className="font-extrabold select-none leading-none tracking-tighter whitespace-nowrap text-[10vw] sm:text-[12vw] md:text-[13vw]" style={{ fontFamily: 'inherit', color: 'var(--text)' }}>
+          <h1 className="font-extrabold select-none leading-none tracking-tighter whitespace-nowrap text-[clamp(2rem,10vw,8rem)] sm:text-[12vw] md:text-[13vw]" style={{ fontFamily: 'inherit', color: 'var(--text)' }}>
             Tayyab Manan
           </h1>
           {/* Copyright icon at top right of last 'n' */}

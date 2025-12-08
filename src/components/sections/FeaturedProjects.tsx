@@ -15,7 +15,7 @@ export default function FeaturedProjects() {
     fetch('/api/projects')
       .then(res => res.json())
       .then(data => {
-        const featured = data.filter((project: Project) => project.featured)
+        const featured = data.filter((project: Project) => project.featured).slice(0, 3)
         setFeaturedProjects(featured)
         setLoading(false)
       })
