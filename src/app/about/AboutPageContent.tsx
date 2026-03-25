@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { CheckCircleIcon } from '@heroicons/react/24/solid'
+import { CheckCircleIcon, CheckBadgeIcon } from '@heroicons/react/24/solid'
 import { MapPinIcon, AcademicCapIcon, BriefcaseIcon } from '@heroicons/react/24/outline'
+import { resumeData, formatDate } from '@/lib/resume-data'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -49,20 +50,8 @@ const experience = [
 
 export default function AboutPage() {
   return (
-    <div className="relative bg-[var(--background)] py-16 min-h-screen overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        {/* Gradient base */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary-light)] via-[var(--background)] to-[var(--accent)] opacity-30" />
-
-        {/* Floating orbs */}
-        <div className="absolute top-[20%] left-[10%] w-96 h-96 bg-[var(--primary)] rounded-full blur-3xl opacity-20" />
-        <div className="absolute bottom-[20%] right-[10%] w-80 h-80 bg-[var(--accent)] rounded-full blur-3xl opacity-20" />
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:48px_48px] opacity-[0.05]" />
-      </div>
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="relative bg-[var(--background)] py-16 min-h-screen">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header - Left aligned */}
         <div className="mb-16 max-w-4xl">
           <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text)] mb-4">About Me</h1>
@@ -80,24 +69,23 @@ export default function AboutPage() {
               <h2 className="text-2xl font-bold text-[var(--text)] mb-4">About My Journey</h2>
               <div className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed space-y-4">
                 <p>
-                  I&apos;m an AI Engineering graduate student specializing in Computer Vision, Natural Language Processing,
-                  and Geospatial AI. Currently pursuing my Master&apos;s in AI Engineering at COMSATS Islamabad,
-                  I&apos;m passionate about applying machine learning to solve real-world problems, particularly in
-                  environmental monitoring and sustainable development.
+                  I got into AI through an unusual path: geography. During my Bachelor&apos;s in GIS at Punjab University,
+                  I spent a lot of time working with satellite imagery and spatial data. At some point I realized the most
+                  interesting problems I was solving all came down to building better models, so I leaned into that fully.
+                  Now I&apos;m doing my Master&apos;s in AI Engineering at COMSATS University, Islamabad.
                 </p>
                 <p>
-                  My journey into AI started with a fascination for how satellite imagery and geospatial data could be
-                  transformed into actionable insights. Through my Bachelor&apos;s in Geographic Information Systems and
-                  hands-on projects, I&apos;ve developed skills in end-to-end ML development - from data collection and
-                  preprocessing to model training and deployment. I&apos;m proficient with PyTorch, TensorFlow, and modern
-                  ML frameworks like LangChain for building intelligent systems.
+                  Alongside my studies, I work as a Junior AI Developer at Cointegration, where I build production ML models
+                  and multi-agent systems with LangChain, AutoGen, and the Model Context Protocol. On the side, I take on
+                  freelance projects. One example is WaterTrace, where I used 22 years of satellite data to predict groundwater
+                  levels across 145 districts in Pakistan. I like working across the full stack, from training models in
+                  PyTorch to deploying them behind Flask APIs with React frontends.
                 </p>
                 <p>
-                  I&apos;m actively seeking Summer 2026 internship opportunities where I can contribute to impactful ML projects,
-                  learn from experienced engineers, and grow my skills in production ML systems. My projects like WaterTrace
-                  (groundwater prediction) and EV Suitability Analysis demonstrate my ability to tackle complex problems and
-                  build full-stack ML applications. I&apos;m excited to bring my enthusiasm for learning, problem-solving
-                  skills, and technical foundation to a collaborative team environment.
+                  Right now I&apos;m also going through AI training programs at Samsung Innovation Campus and AISkill Bridge
+                  to sharpen my deep learning fundamentals. I&apos;m looking for Summer 2026 internship opportunities where
+                  I can work on real ML problems with a strong engineering team, learn from experienced people, and
+                  contribute meaningfully from day one.
                 </p>
               </div>
             </section>
@@ -183,6 +171,29 @@ export default function AboutPage() {
             </div>
           </section>
         </div>
+
+        {/* Certifications */}
+        <section className="mt-12">
+          <div className="flex items-center gap-3 mb-6">
+            <CheckBadgeIcon className="h-6 w-6 text-[var(--primary)]" />
+            <h2 className="text-2xl font-bold text-[var(--text)]">Certifications</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {resumeData.certifications.map((cert, index) => (
+              <div key={index} className="border-l-2 border-[var(--primary-light)] pl-6">
+                {cert.credentialUrl ? (
+                  <a href={cert.credentialUrl} target="_blank" rel="noopener noreferrer" className="text-lg font-semibold text-[var(--text)] hover:text-[var(--primary)] transition-colors mb-1 block">
+                    {cert.name}
+                  </a>
+                ) : (
+                  <h3 className="text-lg font-semibold text-[var(--text)] mb-1">{cert.name}</h3>
+                )}
+                <p className="text-[var(--primary)] font-medium mb-1">{cert.issuer}</p>
+                <p className="text-sm text-[var(--text-secondary)]">{formatDate(cert.date)}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* Call to Action - Two column layout */}
         <div className="mt-16 bg-[var(--background-secondary)] rounded-2xl p-8 lg:p-12 border border-[var(--border)]">

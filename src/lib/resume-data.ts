@@ -319,28 +319,46 @@ export const resumeData: ResumeData = {
 
   certifications: [
     {
-      name: "Going Places with Spatial Analysis",
-      issuer: "ESRI",
-      date: "2024-09-01",
+      name: "Registered Scrum Basics",
+      issuer: "Scrum Inc.",
+      date: "2026-03-01",
+      credentialUrl: ""
+    },
+    {
+      name: "Artificial Intelligence Training (Machine Learning and Deep Learning)",
+      issuer: "AISkill Bridge",
+      date: "2026-02-01",
+      credentialUrl: ""
+    },
+    {
+      name: "AI Training",
+      issuer: "Samsung Innovation Campus",
+      date: "2026-01-01",
+      credentialUrl: ""
+    },
+    {
+      name: "Exploring AI-Based Research Tools",
+      issuer: "GIS Center, Punjab University",
+      date: "2024-05-01",
       credentialUrl: ""
     },
     {
       name: "Cartography",
       issuer: "ESRI",
       date: "2024-03-01",
-      credentialUrl: ""
+      credentialUrl: "https://www.esri.com/training/TrainingRecord/Certificate/Tayyab_Manan/6219dc60e7d51b251885afd3/-300"
     },
     {
       name: "Spatial Data Science",
       issuer: "ESRI",
       date: "2023-11-01",
-      credentialUrl: ""
+      credentialUrl: "https://www.esri.com/training/TrainingRecord/Certificate/Tayyab_Manan/621b1dcce7d51b25188d2e6f/-300"
     },
     {
       name: "Shade Equity",
       issuer: "ESRI",
       date: "2023-06-01",
-      credentialUrl: ""
+      credentialUrl: "https://www.esri.com/training/TrainingRecord/Certificate/Tayyab_Manan/662601921e716c28210c9098/-300"
     }
   ],
   

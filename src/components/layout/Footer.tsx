@@ -23,27 +23,7 @@ export default function Footer() {
     >
       <footer className="fixed bottom-0 h-[400px] sm:h-[500px] w-full text-[var(--text)] flex items-center border-t border-[var(--border)] shadow-2xl">
       {/* Footer Background */}
-      <div className="absolute inset-0">
-        {/* Beautiful gradient background matching the site theme */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--hero-gradient-start)] via-[var(--hero-gradient-mid)] to-[var(--hero-gradient-end)]" />
-
-        {/* Semi-transparent overlay for readability */}
-        <div className="absolute inset-0 bg-[var(--background)]/50 backdrop-blur-sm" />
-
-        {/* Subtle network pattern */}
-        <svg className="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="footer-pattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
-              <circle cx="100" cy="100" r="1" fill="var(--border)" opacity="0.1" />
-              <circle cx="50" cy="50" r="0.5" fill="var(--primary)" opacity="0.08" />
-              <circle cx="150" cy="50" r="0.5" fill="var(--accent)" opacity="0.08" />
-              <circle cx="50" cy="150" r="0.5" fill="var(--info)" opacity="0.08" />
-              <circle cx="150" cy="150" r="0.5" fill="var(--success)" opacity="0.08" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#footer-pattern)" />
-        </svg>
-      </div>
+      <div className="absolute inset-0 bg-[var(--background-secondary)]" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full relative z-10 pt-6 sm:pt-8 pb-16 sm:pb-32">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -52,7 +32,7 @@ export default function Footer() {
             <div className="flex flex-col gap-6">
               {/* Quick Links - Single Column */}
               <div className="text-center">
-                <h3 className="text-sm font-semibold mb-3 text-[var(--text)]" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>Quick Links</h3>
+                <h3 className="text-sm font-semibold mb-3 text-[var(--text)]">Quick Links</h3>
                 <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
                   <Link href="/projects" className="text-sm text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors">
                     Projects
@@ -134,7 +114,7 @@ export default function Footer() {
           <div className="hidden sm:grid sm:grid-cols-3 sm:col-span-3 gap-8">
             {/* Contact Info */}
             <div>
-            <h3 className="text-lg font-semibold mb-4 text-[var(--text)]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>Contact</h3>
+            <h3 className="text-lg font-semibold mb-4 text-[var(--text)]">Contact</h3>
             <div className="space-y-1">
               <div className="flex items-start gap-3">
                 <MapPinIcon className="h-5 w-5 text-[var(--text-tertiary)] mt-0.5 flex-shrink-0" />
@@ -154,7 +134,7 @@ export default function Footer() {
 
             {/* Quick Links */}
             <div>
-            <h3 className="text-lg font-semibold mb-4 text-[var(--text)]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4 text-[var(--text)]">Quick Links</h3>
             <div className="space-y-0.5">
               <Link href="/projects" className="block text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors">
                 Projects
@@ -177,7 +157,7 @@ export default function Footer() {
 
             {/* Professional Links */}
             <div>
-            <h3 className="text-lg font-semibold mb-4 text-[var(--text)]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>Connect</h3>
+            <h3 className="text-lg font-semibold mb-4 text-[var(--text)]">Connect</h3>
             <div className="flex items-center gap-4">
               <a
                 href="https://www.linkedin.com/in/muhammad-tayyab-3962a2373/"
@@ -219,7 +199,7 @@ export default function Footer() {
       {/* Large Name Display - positioned at the very bottom */}
       <div className="absolute bottom-0 left-0 right-0 flex items-end justify-center pb-1 sm:pb-2 md:pb-3 px-4 sm:px-6 md:px-8 pointer-events-none z-0">
         <div className="relative pr-4 sm:pr-8">
-          <h1 className="font-extrabold select-none leading-none tracking-tighter whitespace-nowrap text-[clamp(2rem,10vw,8rem)] sm:text-[12vw] md:text-[13vw]" style={{ fontFamily: 'inherit', color: 'var(--text)' }}>
+          <h1 className="font-extrabold select-none leading-none tracking-tighter whitespace-nowrap text-[clamp(2rem,10vw,8rem)] sm:text-[12vw] md:text-[13vw] text-[var(--text)]">
             Tayyab Manan
           </h1>
           {/* Copyright icon at top right of last 'n' */}

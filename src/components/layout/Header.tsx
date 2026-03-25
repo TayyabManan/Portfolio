@@ -125,21 +125,16 @@ export default function Header() {
         <div
           className={`flex items-center justify-between transition-all duration-300 ${
             isScrolled
-              ? 'h-14 px-4 sm:px-6 rounded-full backdrop-blur-md shadow-lg border'
-              : 'h-16'
+              ? 'h-14 px-4 sm:px-6 rounded-full shadow-lg border border-[var(--border)] bg-[var(--background)] opacity-95'
+              : 'h-16 bg-transparent'
           }`}
-          style={{
-            backgroundColor: isScrolled ? 'var(--background)' : 'transparent',
-            borderColor: isScrolled ? 'var(--border)' : 'transparent',
-            opacity: isScrolled ? 0.95 : 1
-          }}
         >
           {/* Logo */}
           <Link
             href="/"
             className="flex items-center gap-2 sm:gap-3 font-bold transition-all duration-300 hover:opacity-80"
           >
-            <div style={{ color: 'var(--primary)' }}>
+            <div className="text-[var(--primary)]">
               <Logo
                 className={`transition-all duration-300 ${
                   isScrolled ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-6 h-6 sm:w-7 sm:h-7'
@@ -147,10 +142,9 @@ export default function Header() {
               />
             </div>
             <span
-              className={`whitespace-nowrap transition-all duration-300 ${
+              className={`whitespace-nowrap transition-all duration-300 text-[var(--text)] ${
                 isScrolled ? 'text-sm sm:text-base' : 'text-base sm:text-lg'
               }`}
-              style={{ color: 'var(--text)' }}
             >
               Tayyab Manan
             </span>
@@ -164,35 +158,21 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`relative px-3 lg:px-4 py-2 font-medium transition-all duration-200 group ${
+                  className={`relative px-3 lg:px-4 py-2 rounded-lg font-medium transition-all duration-200 group ${
                     isScrolled ? 'text-sm' : 'text-sm lg:text-base'
+                  } ${
+                    active
+                      ? 'text-[var(--primary)]'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--primary)] hover:bg-[var(--background-secondary)]'
                   }`}
-                  style={{
-                    color: active ? 'var(--primary)' : 'var(--text-secondary)',
-                    backgroundColor: 'transparent'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.color = 'var(--primary)'
-                      e.currentTarget.style.backgroundColor = 'var(--background-secondary)'
-                    } else {
-                      e.currentTarget.style.backgroundColor = 'transparent'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent'
-                    if (!active) {
-                      e.currentTarget.style.color = 'var(--text-secondary)'
-                    }
-                  }}
                   aria-current={active ? 'page' : undefined}
                 >
                   {item.name}
                   {active && (
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 rounded-full" style={{ backgroundColor: 'var(--primary)' }} />
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 rounded-full bg-[var(--primary)]" />
                   )}
                   {/* Tooltip */}
-                  <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50" style={{ backgroundColor: 'var(--background-tertiary)', color: 'var(--text)', border: '1px solid var(--border)' }}>
+                  <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 bg-[var(--background-tertiary)] text-[var(--text)] border border-[var(--border)]">
                     {item.shortcut}
                   </div>
                 </Link>
@@ -203,20 +183,11 @@ export default function Header() {
             <button
               onClick={openCommandPalette}
               type="button"
-              className="p-2 min-h-[44px] min-w-[44px] rounded-lg transition-all duration-200 group flex items-center justify-center"
-              style={{ color: 'var(--text-secondary)' }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'var(--primary)'
-                e.currentTarget.style.backgroundColor = 'var(--background-secondary)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'var(--text-secondary)'
-                e.currentTarget.style.backgroundColor = 'transparent'
-              }}
+              className="p-2 min-h-[44px] min-w-[44px] rounded-lg transition-all duration-200 group flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--primary)] hover:bg-[var(--background-secondary)]"
               aria-label="Open command palette"
             >
               <MagnifyingGlassIcon className="h-5 w-5" />
-              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50" style={{ backgroundColor: 'var(--background-tertiary)', color: 'var(--text)', border: '1px solid var(--border)' }}>
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 bg-[var(--background-tertiary)] text-[var(--text)] border border-[var(--border)]">
                 ⌘K
               </div>
             </button>
@@ -227,16 +198,9 @@ export default function Header() {
             {/* Resume Button */}
             <Link
               href="/resume"
-              className={`ml-2 px-4 lg:px-5 py-2 text-white font-medium rounded-lg transition-all duration-200 flex items-center gap-2 ${
+              className={`ml-2 px-4 lg:px-5 py-2 text-white font-medium rounded-lg transition-all duration-200 flex items-center gap-2 bg-[var(--primary)] hover:bg-[var(--primary-hover)] ${
                 isScrolled ? 'text-sm' : 'text-sm lg:text-base'
               }`}
-              style={{ backgroundColor: 'var(--primary)' }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--primary-hover)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--primary)'
-              }}
             >
               Resume
               <ChatBubbleLeftRightIcon className={`${isScrolled ? 'h-3.5 w-3.5' : 'h-4 w-4'}`} />
@@ -269,15 +233,12 @@ export default function Header() {
           <div
             className={`transition-all duration-300 ease-out ${
               isScrolled
-                ? 'rounded-full backdrop-blur-md shadow-lg border'
-                : ''
+                ? 'rounded-full shadow-lg border border-[var(--border)] bg-[var(--background)] opacity-95'
+                : 'bg-transparent'
             }`}
             style={{
               WebkitTransform: 'translateZ(0)',
               transform: 'translateZ(0)',
-              backgroundColor: isScrolled ? 'var(--background)' : 'transparent',
-              borderColor: isScrolled ? 'var(--border)' : 'transparent',
-              opacity: isScrolled ? 0.95 : 1
             }}
           >
             <div className="flex items-center justify-between h-16 px-4">
@@ -286,7 +247,7 @@ export default function Header() {
                 href="/"
                 className="flex items-center gap-2 font-bold transition-all duration-300 hover:opacity-80 z-10"
               >
-                <div style={{ color: 'var(--primary)' }}>
+                <div className="text-[var(--primary)]">
                   <Logo
                     className={`transition-all duration-300 ${
                       isScrolled ? 'w-5 h-5' : 'w-6 h-6'
@@ -294,10 +255,9 @@ export default function Header() {
                   />
                 </div>
                 <span
-                  className={`whitespace-nowrap transition-all duration-300 ${
+                  className={`whitespace-nowrap transition-all duration-300 text-[var(--text)] ${
                     isScrolled ? 'text-sm' : 'text-base'
                   }`}
-                  style={{ color: 'var(--text)' }}
                 >
                   Tayyab Manan
                 </span>
@@ -309,16 +269,7 @@ export default function Header() {
                 <button
                   onClick={openCommandPalette}
                   type="button"
-                  className="p-2 min-h-[44px] min-w-[44px] transition-colors rounded-lg flex items-center justify-center"
-                  style={{ color: 'var(--text-secondary)' }}
-                  onTouchStart={(e) => {
-                    e.currentTarget.style.color = 'var(--primary)'
-                    e.currentTarget.style.backgroundColor = 'var(--background-secondary)'
-                  }}
-                  onTouchEnd={(e) => {
-                    e.currentTarget.style.color = 'var(--text-secondary)'
-                    e.currentTarget.style.backgroundColor = 'transparent'
-                  }}
+                  className="p-2 min-h-[44px] min-w-[44px] transition-colors rounded-lg flex items-center justify-center text-[var(--text-secondary)] active:text-[var(--primary)] active:bg-[var(--background-secondary)]"
                   aria-label="Open search"
                 >
                   <MagnifyingGlassIcon className="h-5 w-5" />
@@ -330,16 +281,7 @@ export default function Header() {
                 {/* Hamburger Menu */}
                 <button
                   type="button"
-                  className="p-2 min-h-[44px] min-w-[44px] transition-colors rounded-lg flex items-center justify-center"
-                  style={{ color: 'var(--text-secondary)' }}
-                  onTouchStart={(e) => {
-                    e.currentTarget.style.color = 'var(--text)'
-                    e.currentTarget.style.backgroundColor = 'var(--background-secondary)'
-                  }}
-                  onTouchEnd={(e) => {
-                    e.currentTarget.style.color = 'var(--text-secondary)'
-                    e.currentTarget.style.backgroundColor = 'transparent'
-                  }}
+                  className="p-2 min-h-[44px] min-w-[44px] transition-colors rounded-lg flex items-center justify-center text-[var(--text-secondary)] active:text-[var(--text)] active:bg-[var(--background-secondary)]"
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                   aria-label={mobileMenuOpen ? "Close mobile menu" : "Open mobile menu"}
                   aria-expanded={mobileMenuOpen}
@@ -358,7 +300,7 @@ export default function Header() {
 
         {/* Mobile Menu Overlay */}
         <div
-          className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${
+          className={`fixed inset-0 bg-black/60 transition-opacity duration-300 ${
             mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
           style={{
@@ -386,7 +328,7 @@ export default function Header() {
           role="menu"
           aria-label="Mobile navigation menu"
         >
-          <div className="rounded-2xl shadow-2xl border overflow-hidden" style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)' }}>
+          <div className="rounded-2xl shadow-2xl border border-[var(--border)] bg-[var(--background)] overflow-hidden">
             <div className="p-2 space-y-1">
               {navigationItems.map((item) => {
                 const active = isActive(item.href)
@@ -394,26 +336,16 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="flex items-center justify-between px-4 py-3 rounded-xl font-medium transition-all duration-200 active:scale-95"
-                    style={{
-                      backgroundColor: 'transparent',
-                      color: active ? 'var(--primary)' : 'var(--text)'
-                    }}
-                    onTouchStart={(e) => {
-                      if (!active) {
-                        e.currentTarget.style.backgroundColor = 'var(--background-secondary)'
-                      } else {
-                        e.currentTarget.style.backgroundColor = 'transparent'
-                      }
-                    }}
-                    onTouchEnd={(e) => {
-                      e.currentTarget.style.backgroundColor = 'transparent'
-                    }}
+                    className={`flex items-center justify-between px-4 py-3 rounded-xl font-medium transition-all duration-200 active:scale-95 ${
+                      active
+                        ? 'text-[var(--primary)]'
+                        : 'text-[var(--text)] active:bg-[var(--background-secondary)]'
+                    }`}
                     onClick={() => setMobileMenuOpen(false)}
                     aria-current={active ? 'page' : undefined}
                   >
                     <span>{item.name}</span>
-                    <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+                    <span className="text-xs text-[var(--text-tertiary)]">
                       {item.shortcut}
                     </span>
                   </Link>
@@ -423,14 +355,7 @@ export default function Header() {
               {/* Resume Button */}
               <Link
                 href="/resume"
-                className="flex items-center justify-center px-4 py-3 mt-2 text-white font-medium rounded-xl transition-all duration-200 active:scale-95 gap-2"
-                style={{ backgroundColor: 'var(--primary)' }}
-                onTouchStart={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--primary-hover)'
-                }}
-                onTouchEnd={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--primary)'
-                }}
+                className="flex items-center justify-center px-4 py-3 mt-2 text-white font-medium rounded-xl transition-all duration-200 active:scale-95 gap-2 bg-[var(--primary)] active:bg-[var(--primary-hover)]"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Resume

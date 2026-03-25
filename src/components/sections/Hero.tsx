@@ -1,76 +1,24 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { MapPinIcon, EnvelopeIcon } from '@heroicons/react/24/solid'
-import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { SimpleCommandHint } from '@/components/ui/SimpleCommandHint'
 
 export default function Hero() {
-  const prefersReducedMotion = useReducedMotion()
   const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     const projectsSection = document.getElementById('projects')
     if (projectsSection) {
-      // Scroll to show projects section at the very top (under the header)
-      const headerHeight = 64 // h-16 = 64px
+      const headerHeight = 64
       const y = projectsSection.getBoundingClientRect().top + window.pageYOffset - headerHeight
       window.scrollTo({ top: y, behavior: 'smooth' })
     }
   }
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    // Check if mobile
-    const checkMobile = () => setIsMobile(window.innerWidth < 640)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
 
   return (
     <section className="relative min-h-[600px] sm:min-h-[calc(100vh-64px)] flex flex-col overflow-hidden bg-[var(--hero-background)]">
-      {/* Animated GIS Background Pattern */}
-      <div className="fixed inset-0 overflow-hidden">
-        {/* Base gradient background - similar to About page */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary-light)] via-[var(--background)] to-[var(--accent)] opacity-30" />
-
-        {/* Phase 5: Optimized floating orbs - static on mobile, reduced duration on desktop */}
-        {isMobile || prefersReducedMotion ? (
-          <>
-            <div className="absolute top-[20%] left-[10%] w-64 h-64 sm:w-96 sm:h-96 bg-[var(--primary)] rounded-full blur-3xl opacity-15" />
-            <div className="absolute bottom-[20%] right-[10%] w-48 h-48 sm:w-80 sm:h-80 bg-[var(--accent)] rounded-full blur-3xl opacity-15" />
-          </>
-        ) : (
-          <>
-            <motion.div
-              className="absolute top-[20%] left-[10%] w-96 h-96 bg-[var(--primary)] rounded-full blur-3xl opacity-20"
-              animate={{
-                x: [0, 50, 0],
-                y: [0, -30, 0],
-              }}
-              transition={{
-                duration: 15, // Reduced from 30s for better performance
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-            <motion.div
-              className="absolute bottom-[20%] right-[10%] w-80 h-80 bg-[var(--accent)] rounded-full blur-3xl opacity-20"
-              animate={{
-                x: [0, -40, 0],
-                y: [0, 30, 0],
-              }}
-              transition={{
-                duration: 18, // Reduced from 35s for better performance
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-          </>
-        )}
-      </div>
+      {/* Simple gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary-light)] via-[var(--background)] to-[var(--accent)] opacity-30" />
       
       <div className="relative flex-1 flex items-center px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl w-full py-12 lg:py-20">
@@ -90,7 +38,7 @@ export default function Hero() {
                   <span className="text-sm text-[var(--text-secondary)]">Available for opportunities</span>
                 </div>
 
-                <h1 className="text-4xl font-bold tracking-tight text-[var(--text)] sm:text-5xl md:text-6xl lg:text-7xl drop-shadow-md">
+                <h1 className="text-4xl font-bold tracking-tight text-[var(--text)] sm:text-5xl md:text-6xl lg:text-7xl">
                   <span className="block">AI Engineering</span>
                   <span className="block">Student</span>
                 </h1>

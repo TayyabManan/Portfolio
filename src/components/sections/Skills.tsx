@@ -33,41 +33,11 @@ const SkillBadge = ({ name }: { name: string }) => {
 
 export default function Skills() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Simple background pattern */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-transparent" />
-
-        {/* Static pattern */}
-        <div className="absolute inset-0">
-          <svg className="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="circuit-pattern" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
-                <path d="M10 10h20v20h-20z M50 10h20v20h-20z M10 50h20v20h-20z M50 50h20v20h-20z" fill="none" stroke="var(--skills-pattern-stroke)" strokeWidth="0.5" opacity="0.1" />
-                <circle cx="20" cy="20" r="2" fill="var(--skills-pattern-stroke)" opacity="0.1" />
-                <circle cx="60" cy="20" r="2" fill="var(--skills-pattern-stroke)" opacity="0.1" />
-                <circle cx="20" cy="60" r="2" fill="var(--skills-pattern-stroke)" opacity="0.1" />
-                <circle cx="60" cy="60" r="2" fill="var(--skills-pattern-stroke)" opacity="0.1" />
-                <path d="M20 20h40 M20 60h40 M20 20v40 M60 20v40" stroke="var(--skills-pattern-stroke)" strokeWidth="0.5" opacity="0.05" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#circuit-pattern)" />
-          </svg>
-        </div>
-
-        {/* Subtle noise texture */}
-        <div className="absolute inset-0 opacity-[0.015]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-          }}
-        />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full py-16">
+    <section className="relative min-h-screen flex items-center">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full py-16">
         <div className="mb-12 max-w-4xl">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)] mb-4" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>Skills & Expertise</h2>
-          <p className="text-base sm:text-lg text-[var(--text-secondary)]" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)] mb-4">Skills & Expertise</h2>
+          <p className="text-base sm:text-lg text-[var(--text-secondary)]">
             Specialized in machine learning engineering with expertise across {resumeData.skills.length} technology domains,
             from deep learning frameworks to production MLOps and deployment.
           </p>
