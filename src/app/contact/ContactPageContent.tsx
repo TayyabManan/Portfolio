@@ -167,7 +167,7 @@ export default function ContactPageContent() {
               </h3>
               <div className="flex items-center gap-4">
                 <a
-                  href="https://www.linkedin.com/in/muhammad-tayyab-3962a2373/"
+                  href="https://www.linkedin.com/in/tayyabmanan"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-[border-color,color] text-[var(--primary)] hover:text-[var(--primary-hover)]"

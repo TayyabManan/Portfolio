@@ -32,81 +32,27 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://tayyabmanan.com'),
   applicationName: 'Tayyab Manan',
   title: {
-    default: 'Tayyab Manan | AI Engineering Student & ML Developer',
+    default: 'Tayyab Manan — AI/ML Engineer',
     template: '%s | Tayyab Manan'
   },
-  description: 'AI Engineering graduate student specializing in Computer Vision, NLP, and Geospatial AI. Building production ML systems with PyTorch, TensorFlow, and LangChain. Portfolio showcasing machine learning projects, deep learning applications, and AI-powered solutions. Seeking Summer 2026 ML/AI internships.',
+  description: 'AI/ML Engineer building production ML systems, computer vision solutions, and multi-agent workflows. PyTorch, TensorFlow, LangChain. Portfolio showcasing deployed machine learning projects and AI-powered applications.',
   keywords: [
-    // Primary AI/ML Keywords
-    'AI Engineering Student',
-    'Machine Learning Student',
-    'Computer Vision Student',
-    'AI Graduate Student',
-    'ML Engineering Student',
-    'Deep Learning Student',
-    'AI Student Portfolio',
-    'ML Student Portfolio',
-
-    // Technical Skills - Frameworks
+    'AI ML Engineer',
+    'Machine Learning Engineer',
+    'Computer Vision Engineer',
+    'Multi-Agent Systems',
+    'Geospatial AI',
     'PyTorch Developer',
     'TensorFlow Developer',
-    'Scikit-learn',
     'LangChain Developer',
-    'Keras',
-    'Hugging Face Transformers',
-
-    // Technical Skills - Domains
-    'Computer Vision',
-    'Natural Language Processing',
-    'NLP Student',
-    'Geospatial AI',
-    'MLOps',
-    'Model Deployment',
+    'Production ML Systems',
     'Deep Learning',
-    'Neural Networks',
-    'Time Series Forecasting',
-    'Predictive Analytics',
-
-    // GIS & Geospatial (Secondary)
-    'Geospatial Machine Learning',
-    'Google Earth Engine',
-    'Remote Sensing AI',
-    'Satellite Imagery Analysis',
-    'GIS Python',
-    'GeoPandas',
-
-    // Programming & Tools
-    'Python Machine Learning',
+    'MLOps',
     'Python AI Developer',
-    'Pandas',
-    'NumPy',
-    'Matplotlib',
-    'Data Science',
-    'FastAPI',
-    'Flask ML API',
-
-    // Project Types
-    'ML Projects',
-    'AI Applications',
-    'Computer Vision Projects',
-    'NLP Projects',
-    'Geospatial AI Projects',
-    'ML Portfolio Projects',
-
-    // Career & Location
     'Tayyab Manan',
-    'ML Internship 2026',
-    'AI Internship Summer 2026',
-    'ML Student Pakistan',
     'AI Engineering COMSATS',
-    'Remote ML Internship',
-    'ML Engineer Entry Level',
-
-    // Education
-    'AI Engineering Masters',
-    'MS AI Engineering',
-    'COMSATS University',
-    'AI Graduate Program'
+    'Satellite Imagery Analysis',
+    'NLP Engineer',
   ],
   authors: [{ name: 'Tayyab Manan' }],
   creator: 'Tayyab Manan',
@@ -120,8 +66,8 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
   openGraph: {
-    title: 'Tayyab Manan | AI Engineering Student & ML Developer',
-    description: 'AI Engineering graduate student specializing in Computer Vision, NLP, and Geospatial AI. Building production ML systems with PyTorch, TensorFlow & LangChain. Portfolio showcasing innovative machine learning projects and AI-powered applications. Seeking Summer 2026 ML/AI internships.',
+    title: 'Tayyab Manan — AI/ML Engineer',
+    description: 'AI/ML Engineer building production ML systems, computer vision solutions, and multi-agent workflows. PyTorch, TensorFlow, LangChain.',
     url: 'https://tayyabmanan.com',
     siteName: 'Tayyab Manan',
     locale: 'en_US',
@@ -131,14 +77,14 @@ export const metadata: Metadata = {
         url: '/images/profile-picture.webp',
         width: 1200,
         height: 630,
-        alt: 'Tayyab Manan - AI Engineering Student Portfolio - Machine Learning & Computer Vision Projects',
+        alt: 'Tayyab Manan — AI/ML Engineer Portfolio',
       }
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tayyab Manan | AI Engineering Student',
-    description: 'AI Engineering graduate student building ML systems with PyTorch, TensorFlow & LangChain. Specializing in Computer Vision, NLP & Geospatial AI. View portfolio of ML projects.',
+    title: 'Tayyab Manan — AI/ML Engineer',
+    description: 'AI/ML Engineer building production ML systems with PyTorch, TensorFlow & LangChain. Computer Vision, Multi-Agent Systems & Geospatial AI.',
     images: ['/images/profile-picture.webp'],
     creator: '@tayyabmanan',
   },
@@ -193,52 +139,14 @@ const jsonLd = [
       url: 'https://tayyabmanan.com/images/profile-picture.webp',
       width: 1200,
       height: 630,
-      caption: 'Tayyab Manan - AI Engineering Student & ML Developer'
+      caption: 'Tayyab Manan — AI/ML Engineer'
     },
     sameAs: [
-      'https://www.linkedin.com/in/muhammad-tayyab-3962a2373',
+      'https://www.linkedin.com/in/tayyabmanan',
       'https://github.com/TayyabManan',
       'https://twitter.com/tayyabmanan'
     ],
-    jobTitle: 'AI Engineering Graduate Student',
-    seeks: {
-      '@type': 'JobPosting',
-      title: 'Machine Learning Internship',
-      datePosted: '2025-01-01',
-      validThrough: '2026-08-31',
-      description: 'Seeking Summer 2026 Machine Learning internship position to apply skills in Computer Vision, Natural Language Processing, and Deep Learning. Interested in opportunities to work with production ML systems, model deployment, MLOps, and cutting-edge AI technologies. Experienced with PyTorch, TensorFlow, LangChain, and building end-to-end ML solutions. Open to roles in ML Engineering, Computer Vision, NLP, or Geospatial AI.',
-      jobStartDate: '2026-05',
-      employmentType: 'INTERN',
-      hiringOrganization: {
-        '@type': 'Organization',
-        name: 'Seeking Opportunities',
-        url: 'https://tayyabmanan.com'
-      },
-      jobLocation: {
-        '@type': 'Place',
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: 'Remote or Islamabad',
-          addressRegion: 'Islamabad Capital Territory',
-          addressCountry: 'Pakistan'
-        }
-      },
-      baseSalary: {
-        '@type': 'MonetaryAmount',
-        currency: 'USD',
-        value: {
-          '@type': 'QuantitativeValue',
-          minValue: 0,
-          maxValue: 0,
-          unitText: 'HOUR'
-        }
-      },
-      applicantLocationRequirements: {
-        '@type': 'Country',
-        name: 'Worldwide (Remote Work Available)'
-      },
-      jobLocationType: 'TELECOMMUTE'
-    },
+    jobTitle: 'AI/ML Engineer',
     alumniOf: [
       {
         '@type': 'CollegeOrUniversity',
@@ -251,7 +159,7 @@ const jsonLd = [
       name: 'COMSATS University Islamabad',
       location: 'Islamabad, Pakistan'
     },
-    description: 'AI Engineering graduate student specializing in Computer Vision, Natural Language Processing, and Geospatial AI. Building production machine learning systems with PyTorch, TensorFlow, and LangChain. Experienced in developing ML models for computer vision tasks, NLP applications, time-series forecasting, and geospatial analysis. Proficient in Python, deep learning frameworks, MLOps, model deployment, and AI system architecture. Portfolio showcases projects in groundwater prediction, satellite imagery analysis, multi-agent systems, and intelligent applications.',
+    description: 'AI/ML Engineer building production machine learning systems with PyTorch, TensorFlow, and LangChain. Specializing in Computer Vision, Multi-Agent Systems, and Geospatial AI. Experienced in deploying ML models for computer vision tasks, multi-agent workflows, time-series forecasting, and geospatial analysis. Proficient in Python, deep learning frameworks, MLOps, model deployment, and AI system architecture.',
     knowsAbout: [
       'Machine Learning',
       'Artificial Intelligence',
@@ -322,9 +230,9 @@ const jsonLd = [
     '@type': 'WebSite',
     '@id': 'https://tayyabmanan.com/#website',
     url: 'https://tayyabmanan.com',
-    name: 'Tayyab Manan | AI Engineering Student & ML Developer',
+    name: 'Tayyab Manan — AI/ML Engineer',
     alternateName: 'Tayyab Manan Portfolio',
-    description: 'AI Engineering graduate student portfolio showcasing machine learning projects, computer vision applications, NLP systems, deep learning implementations, and geospatial AI solutions built with PyTorch, TensorFlow, and LangChain.',
+    description: 'AI/ML Engineer portfolio showcasing production machine learning systems, computer vision applications, multi-agent workflows, and geospatial AI solutions built with PyTorch, TensorFlow, and LangChain.',
     about: {
       '@id': 'https://tayyabmanan.com/#person'
     },
@@ -349,8 +257,8 @@ const jsonLd = [
     '@type': 'ProfilePage',
     '@id': 'https://tayyabmanan.com/#profilepage',
     url: 'https://tayyabmanan.com',
-    name: 'Tayyab Manan | AI Engineering Student & ML Developer',
-    description: 'Professional portfolio and profile of Tayyab Manan, AI Engineering graduate student specializing in Machine Learning, Computer Vision, and Natural Language Processing.',
+    name: 'Tayyab Manan — AI/ML Engineer',
+    description: 'Professional portfolio and profile of Tayyab Manan, AI/ML Engineer specializing in Computer Vision, Multi-Agent Systems, and Production ML.',
     mainEntity: {
       '@id': 'https://tayyabmanan.com/#person'
     },
@@ -400,7 +308,7 @@ const jsonLd = [
     '@context': 'https://schema.org',
     '@type': 'EducationalOccupationalCredential',
     '@id': 'https://tayyabmanan.com/#education',
-    name: 'AI Engineering Graduate Student',
+    name: 'MS Artificial Intelligence Engineering',
     credentialCategory: 'degree',
     educationalLevel: 'Master\'s Degree',
     competencyRequired: [

@@ -96,9 +96,9 @@ export default async function BlogPostPage({ params }: PageProps) {
       '@type': 'Person',
       name: post.author || 'Tayyab Manan',
       url: 'https://tayyabmanan.com',
-      jobTitle: 'AI Engineering Student',
+      jobTitle: 'AI/ML Engineer',
       sameAs: [
-        'https://www.linkedin.com/in/muhammad-tayyab-3962a2373',
+        'https://www.linkedin.com/in/tayyabmanan',
         'https://github.com/TayyabManan',
         'https://twitter.com/tayyabmanan'
       ]
@@ -126,7 +126,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     isPartOf: {
       '@type': 'Blog',
       '@id': 'https://tayyabmanan.com/blog',
-      name: 'AI Engineering Student Blog - Tayyab Manan'
+      name: 'AI/ML Engineering Blog - Tayyab Manan'
     }
   }
 

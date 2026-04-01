@@ -77,7 +77,7 @@ export default function Footer() {
               {/* Social Icons */}
               <div className="flex items-center justify-center gap-4">
                 <a
-                  href="https://www.linkedin.com/in/muhammad-tayyab-3962a2373/"
+                  href="https://www.linkedin.com/in/tayyabmanan"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-all text-[var(--primary)] hover:text-[var(--primary-hover)]"
@@ -160,7 +160,7 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4 text-[var(--text)]">Connect</h3>
             <div className="flex items-center gap-4">
               <a
-                href="https://www.linkedin.com/in/muhammad-tayyab-3962a2373/"
+                href="https://www.linkedin.com/in/tayyabmanan"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-all text-[var(--primary)] hover:text-[var(--primary-hover)]"

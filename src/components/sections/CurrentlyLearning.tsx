@@ -13,10 +13,10 @@ export default function CurrentlyLearning() {
       icon: BookOpenIcon,
       category: "Studying",
       items: [
-        "Face Detection & Convolutional Neural Networks (CNNs)",
-        "Advanced Computer Vision Techniques",
+        "Advanced Transformer Architectures & Attention Mechanisms",
+        "Multi-Agent Orchestration Patterns",
         "Deep Learning Specialization (Coursera)",
-        "Transformer Architectures & Attention Mechanisms",
+        "Distributed Training & Model Parallelism",
       ],
       color: "primary"
     },
@@ -24,9 +24,9 @@ export default function CurrentlyLearning() {
       icon: BeakerIcon,
       category: "Experimenting With",
       items: [
-        "Fine-tuning Large Language Models",
-        "Diffusion Models for Image Generation",
-        "Time-Series Forecasting with LSTM/Transformers",
+        "Fine-tuning Large Language Models for Domain Tasks",
+        "Diffusion Models for Satellite Imagery Super-Resolution",
+        "RAG Pipelines with Vector Databases",
       ],
       color: "accent"
     },
@@ -35,7 +35,7 @@ export default function CurrentlyLearning() {
       category: "Reading",
       items: [
         "Chip Huyen's 'AI Engineering: Building Applications with Foundation Models'",
-        "Aurélien Géron's 'Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow'"
+        "Aur\u00E9lien G\u00E9ron's 'Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow'"
       ],
       color: "info"
     },
@@ -43,9 +43,9 @@ export default function CurrentlyLearning() {
       icon: RocketLaunchIcon,
       category: "Next Goals",
       items: [
-        "Deploy ML model to production with monitoring",
-        "Contribute to open-source ML projects",
-        "Build end-to-end MLOps pipeline",
+        "Scale multi-agent orchestration for enterprise document processing",
+        "Publish geospatial forecasting research from Master's thesis",
+        "Contribute to LangChain or AutoGen open-source projects",
       ],
       color: "warning"
     }
@@ -123,10 +123,6 @@ export default function CurrentlyLearning() {
               </div>
             )
           })}
-        </div>
-
-        {/* Progress indicator */}
-        <div className="mt-12 text-center">
         </div>
       </div>
     </section>

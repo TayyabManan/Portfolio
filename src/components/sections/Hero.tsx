@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { MapPinIcon, EnvelopeIcon } from '@heroicons/react/24/solid'
 import { SimpleCommandHint } from '@/components/ui/SimpleCommandHint'
+import HeroChatbot from '@/components/ui/HeroChatbot'
 
 export default function Hero() {
   const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -19,7 +20,7 @@ export default function Hero() {
     <section className="relative min-h-[600px] sm:min-h-[calc(100vh-64px)] flex flex-col overflow-hidden bg-[var(--hero-background)]">
       {/* Simple gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary-light)] via-[var(--background)] to-[var(--accent)] opacity-30" />
-      
+
       <div className="relative flex-1 flex items-center px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl w-full py-12 lg:py-20">
           {/* Two-column layout on desktop, single column on mobile */}
@@ -39,17 +40,16 @@ export default function Hero() {
                 </div>
 
                 <h1 className="text-4xl font-bold tracking-tight text-[var(--text)] sm:text-5xl md:text-6xl lg:text-7xl">
-                  <span className="block">AI Engineering</span>
-                  <span className="block">Student</span>
+                  <span className="block">AI / ML</span>
+                  <span className="block">Engineer</span>
                 </h1>
 
                 <p className="mt-4 text-xl sm:text-2xl font-semibold bg-gradient-to-r from-[var(--info)] to-[var(--accent)] bg-clip-text text-transparent">
-                  specializing in Computer Vision & Geospatial AI
+                  Computer Vision · Multi-Agent Systems · Production ML
                 </p>
 
                 <p className="mt-6 text-base sm:text-lg leading-relaxed text-[var(--text-secondary)] max-w-xl">
-                  Building ML systems and AI-powered applications with PyTorch, TensorFlow, and LangChain through coursework and projects.
-                  Passionate about solving real-world problems with machine learning.
+                  I build and deploy production ML systems, from multi-agent AI workflows that save 15+ hours/week to geospatial models serving 145 districts in real time. Currently pursuing a Master&apos;s in AI Engineering at COMSATS while working as an AI Developer at Cointegration.
                 </p>
 
                 <div className="mt-8 flex flex-row items-center gap-3 text-sm text-[var(--text-secondary)] flex-wrap">
@@ -74,10 +74,10 @@ export default function Hero() {
                     <span aria-hidden="true">→</span>
                   </a>
                   <a
-                    href="/contact"
+                    href="/resume"
                     className="text-sm sm:text-base font-semibold leading-6 text-[var(--text)] hover:text-[var(--primary)] transition-all duration-200 group border-2 border-[var(--border)] hover:border-[var(--primary)] px-4 sm:px-8 py-3 sm:py-4 rounded-lg bg-[var(--background-secondary)] hover:bg-[var(--background-tertiary)] flex items-center justify-center gap-2 w-full sm:w-auto"
                   >
-                    Get in touch
+                    View Resume
                     <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1">→</span>
                   </a>
                 </div>
@@ -99,225 +99,12 @@ export default function Hero() {
               </motion.div>
             </div>
 
-            {/* Right Column - Visual Element (Desktop Only) */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="hidden lg:block order-2 lg:order-2 relative"
-            >
-              {/* Code Terminal - Desktop Only */}
-              <div className="relative w-full max-w-md mx-auto lg:mx-0 lg:ml-auto">
-                {/* Animated code/terminal window */}
-                <div className="bg-gradient-to-br from-[var(--background-secondary)] to-[var(--background-tertiary)] rounded-2xl border border-[var(--border)] shadow-2xl overflow-hidden flex flex-col">
-                  {/* Terminal header */}
-                  <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border)] bg-[var(--background)]">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-[#ff5f56] hover:bg-[#ff5f56]/80 cursor-pointer transition-colors"></div>
-                      <div className="w-3 h-3 rounded-full bg-[#ffbd2e] hover:bg-[#ffbd2e]/80 cursor-pointer transition-colors"></div>
-                      <div className="w-3 h-3 rounded-full bg-[#27c93f] hover:bg-[#27c93f]/80 cursor-pointer transition-colors"></div>
-                      <span className="ml-2 text-xs text-[var(--text-secondary)]">train_model.py</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                      <span className="text-[10px] text-[var(--text-secondary)]">Training</span>
-                    </div>
-                  </div>
-
-                  {/* Code content with realistic syntax highlighting */}
-                  <div className="flex-1 p-4 font-mono text-[11px] leading-relaxed overflow-hidden">
-                    {/* Line numbers column */}
-                    <div className="flex gap-4">
-                      <div className="text-[var(--text-tertiary)] select-none">
-                        <div>1</div>
-                        <div>2</div>
-                        <div>3</div>
-                        <div>4</div>
-                        <div>5</div>
-                        <div>6</div>
-                        <div>7</div>
-                        <div>8</div>
-                        <div>9</div>
-                        <div>10</div>
-                        <div>11</div>
-                        <div>12</div>
-                        <div>13</div>
-                        <div>14</div>
-                        <div>15</div>
-                        <div>16</div>
-                        <div>17</div>
-                      </div>
-                      <div className="flex-1">
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.3 }}
-                        >
-                          <span className="text-[var(--primary)]">import</span> <span className="text-[var(--info)]">torch</span>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.4 }}
-                        >
-                          <span className="text-[var(--primary)]">import</span> <span className="text-[var(--info)]">torch.nn</span> <span className="text-[var(--primary)]">as</span> <span className="text-[var(--info)]">nn</span>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.5 }}
-                        >
-                          <span className="text-[var(--primary)]">from</span> <span className="text-[var(--info)]">transformers</span> <span className="text-[var(--primary)]">import</span> <span className="text-[var(--accent)]">AutoModel</span>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.6 }}
-                        >
-                          <span className="text-[var(--primary)]">from</span> <span className="text-[var(--info)]">langchain</span> <span className="text-[var(--primary)]">import</span> <span className="text-[var(--accent)]">LLMChain</span>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.7 }}
-                          className="mt-2"
-                        >
-                          &nbsp;
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.8 }}
-                        >
-                          <span className="text-[var(--text-tertiary)]"># Initialize model architecture</span>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.9 }}
-                        >
-                          <span className="text-[var(--info)]">model</span> <span className="text-[var(--text)]">=</span> <span className="text-[var(--accent)]">VisionTransformer</span><span className="text-[var(--text)]">(</span>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.0 }}
-                        >
-                          &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-[var(--text-secondary)]">img_size</span><span className="text-[var(--text)]">=</span><span className="text-[var(--success)]">224</span><span className="text-[var(--text)]">,</span> <span className="text-[var(--text-secondary)]">patch_size</span><span className="text-[var(--text)]">=</span><span className="text-[var(--success)]">16</span>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.1 }}
-                        >
-                          <span className="text-[var(--text)]">)</span>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.2 }}
-                          className="mt-2"
-                        >
-                          &nbsp;
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.3 }}
-                        >
-                          <span className="text-[var(--text-tertiary)]"># Training loop</span>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.4 }}
-                        >
-                          <span className="text-[var(--primary)]">for</span> <span className="text-[var(--text-secondary)]">epoch</span> <span className="text-[var(--primary)]">in</span> <span className="text-[var(--accent)]">range</span><span className="text-[var(--text)]">(</span><span className="text-[var(--success)]">100</span><span className="text-[var(--text)]">):</span>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.5 }}
-                        >
-                          &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-[var(--info)]">loss</span> <span className="text-[var(--text)]">=</span> <span className="text-[var(--accent)]">train_step</span><span className="text-[var(--text)]">(</span><span className="text-[var(--text-secondary)]">model</span><span className="text-[var(--text)]">,</span> <span className="text-[var(--text-secondary)]">batch</span><span className="text-[var(--text)]">)</span>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.6 }}
-                          className="mt-2"
-                        >
-                          &nbsp;
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.7 }}
-                        >
-                          <span className="text-[var(--accent)]">print</span><span className="text-[var(--text)]">(</span><span className="text-amber-500">&quot;Epoch: 100/100 - Loss: 0.089&quot;</span><span className="text-[var(--text)]">)</span>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.8 }}
-                        >
-                          <span className="text-[var(--accent)]">print</span><span className="text-[var(--text)]">(</span><span className="text-amber-500">&quot;✓ Training complete!&quot;</span><span className="text-[var(--text)]">)</span>
-                        </motion.div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Console output section */}
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    transition={{ delay: 1.9, duration: 0.5 }}
-                    className="border-t border-[var(--border)] bg-[var(--background)] px-4 py-3"
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="text-[10px] text-[var(--text-tertiary)]">OUTPUT</div>
-                      <div className="flex-1 h-px bg-[var(--border)]"></div>
-                    </div>
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 2.0 }}
-                      className="font-mono text-[10px] space-y-1"
-                    >
-                      <div className="text-[var(--text-secondary)]">Epoch: 100/100 - Loss: 0.089</div>
-                      <div className="text-[var(--success)]">✓ Training complete!</div>
-                      <div className="text-[var(--text-secondary)] flex items-center gap-2">
-                        <span>Accuracy:</span>
-                        <span className="text-[var(--success)] font-bold">94.3%</span>
-                        <span className="text-[var(--text-tertiary)]">|</span>
-                        <span>Val Loss:</span>
-                        <span className="text-[var(--info)]">0.089</span>
-                      </div>
-                    </motion.div>
-                  </motion.div>
-
-                  {/* Interactive progress bar */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2.2 }}
-                    className="absolute top-16 right-4 bg-[var(--background)] border border-[var(--border)] rounded-lg px-3 py-2 shadow-lg"
-                  >
-                    <div className="text-[10px] text-[var(--text-secondary)] mb-1">Training Progress</div>
-                    <div className="w-32 h-2 bg-[var(--border)] rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: "0%" }}
-                        animate={{ width: "100%" }}
-                        transition={{ delay: 2.3, duration: 2, ease: "linear" }}
-                        className="h-full bg-gradient-to-r from-[var(--primary)] to-[var(--success)]"
-                      />
-                    </div>
-                    <div className="text-[10px] text-[var(--success)] mt-1 font-bold">100%</div>
-                  </motion.div>
-                </div>
-                
+            {/* Right Column - AI Chatbot (Desktop Only) */}
+            <div className="hidden lg:block order-2">
+              <div className="max-w-md mx-auto lg:ml-auto">
+                <HeroChatbot />
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

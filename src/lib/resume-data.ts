@@ -72,13 +72,13 @@ export interface ResumeData {
 export const resumeData: ResumeData = {
   personalInfo: {
     name: "Tayyab Manan",
-    title: "AI Engineering Student | ML Developer",
+    title: "AI/ML Engineer",
     email: "m.tayyab.manan@gmail.com",
     location: "Islamabad, Pakistan",
     website: "https://tayyabmanan.com/",
     github: "https://github.com/TayyabManan",
-    linkedin: "https://www.linkedin.com/in/muhammad-tayyab-3962a2373",
-    summary: "AI Engineering graduate student specializing in Computer Vision, NLP, and Geospatial AI. Building ML systems with PyTorch, TensorFlow, and LangChain through coursework and hands-on projects. Strong foundation in deep learning, computer vision, and full-stack ML development. Passionate about applying machine learning to solve real-world problems in environmental monitoring and sustainability. Currently pursuing Master's in AI Engineering. Seeking Summer 2026 internship opportunities."
+    linkedin: "https://www.linkedin.com/in/tayyabmanan",
+    summary: "AI/ML Engineer building production ML systems with PyTorch, TensorFlow, and LangChain. Specializing in Computer Vision, Multi-Agent Systems, and Geospatial AI. Experienced in deploying models serving 145 districts, building multi-agent workflows that save 15+ hours/week, and reducing data retrieval latency by 40%. Currently pursuing a Master's in AI Engineering at COMSATS while working as an AI Developer at Cointegration."
   },
 
   skills: [
@@ -173,13 +173,12 @@ export const resumeData: ResumeData = {
     },
     {
       category: "Tools & Methodologies",
-      items: ["Git", "Agile", "OpenAI SDK", "Model Optimization", "A/B Testing"],
+      items: ["Git", "Agile", "OpenAI SDK", "Model Optimization"],
       metadata: {
         "Git": { yearsOfExperience: 4, proficiencyLevel: "Expert", usageFrequency: "Daily", projectCount: 25 },
         "Agile": { yearsOfExperience: 2, proficiencyLevel: "Advanced", usageFrequency: "Daily", projectCount: 10 },
         "OpenAI SDK": { yearsOfExperience: 1, proficiencyLevel: "Advanced", usageFrequency: "Daily", projectCount: 5 },
-        "Model Optimization": { yearsOfExperience: 2, proficiencyLevel: "Advanced", usageFrequency: "Weekly", projectCount: 8 },
-        "A/B Testing": { yearsOfExperience: 1, proficiencyLevel: "Proficient", usageFrequency: "Project-based", projectCount: 4 }
+        "Model Optimization": { yearsOfExperience: 2, proficiencyLevel: "Advanced", usageFrequency: "Weekly", projectCount: 8 }
       }
     }
   ],

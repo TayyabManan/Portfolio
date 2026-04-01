@@ -111,9 +111,9 @@ export default async function ProjectPage({ params }: PageProps) {
       '@type': 'Person',
       name: 'Tayyab Manan',
       url: 'https://tayyabmanan.com',
-      jobTitle: 'AI Engineering Student',
+      jobTitle: 'AI/ML Engineer',
       sameAs: [
-        'https://www.linkedin.com/in/muhammad-tayyab-3962a2373',
+        'https://www.linkedin.com/in/tayyabmanan',
         'https://github.com/TayyabManan',
         'https://twitter.com/tayyabmanan'
       ]

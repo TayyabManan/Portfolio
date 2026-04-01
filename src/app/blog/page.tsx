@@ -3,25 +3,21 @@ import { getAllBlogPosts } from '@/lib/markdown'
 import BlogPageContent from './BlogPageContent'
 
 export const metadata: Metadata = {
-  title: 'Blog - Tayyab Manan | AI Engineering Student Insights & Learning Journey',
-  description: 'Read about my learning journey in AI Engineering, ML projects, technical insights, and experiences with Computer Vision, NLP, and Deep Learning. Student perspectives on AI/ML development.',
+  title: 'Blog - Tayyab Manan | AI/ML Engineering Insights',
+  description: 'Technical writing on AI/ML engineering, production ML systems, Computer Vision, and Geospatial AI. Project deep-dives, tutorials, and engineering insights.',
   keywords: [
     'AI engineering blog',
-    'ML student blog',
     'machine learning insights',
-    'AI learning journey',
     'ML project tutorials',
     'computer vision blog',
-    'deep learning student',
-    'AI student experiences',
+    'deep learning blog',
     'ML engineering blog',
-    'tech blog',
-    'student developer blog',
-    'AI/ML tutorials'
+    'AI/ML tutorials',
+    'production ML blog'
   ],
   openGraph: {
-    title: 'Blog - AI Engineering Student | Tayyab Manan',
-    description: 'Follow my AI Engineering journey through blog posts about ML projects, learning experiences, and technical insights in Computer Vision, NLP & Deep Learning.',
+    title: 'Blog - Tayyab Manan | AI/ML Engineer',
+    description: 'Technical writing on production ML systems, Computer Vision, Multi-Agent Systems, and Geospatial AI.',
     url: 'https://tayyabmanan.com/blog',
     type: 'website',
     images: [
@@ -29,14 +25,14 @@ export const metadata: Metadata = {
         url: '/images/profile-picture.webp',
         width: 1200,
         height: 630,
-        alt: 'AI Engineering Blog - Tayyab Manan',
+        alt: 'AI/ML Engineering Blog - Tayyab Manan',
       }
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog - AI Engineering Student',
-    description: 'Read about my AI Engineering learning journey, ML projects, and technical insights.',
+    title: 'Blog - Tayyab Manan | AI/ML Engineer',
+    description: 'Technical writing on production ML systems, Computer Vision, and Geospatial AI.',
     images: ['/images/profile-picture.webp'],
   },
   alternates: {

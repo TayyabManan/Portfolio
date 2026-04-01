@@ -17,8 +17,8 @@ export default function CallToAction() {
               Interested in Collaborating?
             </h2>
             <p className="text-xl text-[var(--text-secondary)]">
-              I&apos;m excited to learn, contribute, and build impactful ML solutions.
-              Let&apos;s discuss opportunities, projects, or just chat about AI and machine learning!
+              I build production ML systems and I&apos;m looking for the right team to do it with.
+              Let&apos;s discuss opportunities, projects, or just chat about AI and machine learning.
             </p>
           </div>
           <div className="flex flex-row items-center justify-center gap-3 sm:gap-4">
