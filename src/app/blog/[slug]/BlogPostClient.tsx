@@ -255,6 +255,20 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
                   unoptimized
                 />
               ),
+              table: ({ children }) => (
+                <div className="overflow-x-auto my-6 rounded-lg border border-[var(--border)]">
+                  <table className="w-full text-sm">{children}</table>
+                </div>
+              ),
+              thead: ({ children }) => (
+                <thead className="bg-[var(--background-tertiary)]">{children}</thead>
+              ),
+              th: ({ children }) => (
+                <th className="px-4 py-3 text-left font-semibold text-[var(--text)] border-b border-[var(--border)]">{children}</th>
+              ),
+              td: ({ children }) => (
+                <td className="px-4 py-3 text-[var(--text-secondary)] border-b border-[var(--border)]">{children}</td>
+              ),
             }}
           >
                 {post.content}

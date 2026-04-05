@@ -218,6 +218,20 @@ export const resumeData: ResumeData = {
 
   projects: [
     {
+      name: "US Visa Approval Prediction",
+      description: "ML system predicting PERM labor certification outcomes with SHAP explainability",
+      technologies: ["Python", "Scikit-learn", "XGBoost", "LightGBM", "CatBoost", "SHAP", "FastAPI", "Docker"],
+      url: "https://huggingface.co/spaces/TayyabManan/visa_prediction",
+      urlText: "Live Demo",
+      github: "https://github.com/TayyabManan/US-Visa-Prediction",
+      githubText: "GitHub",
+      highlights: [
+        "Built threshold-tuned Gradient Boosting classifier achieving 73.2% accuracy with 61% denied recall on 25K PERM records",
+        "Implemented SHAP TreeExplainer with feature mapping to provide per-prediction explanations across 10 input features",
+        "Designed 5-stage modular MLOps pipeline (ingestion, validation, transformation, training, evaluation) with model promotion gating"
+      ]
+    },
+    {
       name: "Face Expression Detection",
       description: "Deep learning system for facial expression recognition in group photos using ensemble models",
       technologies: ["PyTorch", "Flask", "MTCNN", "ResNet-18", "OpenCV", "Docker", "Hugging Face"],

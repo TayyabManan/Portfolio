@@ -35,9 +35,9 @@ export const DynamicMotionDiv = dynamic(
   }
 )
 
-// Lazy load react-markdown for blog posts
+// Lazy load markdown renderer (react-markdown + remark-gfm)
 export const DynamicReactMarkdown = dynamic(
-  () => import('react-markdown'),
+  () => import('@/components/ui/Markdown'),
   {
     loading: LoadingSpinner,
     ssr: true

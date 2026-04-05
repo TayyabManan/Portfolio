@@ -2,7 +2,7 @@
 slug: "teacher-rank"
 title: "TeacherRank"
 subtitle: "Student-Driven Teacher Review Platform"
-description: "A comprehensive teacher rating and review system that empowers students to share honest feedback about educators, helping others make informed decisions about their academic journey. Built with modern web technologies for optimal performance and user experience."
+description: "A teacher rating and review platform that lets students share structured feedback about educators across multiple dimensions, helping others make more informed decisions during course registration. Built with React, TypeScript, and Supabase."
 category: "Web Application"
 techStack: ["React", "TypeScript", "Supabase", "TanStack Query", "React Router", "Tailwind CSS", "DaisyUI", "Vite", "React Hook Form", "Zod"]
 image: "/projects/teacher-rank.png"
@@ -15,67 +15,72 @@ date: "2025-01-06"
 # TeacherRank
 
 ## Overview
-TeacherRank is a modern web application that revolutionizes how students evaluate and discover teachers. The platform provides a transparent, user-friendly system for rating educators based on multiple criteria including teaching quality, communication skills, and course difficulty. With real-time data synchronization and a responsive interface, TeacherRank helps students make informed decisions about their education while providing valuable feedback to educational institutions.
+TeacherRank is a web app that lets students rate and review their teachers across multiple dimensions instead of reducing them to a single number. The platform supports ratings for teaching quality, communication, helpfulness, and course difficulty, with real-time data sync and a responsive interface. The goal is to help students make better decisions during course registration while giving institutions useful feedback.
 
 **[Read the full technical deep-dive →](/blog/building-teacherrank)**
 
 ## Key Features
-- **Comprehensive Rating System**: Multi-dimensional evaluation across teaching quality, communication, helpfulness, and course difficulty
-- **Advanced Search & Filtering**: Find teachers by name, subject, institution, or rating with real-time search
-- **User Authentication**: Secure login system with email verification and password recovery via Supabase
-- **Teacher Profiles**: Detailed educator pages with ratings breakdown, student reviews, and teaching statistics
-- **Institution Management**: Browse and explore teachers organized by educational institutions
-- **Admin Dashboard**: Comprehensive admin panel for managing teachers, reviews, and user feedback
-- **Real-time Updates**: Live data synchronization using TanStack Query for optimal performance
-- **Mobile-First Design**: Fully responsive interface optimized for all devices
+- **Multi-Dimensional Ratings**: Separate scores for teaching quality, communication, helpfulness, and course difficulty
+- **Search & Filtering**: Find teachers by name, subject, institution, or rating with real-time results
+- **User Authentication**: Login with email verification and password recovery via Supabase
+- **Teacher Profiles**: Detailed pages with ratings breakdown, student reviews, and teaching statistics
+- **Institution Management**: Browse teachers organized by educational institution
+- **Admin Dashboard**: Admin panel for managing teachers, reviews, and user reports
+- **Real-time Updates**: Live data sync using Supabase subscriptions with TanStack Query cache invalidation
+- **Mobile-First Design**: Responsive interface that works on phones first, desktops second
 
 ## Technical Architecture
-The application is built with React 18 and TypeScript for type-safe development, utilizing Vite for lightning-fast build times and hot module replacement. Supabase provides the backend infrastructure including authentication, real-time database, and row-level security. TanStack Query handles server state management with intelligent caching and background refetching. The UI is crafted with Tailwind CSS and DaisyUI components, ensuring a consistent and accessible user experience.
+Built with React 18 and TypeScript, using Vite for fast builds and hot module replacement. Supabase handles the backend: authentication, real-time database, and row-level security at the PostgreSQL level. TanStack Query manages server state with stale-while-revalidate caching. The UI uses Tailwind CSS and DaisyUI components.
 
 ## Performance Optimizations
-- **Code Splitting**: Lazy loading of route components reduces initial bundle size by 60%
-- **Virtual Scrolling**: Efficient rendering of large teacher lists using @tanstack/react-virtual
-- **Image Optimization**: Lazy loading and responsive images with WebP format support
-- **Caching Strategy**: Intelligent query caching with stale-while-revalidate pattern
-- **Bundle Compression**: Brotli compression reducing asset sizes by up to 80%
-- **PWA Features**: Service worker for offline functionality and app-like experience
 
-## User Experience Features
-- **Protected Routes**: Secure access control for authenticated features
-- **Form Validation**: Real-time validation with React Hook Form and Zod schemas
-- **Error Boundaries**: Graceful error handling with user-friendly fallback UI
-- **SEO Optimization**: Dynamic meta tags with React Helmet for improved search visibility
-- **Accessibility**: WCAG 2.1 compliant with keyboard navigation and screen reader support
-- **Dark Mode**: System-aware theme switching for comfortable viewing
+| Optimization | Impact |
+|-------------|--------|
+| Code Splitting | Route-based lazy loading cuts initial bundle size by 60% |
+| Virtual Scrolling | Renders only visible teacher cards using @tanstack/react-virtual |
+| Image Optimization | Lazy loading with WebP support and responsive sizing |
+| Caching Strategy | Stale-while-revalidate pattern via TanStack Query |
+| Bundle Compression | Brotli compression reducing asset sizes by up to 80% |
+| PWA Features | Service worker for offline functionality |
+
+## User Experience
+
+| Feature | Description |
+|---------|-------------|
+| Protected Routes | Auth-gated access for review submission and admin features |
+| Form Validation | React Hook Form with Zod schemas for type-safe validation |
+| Error Boundaries | Friendly error states with retry options instead of white screens |
+| SEO | Dynamic meta tags with React Helmet |
+| Accessibility | WCAG 2.1 compliant with keyboard navigation and screen reader support |
+| Dark Mode | Respects OS theme preference by default |
 
 ## Database Design
-- **Teachers Table**: Comprehensive educator profiles with department and contact information
-- **Reviews Table**: Detailed student feedback with ratings and timestamps
-- **Institutions Table**: Educational organization management with hierarchical structure
-- **Users Table**: Secure user profiles with role-based access control
-- **Row-Level Security**: Granular permissions ensuring data privacy and integrity
 
-## Security Features
-- **Authentication**: Secure JWT-based authentication with refresh tokens
-- **Input Sanitization**: XSS protection and SQL injection prevention
-- **Rate Limiting**: API throttling to prevent abuse and ensure fair usage
-- **HTTPS Only**: Enforced secure connections with HSTS headers
-- **Content Security Policy**: Strict CSP headers preventing unauthorized script execution
+| Table | Purpose |
+|-------|---------|
+| Teachers | Educator profiles with department and contact info |
+| Reviews | Student feedback with four-dimensional ratings and timestamps |
+| Institutions | Educational organizations with hierarchical structure |
+| Users | Profiles with role-based access (student vs admin) |
+| Row-Level Security | PostgreSQL policies enforcing permissions at the data layer |
 
-## Analytics & Monitoring
-- **Vercel Analytics**: Real-time performance metrics and user behavior tracking
-- **Speed Insights**: Core Web Vitals monitoring for optimal user experience
-- **Sentry Integration**: Error tracking and performance monitoring in production
-- **Web Vitals**: Automated performance reporting for continuous improvement
+## Security
+
+| Feature | Description |
+|---------|-------------|
+| Authentication | JWT tokens with refresh token rotation (1hr access, 30-day refresh) |
+| Input Sanitization | DOMPurify for XSS protection, Zod for schema validation |
+| Rate Limiting | Max 5 reviews/hour, 20/day per user |
+| HTTPS + HSTS | Enforced encrypted connections |
+| Content Security Policy | Strict CSP headers for script execution control |
+
+## Monitoring
+
+| Tool | Purpose |
+|------|---------|
+| Vercel Analytics | Traffic and performance metrics |
+| Speed Insights | Core Web Vitals monitoring |
+| Sentry | Error tracking and performance monitoring in production |
 
 ## Future Enhancements
-- **AI-Powered Sentiment Analysis**: NLP models for automated review moderation and emotion detection
-- **ML Recommendation Engine**: Personalized teacher suggestions using collaborative filtering and neural networks
-- **Computer Vision Integration**: Video testimonials with automated transcription and analysis
-- **Predictive Analytics**: ML models for teacher performance trends and student success prediction
-- **NLP Text Classification**: Automated categorization of reviews by topic and quality metrics
-- **Anomaly Detection**: ML algorithms for identifying fake or biased reviews
-- **Academic Calendar Integration**: AI-powered course scheduling optimization
-- **Mobile ML Applications**: iOS and Android apps with on-device inference
-- **Advanced Analytics Dashboard**: Deep learning insights for institutional decision-making
-- **LLM Integration**: ChatGPT-style Q&A about teachers and courses using RAG (Retrieval-Augmented Generation)
+Planned additions include sentiment analysis on review text to surface patterns that numeric ratings miss, collaborative filtering to recommend professors based on similar students' preferences, and anomaly detection to flag suspicious review clusters. I'd also like to add automatic topic classification (teaching style, grading, workload) so students can filter reviews by what they care about, and eventually a natural language query interface using RAG so students can ask questions like "Which Data Structures professors have high ratings with manageable workload?"

@@ -49,7 +49,7 @@ export default function Hero() {
                 </p>
 
                 <p className="mt-6 text-base sm:text-lg leading-relaxed text-[var(--text-secondary)] max-w-xl">
-                  I build and deploy production ML systems, from multi-agent AI workflows that save 15+ hours/week to geospatial models serving 145 districts in real time. Currently pursuing a Master&apos;s in AI Engineering at COMSATS while working as an AI Developer at Cointegration.
+                  AI/ML Engineering graduate student at COMSATS, building machine learning systems across computer vision, NLP, and geospatial AI. Currently working as an AI Developer at Cointegration.
                 </p>
 
                 <div className="mt-8 flex flex-row items-center gap-3 text-sm text-[var(--text-secondary)] flex-wrap">

@@ -7,7 +7,7 @@ import { type Project } from '@/lib/projects'
 import { LoadingError } from '@/components/ui/ErrorState'
 import { toast } from '@/components/ui/Toast'
 
-const categories = ['All', 'Geospatial AI & Predictive Analytics', 'Geospatial AI & Optimization', 'Computer Vision', 'Natural Language Processing', 'MLOps', 'Web Application']
+const categories = ['All', 'Geospatial AI & Predictive Analytics', 'Geospatial AI & Optimization', 'Computer Vision', 'Natural Language Processing', 'Machine Learning & MLOps', 'Web Application']
 
 const PROJECTS_PER_PAGE = 6
 

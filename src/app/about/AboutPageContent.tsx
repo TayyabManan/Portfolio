@@ -71,7 +71,7 @@ export default function AboutPage() {
                 <p>
                   I got into AI through an unusual path: geography. During my Bachelor&apos;s in GIS at Punjab University,
                   I spent a lot of time working with satellite imagery and spatial data. At some point I realized the most
-                  interesting problems I was solving all came down to building better models, so I leaned into that fully.
+                  interesting problems I was solving all came down to building better models, so I leaned into that.
                   Now I&apos;m doing my Master&apos;s in AI Engineering at COMSATS University, Islamabad.
                 </p>
                 <p>
@@ -82,10 +82,9 @@ export default function AboutPage() {
                   PyTorch to deploying them behind Flask APIs with React frontends.
                 </p>
                 <p>
-                  Right now I&apos;m also going through AI training programs at Samsung Innovation Campus and AISkill Bridge
-                  to sharpen my deep learning fundamentals. I&apos;m looking for Summer 2026 internship opportunities where
-                  I can work on real ML problems with a strong engineering team, learn from experienced people, and
-                  contribute meaningfully from day one.
+                  I&apos;m also going through AI training programs at Samsung Innovation Campus and AISkill Bridge
+                  to fill gaps in my deep learning knowledge. I&apos;m looking for Summer 2026 internship opportunities where
+                  I can work on real ML problems with a strong engineering team and learn from experienced people.
                 </p>
               </div>
             </section>
