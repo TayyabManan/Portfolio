@@ -28,35 +28,8 @@ export default function BlogPageContent({ posts }: BlogPageContentProps) {
   }
 
   return (
-    <div className="min-h-screen relative py-24 overflow-hidden">
-      {/* Background with gradient */}
-      <div className="absolute inset-0">
-        {/* Beautiful gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--hero-gradient-start)] via-[var(--hero-gradient-mid)] to-[var(--hero-gradient-end)]" />
-
-        {/* Subtle pattern overlay */}
-        <svg className="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="blog-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-              <circle cx="50" cy="50" r="1" fill="var(--border)" opacity="0.1" />
-              <circle cx="25" cy="25" r="0.5" fill="var(--primary)" opacity="0.08" />
-              <circle cx="75" cy="25" r="0.5" fill="var(--accent)" opacity="0.08" />
-              <circle cx="25" cy="75" r="0.5" fill="var(--info)" opacity="0.08" />
-              <circle cx="75" cy="75" r="0.5" fill="var(--success)" opacity="0.08" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#blog-pattern)" />
-        </svg>
-
-        {/* Subtle noise texture */}
-        <div className="absolute inset-0 opacity-[0.015]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-          }}
-        />
-      </div>
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+    <div className="min-h-screen py-24 bg-[var(--background)]">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-12">
           <h1 className="text-4xl font-bold tracking-tight text-[var(--text)] sm:text-5xl md:text-6xl">

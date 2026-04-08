@@ -9,7 +9,7 @@ export default function CallToAction() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div className="max-w-2xl mx-auto text-center">
           <div className="mb-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[var(--primary)] to-[var(--primary-hover)] rounded-full mb-4 shadow-lg">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--primary)] rounded-full mb-4">
               <SparklesIcon className="w-5 h-5 text-white" />
               <span className="text-sm font-semibold text-white uppercase tracking-wider">Let&apos;s Connect</span>
             </div>
@@ -24,7 +24,7 @@ export default function CallToAction() {
           <div className="flex flex-row items-center justify-center gap-3 sm:gap-4">
             <Link
               href="/contact"
-              className="group bg-[var(--primary)] text-white px-4 sm:px-8 py-3 sm:py-4 rounded-lg text-sm sm:text-base font-semibold hover:bg-[var(--primary-hover)] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center gap-2 whitespace-nowrap"
+              className="group bg-[var(--primary)] text-white px-4 sm:px-8 py-3 sm:py-4 rounded-lg text-sm sm:text-base font-semibold hover:bg-[var(--primary-hover)] transition-all duration-200 inline-flex items-center gap-2 whitespace-nowrap"
             >
               <span className="hidden sm:inline">Get in Touch</span>
               <span className="sm:hidden">Contact</span>
@@ -32,7 +32,7 @@ export default function CallToAction() {
             </Link>
             <Link
               href="/projects"
-              className="group border-2 border-[var(--primary)] text-[var(--primary)] px-4 sm:px-8 py-3 sm:py-4 rounded-lg text-sm sm:text-base font-semibold hover:bg-[var(--primary)] hover:text-white transition-all duration-300 bg-[var(--background)] hover:shadow-lg inline-flex items-center gap-2 whitespace-nowrap"
+              className="group border-2 border-[var(--border)] text-[var(--text)] px-4 sm:px-8 py-3 sm:py-4 rounded-lg text-sm sm:text-base font-semibold hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-200 bg-[var(--background)] inline-flex items-center gap-2 whitespace-nowrap"
             >
               View My Work
               <span>→</span>

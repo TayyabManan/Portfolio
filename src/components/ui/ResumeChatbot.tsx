@@ -168,10 +168,10 @@ export default function ResumeChatbot() {
             </span>
           )}
           <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-            <div className="bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm py-2 px-3 rounded-lg whitespace-nowrap shadow-lg border border-gray-800 dark:border-gray-200">
+            <div className="bg-[var(--text)] text-[var(--background)] text-sm py-2 px-3 rounded-lg whitespace-nowrap shadow-lg border border-[var(--border)]">
               Chat with my resume!
               <div className="absolute top-full right-4 transform -translate-y-1">
-                <div className="border-4 border-transparent border-t-gray-900 dark:border-t-gray-100"></div>
+                <div className="border-4 border-transparent border-t-[var(--text)]"></div>
               </div>
             </div>
           </div>
@@ -234,7 +234,7 @@ export default function ResumeChatbot() {
           {!isMinimized && (
             <div className="flex-1 flex flex-col overflow-hidden">
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div data-lenis-prevent className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -264,7 +264,7 @@ export default function ResumeChatbot() {
                 )}
                 {error && (
                   <div className="flex justify-center">
-                    <div className="bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg px-4 py-2 text-sm">
+                    <div className="bg-red-100 text-red-600 rounded-lg px-4 py-2 text-sm">
                       {error}
                     </div>
                   </div>

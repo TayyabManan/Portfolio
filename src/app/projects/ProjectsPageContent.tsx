@@ -68,31 +68,8 @@ export default function ProjectsPageContent() {
   }, [selectedCategory])
 
   return (
-    <div className="relative py-16 min-h-screen overflow-hidden">
-      {/* Background with gradient */}
-      <div className="absolute inset-0">
-        {/* Beautiful gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--hero-gradient-start)] via-[var(--hero-gradient-mid)] to-[var(--hero-gradient-end)]" />
-
-        {/* Hexagon pattern */}
-        <svg className="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="hexagon-pattern-page" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
-              <polygon points="30,1 45,13 45,39 30,51 15,39 15,13" fill="none" stroke="var(--border)" strokeWidth="0.5" opacity="0.1" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hexagon-pattern-page)" />
-        </svg>
-
-        {/* Subtle noise texture */}
-        <div className="absolute inset-0 opacity-[0.015]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-          }}
-        />
-      </div>
-      
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="relative py-16 min-h-screen bg-[var(--background)]">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header - Left aligned */}
         <div className="mb-12 max-w-4xl">
           <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text)] mb-4">ML & AI Projects</h1>

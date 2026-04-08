@@ -50,12 +50,12 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
 
   return (
     <article
-      className="group relative bg-[var(--background)] dark:bg-[var(--background-secondary)] rounded-xl shadow-sm hover:shadow-xl transition-[transform,box-shadow] duration-300 overflow-hidden border border-[var(--border)] hover:-translate-y-1"
+      className="group relative bg-[var(--background)] rounded-xl shadow-sm hover:shadow-xl transition-[transform,box-shadow] duration-300 overflow-hidden border border-[var(--border)] hover:-translate-y-1"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       aria-label={`${project.title} - ${project.category} project`}
     >
-      <div className="aspect-video relative overflow-hidden bg-[var(--border)] dark:bg-[var(--background-tertiary)]">
+      <div className="aspect-video relative overflow-hidden bg-[var(--border)]">
         {project.image ? (
           <Image
             src={project.image}
@@ -86,7 +86,7 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
 
       <div className="p-6 transition-all duration-300">
         <div className="flex items-center gap-2 mb-2">
-          <span className="inline-flex items-center rounded-md bg-[var(--accent)]/10 dark:bg-[var(--accent)]/20 px-2 py-1 text-xs font-medium text-[var(--accent)] dark:text-[var(--accent)]">
+          <span className="inline-flex items-center rounded-md bg-[var(--accent)]/10 px-2 py-1 text-xs font-medium text-[var(--accent)]">
             {project.category}
           </span>
         </div>
@@ -129,14 +129,14 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
           {(isExpanded ? project.techStack : project.techStack.slice(0, 3)).map((tech, index) => (
             <span
               key={tech}
-              className="inline-flex items-center rounded-md bg-[var(--background-secondary)] dark:bg-[var(--background-tertiary)] px-2 py-1 text-xs font-medium text-[var(--text-secondary)] animate-in fade-in duration-200"
+              className="inline-flex items-center rounded-md bg-[var(--background-secondary)] px-2 py-1 text-xs font-medium text-[var(--text-secondary)] animate-in fade-in duration-200"
               style={{ animationDelay: `${index * 30}ms` }}
             >
               {tech}
             </span>
           ))}
           {!isExpanded && project.techStack.length > 3 && (
-            <span className="inline-flex items-center rounded-md bg-[var(--background-secondary)] dark:bg-[var(--background-tertiary)] px-2 py-1 text-xs font-medium text-[var(--text-secondary)]">
+            <span className="inline-flex items-center rounded-md bg-[var(--background-secondary)] px-2 py-1 text-xs font-medium text-[var(--text-secondary)]">
               +{project.techStack.length - 3} more
             </span>
           )}

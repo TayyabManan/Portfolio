@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Bricolage_Grotesque } from 'next/font/google'
+import { Bricolage_Grotesque, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { ProgressBarProvider } from '@/components/ProgressBar'
@@ -14,12 +14,22 @@ import './globals.css'
 
 const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-bricolage-grotesque',
-  display: 'swap', // Ensures text is visible during font load
-  preload: true, // Preload font files for faster loading
-  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'], // Fallback fonts
-  adjustFontFallback: true, // Reduce layout shift by adjusting fallback font metrics
+  weight: ['500', '600', '700'],
+  variable: '--font-heading',
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+  adjustFontFallback: true,
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-body',
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+  adjustFontFallback: true,
 })
 
 export const viewport = {
@@ -345,29 +355,11 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  const savedTheme = localStorage.getItem('theme') || 'system';
-                  const themes = ${JSON.stringify({
-                    light: themes.light,
-                    dark: themes.dark
-                  })};
-
-                  const getActualTheme = (themeMode) => {
-                    if (themeMode === 'system') {
-                      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                    }
-                    return themeMode;
-                  };
-
-                  const actualTheme = getActualTheme(savedTheme);
-                  const selectedTheme = themes[actualTheme] || themes.light;
-                  const root = document.documentElement;
-
-                  Object.entries(selectedTheme).forEach(([key, value]) => {
-                    const cssVarName = '--' + key.replace(/([A-Z])/g, '-$1').toLowerCase();
-                    root.style.setProperty(cssVarName, value);
+                  var t = ${JSON.stringify(themes.light)};
+                  var r = document.documentElement;
+                  Object.entries(t).forEach(function(e) {
+                    r.style.setProperty('--' + e[0].replace(/([A-Z])/g, '-$1').toLowerCase(), e[1]);
                   });
-
-                  root.setAttribute('data-theme', actualTheme);
                 } catch (e) {}
               })();
             `,
@@ -385,7 +377,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
       </head>
-      <body className={bricolageGrotesque.className} suppressHydrationWarning>
+      <body className={`${inter.variable} ${bricolageGrotesque.variable} ${inter.className}`} suppressHydrationWarning>
         {/* Page transition progress bar */}
         <ProgressBarProvider />
         {/* Skip to main content link for screen readers */}

@@ -88,17 +88,17 @@ export function ExpandableSection({
 
   const containerClasses = cn(
     'overflow-hidden',
-    variant === 'card' && 'border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm',
-    variant === 'minimal' && 'border-b border-gray-200 dark:border-gray-700',
+    variant === 'card' && 'border border-[var(--border)] rounded-lg shadow-sm',
+    variant === 'minimal' && 'border-b border-[var(--border)]',
     className
   )
 
   const headerClasses = cn(
     'w-full flex items-center justify-between cursor-pointer select-none',
     'transition-colors duration-200',
-    variant === 'default' && 'p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg',
-    variant === 'card' && 'p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50',
-    variant === 'minimal' && 'py-3 hover:text-blue-600 dark:hover:text-blue-400',
+    variant === 'default' && 'p-4 hover:bg-[var(--background-secondary)] rounded-lg',
+    variant === 'card' && 'p-4 hover:bg-[var(--background-secondary)]',
+    variant === 'minimal' && 'py-3 hover:text-[var(--primary)]',
     headerClassName
   )
 
@@ -114,7 +114,7 @@ export function ExpandableSection({
           {icon && <div className="flex-shrink-0">{icon}</div>}
           <span className="font-medium text-left">{title}</span>
           {badge && (
-            <span className="px-2 py-0.5 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full">
+            <span className="px-2 py-0.5 text-xs font-medium bg-[var(--primary)]/10 text-[var(--primary)] rounded-full">
               {badge}
             </span>
           )}
@@ -136,7 +136,7 @@ export function ExpandableSection({
               id={`expandable-content-${title}`}
               className={cn(
                 variant === 'default' && 'px-4 pb-4',
-                variant === 'card' && 'px-4 pb-4 border-t border-gray-200 dark:border-gray-700',
+                variant === 'card' && 'px-4 pb-4 border-t border-[var(--border)]',
                 variant === 'minimal' && 'pb-3',
                 contentClassName
               )}
@@ -245,20 +245,20 @@ export function Tabs({
     variant === 'default' && [
       'border-b-2',
       isActive
-        ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-        : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+        ? 'border-[var(--primary)] text-[var(--primary)]'
+        : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text)]'
     ],
     variant === 'pills' && [
       'rounded-lg',
       isActive
-        ? 'bg-blue-500 text-white'
-        : 'text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800'
+        ? 'bg-[var(--primary)] text-white'
+        : 'text-[var(--text-secondary)] hover:bg-[var(--background-secondary)]'
     ],
     variant === 'underline' && [
       'relative',
       isActive
-        ? 'text-blue-600 dark:text-blue-400'
-        : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+        ? 'text-[var(--primary)]'
+        : 'text-[var(--text-secondary)] hover:text-[var(--text)]'
     ]
   )
 
@@ -267,8 +267,8 @@ export function Tabs({
       <div
         className={cn(
           'flex',
-          variant === 'default' && 'border-b border-gray-200 dark:border-gray-700',
-          variant === 'pills' && 'gap-2 p-1 bg-gray-100 dark:bg-gray-800 rounded-lg',
+          variant === 'default' && 'border-b border-[var(--border)]',
+          variant === 'pills' && 'gap-2 p-1 bg-[var(--background-secondary)] rounded-lg',
           variant === 'underline' && 'gap-4'
         )}
         role="tablist"
@@ -285,7 +285,7 @@ export function Tabs({
             {tab.icon}
             <span>{tab.label}</span>
             {tab.badge && (
-              <span className="ml-2 px-2 py-0.5 text-xs font-medium bg-gray-200 dark:bg-gray-700 rounded-full">
+              <span className="ml-2 px-2 py-0.5 text-xs font-medium bg-[var(--background-tertiary)] rounded-full">
                 {tab.badge}
               </span>
             )}

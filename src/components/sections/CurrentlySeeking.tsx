@@ -51,11 +51,8 @@ export default function CurrentlySeeking() {
   ]
 
   return (
-    <section className="py-16 sm:py-24 bg-[var(--background)] relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--accent)]/5" />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="py-16 sm:py-24 bg-[var(--background-secondary)]">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-4">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
@@ -84,7 +81,7 @@ export default function CurrentlySeeking() {
             return (
             <div
               key={index}
-              className="bg-[var(--background-secondary)] border border-[var(--border)] rounded-2xl p-6 hover:border-[var(--primary)] transition-all duration-300 hover:shadow-lg"
+              className="bg-[var(--background-secondary)] border border-[var(--border)] rounded-2xl p-6 hover:border-[var(--primary)] transition-all duration-200 hover:shadow-md"
             >
               <div className="flex flex-col items-center text-center">
                 <div
@@ -141,7 +138,7 @@ export default function CurrentlySeeking() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/contact"
-              className="w-full sm:min-w-[180px] inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-[var(--primary)] rounded-lg shadow-lg hover:bg-[var(--primary-hover)] hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+              className="w-full sm:min-w-[180px] inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-[var(--primary)] rounded-lg hover:bg-[var(--primary-hover)] transition-all duration-200"
             >
               Get in Touch
               <span aria-hidden="true" className="ml-2">→</span>

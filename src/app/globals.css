@@ -54,25 +54,22 @@ body {
   /* Default theme variables (will be overridden by JavaScript) */
   --primary: #2563eb;
   --primary-hover: #1d4ed8;
-  --primary-light: #dbeafe;
-  --background: #ffffff;
-  --background-secondary: #f9fafb;
-  --background-tertiary: #f3f4f6;
-  --text: #111827;
-  --text-secondary: #4b5563; /* Improved contrast WCAG AA */
-  --text-tertiary: #6b7280; /* Improved contrast WCAG AA */
-  --border: #e5e7eb;
-  --border-hover: #d1d5db;
-  --success: #10b981;
-  --error: #ef4444;
-  --warning: #f59e0b;
-  --info: #3b82f6;
-  --accent: #059669;
-  --highlight: #fbbf24;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  
+  --primary-light: #eff6ff;
+  --background: #fafaf9;
+  --background-secondary: #f5f5f4;
+  --background-tertiary: #e7e5e4;
+  --text: #1c1917;
+  --text-secondary: #57534e;
+  --text-tertiary: #78716c;
+  --border: #d6d3d1;
+  --border-hover: #a8a29e;
+  --success: #16a34a;
+  --error: #dc2626;
+  --warning: #d97706;
+  --shadow-sm: 0 1px 2px 0 rgb(28 25 23 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(28 25 23 / 0.07), 0 2px 4px -2px rgb(28 25 23 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(28 25 23 / 0.07), 0 4px 6px -4px rgb(28 25 23 / 0.05);
+
   /* Animation variables */
   --transition-speed: 200ms;
   --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
@@ -105,10 +102,6 @@ button, a, input, select, textarea,
   }
 }
 
-/* Disable transitions when theme is changing to prevent flashing */
-[data-theme-changing="true"] * {
-  transition: none !important;
-}
 
 /* Custom Animations */
 @keyframes pulse-attention {
@@ -131,16 +124,20 @@ html {
 }
 
 body {
-  font-family: inherit;
+  font-family: var(--font-body), system-ui, sans-serif;
   font-feature-settings: "liga" 1, "kern" 1;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
   background-color: var(--background);
   color: var(--text);
 }
 
-/* Typography improvements */
+/* Typography — heading/body font split */
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), system-ui, sans-serif;
   font-weight: 600;
   letter-spacing: -0.025em;
+  line-height: 1.2;
   text-wrap: balance;
 }
 
@@ -182,11 +179,6 @@ textarea:focus-visible,
   outline: 3px solid var(--primary);
   outline-offset: 2px;
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
-}
-
-/* Focus styles for dark backgrounds */
-[data-theme="dark"] *:focus-visible {
-  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.2);
 }
 
 /* Skip link focus styles */
@@ -238,32 +230,6 @@ select {
   background-color: var(--border-hover);
 }
 
-/* Smooth transitions for theme switching */
-html.theme-transition,
-html.theme-transition *,
-html.theme-transition *::before,
-html.theme-transition *::after {
-  transition: background-color 200ms ease, 
-              color 200ms ease, 
-              border-color 200ms ease,
-              fill 200ms ease,
-              stroke 200ms ease,
-              box-shadow 200ms ease !important;
-  transition-delay: 0 !important;
-}
-
-/* Professional gradient backgrounds */
-.gradient-radial {
-  background: radial-gradient(
-    ellipse at center,
-    rgba(59, 130, 246, 0.15) 0%,
-    transparent 70%
-  );
-}
-
-.gradient-hero {
-  @apply bg-gradient-to-br from-blue-500/5 via-emerald-500/5 to-transparent;
-}
 
 /* Glass utility class - solid background */
 .glass {
@@ -292,8 +258,8 @@ html.theme-transition *::after {
 }
 
 .card-hover:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 /* Enhanced project card animations - Reduced hover distance */
@@ -304,8 +270,8 @@ html.theme-transition *::after {
 }
 
 .project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .project-card .project-image {
@@ -427,28 +393,6 @@ html.theme-transition *::after {
   clip: rect(0, 0, 0, 0);
 }
 
-/* Theme toggle animations */
-.theme-toggle {
-  @apply relative inline-flex items-center justify-center;
-}
-
-.theme-toggle svg {
-  @apply transition-all duration-200 ease-in-out;
-}
-
-.theme-toggle:hover svg {
-  @apply rotate-[15deg] scale-110;
-}
-
-.theme-toggle:active svg {
-  @apply scale-95;
-}
-
-/* Icon transitions */
-.theme-icon-light,
-.theme-icon-dark {
-  @apply transition-all duration-200 ease-in-out;
-}
 
 /* Utility classes */
 .line-clamp-2 {
@@ -472,7 +416,7 @@ html.theme-transition *::after {
 
 /* Subtle text gradient for headings */
 .text-gradient {
-  background: linear-gradient(to right, var(--primary), var(--info), var(--accent));
+  background: linear-gradient(to right, var(--primary), var(--primary-hover));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -514,9 +458,6 @@ html.theme-transition *::after {
     transition-duration: 0.01ms !important;
   }
 
-  .theme-toggle svg {
-    transition: none !important;
-  }
 }
 
 /* Print styles */
@@ -561,27 +502,6 @@ html.theme-transition *::after {
     --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.2);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4);
-  }
-
-  /* Dark mode high contrast */
-  [data-theme="dark"] {
-    --primary: #66ccff;
-    --primary-hover: #99ddff;
-    --primary-light: #003366;
-    --background: #000000;
-    --background-secondary: #1a1a1a;
-    --background-tertiary: #333333;
-    --text: #ffffff;
-    --text-secondary: #f0f0f0;
-    --text-tertiary: #cccccc;
-    --border: #ffffff;
-    --border-hover: #cccccc;
-    --success: #00ff00;
-    --error: #ff3333;
-    --warning: #ffaa00;
-    --info: #3399ff;
-    --accent: #00cccc;
-    --highlight: #ffff00;
   }
 
   /* Stronger focus indicators */

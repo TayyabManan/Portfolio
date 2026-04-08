@@ -104,7 +104,7 @@ export default function AboutPage() {
 
           {/* Profile - Right side on desktop, order-1 on mobile */}
           <div className="lg:col-span-1 order-1 lg:order-2">
-            <div className="relative aspect-square w-64 mx-auto mb-8 rounded-xl overflow-hidden shadow-lg border-2 border-[var(--border)]">
+            <div className="relative aspect-square w-64 mx-auto mb-8 rounded-xl overflow-hidden shadow-[0_8px_30px_-4px_rgba(28,25,23,0.12)]">
               <Image
                 src="/images/profile-picture.webp"
                 alt="Tayyab Manan - ML Engineer and AI Developer specializing in Computer Vision, NLP, and Geospatial AI"
@@ -206,7 +206,7 @@ export default function AboutPage() {
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 bg-[var(--primary)] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[var(--primary-hover)] transition-all hover:scale-105 shadow-lg"
+                className="inline-flex items-center gap-2 bg-[var(--primary)] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[var(--primary-hover)] transition-all duration-200"
               >
                 Get in Touch
                 <span aria-hidden="true">→</span>
@@ -216,130 +216,45 @@ export default function AboutPage() {
             {/* Right - SVG Illustration */}
             <div className="hidden lg:flex items-center justify-center">
               <svg className="w-full max-w-xs" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                {/* Coffee chat / collaboration illustration */}
                 <g>
                   {/* Laptop */}
                   <g>
-                    {/* Screen */}
-                    <rect
-                      x="95"
-                      y="85"
-                      width="70"
-                      height="50"
-                      rx="3"
-                      fill="var(--accent)"
-                      opacity="0.8"
-                    />
-                    {/* Screen border */}
-                    <rect
-                      x="98"
-                      y="88"
-                      width="64"
-                      height="44"
-                      rx="2"
-                      fill="var(--background)"
-                      opacity="0.3"
-                    />
-
-                    {/* Animated Code on screen */}
+                    <rect x="95" y="85" width="70" height="50" rx="3" fill="var(--accent)" opacity="0.8" />
+                    <rect x="98" y="88" width="64" height="44" rx="2" fill="var(--background)" opacity="0.3" />
                     <g>
                       {[0, 1, 2, 3].map((i) => (
                         <motion.line
                           key={`code-${i}`}
-                          x1="105"
-                          y1={95 + i * 8}
-                          x2="155"
-                          y2={95 + i * 8}
-                          stroke="var(--success)"
-                          strokeWidth="2"
-                          strokeLinecap="round"
+                          x1="105" y1={95 + i * 8} x2="155" y2={95 + i * 8}
+                          stroke="var(--success)" strokeWidth="2" strokeLinecap="round"
                           initial={{ pathLength: 0 }}
                           animate={{ pathLength: 1 }}
-                          transition={{
-                            duration: 1.5,
-                            delay: i * 0.3,
-                            repeat: Infinity,
-                            repeatDelay: 2
-                          }}
+                          transition={{ duration: 1.5, delay: i * 0.3, repeat: Infinity, repeatDelay: 2 }}
                         />
                       ))}
                     </g>
-
-                    {/* Keyboard base */}
-                    <path
-                      d="M 90 135 L 95 140 L 165 140 L 170 135 Z"
-                      fill="var(--accent)"
-                      opacity="0.8"
-                    />
+                    <path d="M 90 135 L 95 140 L 165 140 L 170 135 Z" fill="var(--accent)" opacity="0.8" />
                   </g>
 
                   {/* Notebook with pen */}
                   <g>
-                    {/* Notebook */}
-                    <rect
-                      x="50"
-                      y="50"
-                      width="35"
-                      height="45"
-                      rx="2"
-                      fill="var(--warning)"
-                      opacity="0.7"
-                    />
-                    {/* Spiral binding */}
+                    <rect x="50" y="50" width="35" height="45" rx="2" fill="var(--warning)" opacity="0.7" />
                     {[0, 1, 2, 3, 4].map((i) => (
-                      <circle
-                        key={`spiral-${i}`}
-                        cx="52"
-                        cy={55 + i * 9}
-                        r="2"
-                        fill="var(--background)"
-                        opacity="0.5"
-                      />
+                      <circle key={`spiral-${i}`} cx="52" cy={55 + i * 9} r="2" fill="var(--background)" opacity="0.5" />
                     ))}
-                    {/* Lines on notebook */}
                     {[0, 1, 2, 3].map((i) => (
-                      <line
-                        key={`line-${i}`}
-                        x1="58"
-                        y1={60 + i * 8}
-                        x2="80"
-                        y2={60 + i * 8}
-                        stroke="var(--background)"
-                        strokeWidth="1"
-                        opacity="0.3"
-                      />
+                      <line key={`line-${i}`} x1="58" y1={60 + i * 8} x2="80" y2={60 + i * 8} stroke="var(--background)" strokeWidth="1" opacity="0.3" />
                     ))}
-
-                    {/* Animated Pen */}
                     <motion.g
-                      animate={{
-                        y: [0, -3, 0],
-                        rotate: [0, -2, 0]
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
+                      animate={{ y: [0, -3, 0], rotate: [0, -2, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                     >
-                      <rect
-                        x="75"
-                        y="65"
-                        width="4"
-                        height="25"
-                        fill="var(--info)"
-                        opacity="0.8"
-                        transform="rotate(-45 77 77)"
-                      />
-                      <path
-                        d="M 88 52 L 90 50 L 92 52 Z"
-                        fill="var(--text)"
-                        opacity="0.7"
-                      />
+                      <rect x="75" y="65" width="4" height="25" fill="var(--info)" opacity="0.8" transform="rotate(-45 77 77)" />
+                      <path d="M 88 52 L 90 50 L 92 52 Z" fill="var(--text)" opacity="0.7" />
                     </motion.g>
                   </g>
 
-                  {/* Animated Floating idea icons */}
+                  {/* Floating idea icons */}
                   {[
                     { x: 140, y: 50, icon: 'lightbulb', delay: 0 },
                     { x: 170, y: 70, icon: 'star', delay: 0.5 },
@@ -347,16 +262,8 @@ export default function AboutPage() {
                   ].map((item, i) => (
                     <motion.g
                       key={`icon-${i}`}
-                      animate={{
-                        y: [0, -5, 0],
-                        opacity: [0.7, 1, 0.7]
-                      }}
-                      transition={{
-                        duration: 2.5,
-                        delay: item.delay,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
+                      animate={{ y: [0, -5, 0], opacity: [0.7, 1, 0.7] }}
+                      transition={{ duration: 2.5, delay: item.delay, repeat: Infinity, ease: "easeInOut" }}
                     >
                       {item.icon === 'lightbulb' && (
                         <>
@@ -367,89 +274,46 @@ export default function AboutPage() {
                       {item.icon === 'star' && (
                         <motion.path
                           d={`M ${item.x} ${item.y - 6} L ${item.x + 2} ${item.y} L ${item.x + 6} ${item.y + 2} L ${item.x + 2} ${item.y + 4} L ${item.x} ${item.y + 8} L ${item.x - 2} ${item.y + 4} L ${item.x - 6} ${item.y + 2} L ${item.x - 2} ${item.y} Z`}
-                          fill="var(--success)"
-                          opacity="0.7"
+                          fill="var(--success)" opacity="0.7"
                           animate={{ rotate: [0, 360] }}
-                          transition={{
-                            duration: 8,
-                            repeat: Infinity,
-                            ease: "linear"
-                          }}
+                          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                         />
                       )}
                       {item.icon === 'checkmark' && (
                         <motion.path
                           d={`M ${item.x - 4} ${item.y} L ${item.x - 1} ${item.y + 4} L ${item.x + 4} ${item.y - 4}`}
-                          stroke="var(--success)"
-                          strokeWidth="3"
-                          strokeLinecap="round"
-                          fill="none"
-                          opacity="0.7"
+                          stroke="var(--success)" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.7"
                           initial={{ pathLength: 0 }}
                           animate={{ pathLength: 1 }}
-                          transition={{
-                            duration: 1,
-                            repeat: Infinity,
-                            repeatDelay: 2
-                          }}
+                          transition={{ duration: 1, repeat: Infinity, repeatDelay: 2 }}
                         />
                       )}
                     </motion.g>
                   ))}
 
-                  {/* Animated Chat bubbles */}
+                  {/* Chat bubbles */}
                   <motion.g
-                    animate={{
-                      y: [0, -3, 0],
-                      opacity: [0.6, 0.8, 0.6]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
+                    animate={{ y: [0, -3, 0], opacity: [0.6, 0.8, 0.6] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    {/* Bubble 1 */}
                     <rect x="115" y="160" width="30" height="20" rx="8" fill="var(--primary)" opacity="0.6" />
                     <path d="M 120 180 L 125 185 L 130 180" fill="var(--primary)" opacity="0.6" />
                   </motion.g>
-
                   <motion.g
-                    animate={{
-                      y: [0, -3, 0],
-                      opacity: [0.6, 0.8, 0.6]
-                    }}
-                    transition={{
-                      duration: 2,
-                      delay: 0.5,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
+                    animate={{ y: [0, -3, 0], opacity: [0.6, 0.8, 0.6] }}
+                    transition={{ duration: 2, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    {/* Bubble 2 */}
                     <rect x="55" y="165" width="25" height="18" rx="7" fill="var(--accent)" opacity="0.6" />
                     <path d="M 60 183 L 64 187 L 68 183" fill="var(--accent)" opacity="0.6" />
                   </motion.g>
 
-                  {/* Animated Connecting dots showing collaboration */}
+                  {/* Connecting dots */}
                   {[0, 1, 2, 3, 4].map((i) => (
                     <motion.circle
                       key={`dot-${i}`}
-                      cx={60 + i * 20}
-                      cy={155}
-                      r="2"
-                      fill="var(--info)"
-                      opacity="0.4"
-                      animate={{
-                        scale: [1, 1.5, 1],
-                        opacity: [0.4, 0.8, 0.4]
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        delay: i * 0.2,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
+                      cx={60 + i * 20} cy={155} r="2" fill="var(--info)" opacity="0.4"
+                      animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0.8, 0.4] }}
+                      transition={{ duration: 1.5, delay: i * 0.2, repeat: Infinity, ease: "easeInOut" }}
                     />
                   ))}
                 </g>

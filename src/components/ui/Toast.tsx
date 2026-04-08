@@ -28,12 +28,12 @@ const toastVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-gray-300 bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 dark:border-gray-600',
+        default: 'border-[var(--border)] bg-[var(--background)]/95 text-[var(--text)]',
         destructive:
-          'border-red-500 bg-red-50/95 dark:bg-red-950/95 text-red-900 dark:text-red-100',
-        success: 'border-green-500 bg-green-50/95 dark:bg-green-950/95 text-green-900 dark:text-green-100',
-        warning: 'border-yellow-500 bg-yellow-50/95 dark:bg-yellow-950/95 text-yellow-900 dark:text-yellow-100',
-        info: 'border-blue-500 bg-blue-50/95 dark:bg-blue-950/95 text-blue-900 dark:text-blue-100',
+          'border-red-500 bg-red-50/95 text-red-900',
+        success: 'border-green-500 bg-green-50/95 text-green-900',
+        warning: 'border-yellow-500 bg-yellow-50/95 text-yellow-900',
+        info: 'border-blue-500 bg-blue-50/95 text-blue-900',
       },
     },
     defaultVariants: {
@@ -79,7 +79,7 @@ const ToastClose = React.forwardRef<
   <ToastPrimitives.Close
     ref={ref}
     className={cn(
-      'absolute right-2 top-2 rounded-md p-1.5 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 opacity-70 hover:opacity-100 transition-all hover:bg-gray-200/50 dark:hover:bg-gray-700/50 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-400',
+      'absolute right-2 top-2 rounded-md p-1.5 text-[var(--text-tertiary)] hover:text-[var(--text)] opacity-70 hover:opacity-100 transition-all hover:bg-[var(--background-secondary)]/50 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-[var(--border-hover)]',
       className
     )}
     toast-close=""

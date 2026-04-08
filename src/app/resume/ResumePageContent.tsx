@@ -21,32 +21,9 @@ export default function ResumePageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--background)] via-[var(--background-secondary)] to-[var(--background-tertiary)]" />
-
-        {/* Document pattern - representing resume/document theme */}
-        <svg className="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="document-pattern" x="0" y="0" width="100" height="120" patternUnits="userSpaceOnUse">
-              <rect x="20" y="20" width="60" height="2" fill="var(--border)" opacity="0.1" />
-              <rect x="20" y="30" width="50" height="2" fill="var(--border)" opacity="0.08" />
-              <rect x="20" y="40" width="55" height="2" fill="var(--border)" opacity="0.06" />
-              <rect x="20" y="60" width="40" height="2" fill="var(--border)" opacity="0.1" />
-              <rect x="20" y="70" width="45" height="2" fill="var(--border)" opacity="0.08" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#document-pattern)" />
-        </svg>
-
-        {/* Gradient orbs */}
-        <div className="absolute top-20 left-10 w-64 h-64 bg-[var(--primary)]/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-64 h-64 bg-[var(--accent)]/10 rounded-full blur-3xl" />
-      </div>
+    <div className="min-h-screen bg-[var(--background)]">
       {/* Header with Download Button */}
-      <div className="bg-[var(--background)]/80 backdrop-blur-sm border-b border-[var(--border)] print:hidden relative z-10">
+      <div className="bg-[var(--background)] border-b border-[var(--border)] print:hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <div className="mb-4 sm:mb-0">
@@ -75,8 +52,8 @@ export default function ResumePageContent() {
       </div>
 
       {/* Resume Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        <div className="bg-[var(--background)]/90 backdrop-blur-sm rounded-lg shadow-lg p-6 sm:p-8" id="resume-content">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-[var(--background)] rounded-lg border border-[var(--border)] p-6 sm:p-8" id="resume-content">
           {/* Header Section */}
           <div className="text-center mb-8 pb-6 border-b-2 border-[var(--primary)]">
             <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text)] mb-2">

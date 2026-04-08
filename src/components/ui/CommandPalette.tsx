@@ -12,12 +12,9 @@ import {
   EnvelopeIcon,
   CommandLineIcon,
   ArrowRightIcon,
-  SunIcon,
   NewspaperIcon,
 } from '@heroicons/react/24/outline'
 import { cn } from '@/lib/utils'
-import { toast } from '@/components/ui/Toast'
-import { useTheme } from '@/contexts/ThemeContext'
 import { useRouter } from 'next/navigation'
 
 interface CommandItem {
@@ -39,7 +36,6 @@ interface CommandPaletteProps {
 
 export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: CommandPaletteProps) {
   const router = useRouter()
-  const { toggleTheme, actualTheme } = useTheme()
   const [search, setSearch] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [recentCommands, setRecentCommands] = useState<string[]>([])
@@ -136,21 +132,6 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       shortcut: 'Alt+C',
     },
     {
-      id: 'theme-toggle',
-      title: 'Toggle Theme',
-      description: 'Switch between light and dark mode',
-      icon: SunIcon,
-      action: () => {
-        toggleTheme()
-        const newTheme = actualTheme === 'light' ? 'dark' : 'light'
-        toast.success(`Switched to ${newTheme === 'light' ? 'Light' : 'Dark'} theme`)
-        onClose()
-      },
-      keywords: ['theme', 'dark', 'light', 'switch', 'toggle', 'mode', 'appearance'],
-      category: 'Settings',
-      shortcut: 'Alt+T',
-    },
-    {
       id: 'source',
       title: 'View Source Code',
       description: 'Open GitHub repository',
@@ -163,7 +144,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       category: 'External',
       shortcut: 'Alt+G',
     },
-  ], [navigate, onClose, toggleTheme, actualTheme])
+  ], [navigate, onClose])
 
   // Load recent commands from localStorage
   useEffect(() => {
@@ -385,7 +366,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="mx-auto max-w-2xl transform divide-y divide-[var(--border)] overflow-hidden rounded-xl bg-[var(--background)] shadow-2xl ring-1 ring-black/5 dark:ring-white/10 transition-all">
+            <Dialog.Panel className="mx-auto max-w-2xl transform divide-y divide-[var(--border)] overflow-hidden rounded-xl bg-[var(--background)] shadow-2xl ring-1 ring-black/5 transition-all">
               <div className="relative">
                 <MagnifyingGlassIcon
                   className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-[var(--text-tertiary)]"

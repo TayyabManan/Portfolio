@@ -24,7 +24,7 @@ const toolCategories = resumeData.skills.map(category => ({
 // Simple skill badge component
 const SkillBadge = ({ name }: { name: string }) => {
   return (
-    <span className="inline-flex items-center gap-1.5 px-4 py-2 bg-[var(--background-secondary)] rounded-lg text-sm text-[var(--text)] border border-[var(--border)] hover:border-[var(--primary)] transition-all hover:scale-105">
+    <span className="inline-flex items-center gap-1.5 px-4 py-2 bg-[var(--background-secondary)] rounded-lg text-sm text-[var(--text)] border border-[var(--border)] hover:border-[var(--primary)] transition-colors">
       <CheckCircleIcon className="h-3.5 w-3.5 text-[var(--primary)]" />
       <span className="font-medium">{name}</span>
     </span>
@@ -51,17 +51,13 @@ export default function Skills() {
             return (
               <div
                 key={category.name}
-                className="group relative bg-[var(--background-secondary)] rounded-xl p-4 border border-[var(--border)] hover:border-[var(--primary)] transition-all hover:shadow-lg"
+                className="bg-[var(--background-secondary)] rounded-xl p-4 border border-[var(--border)] hover:border-[var(--primary)] transition-all hover:shadow-md"
               >
-                {/* Gradient background on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                {/* Content */}
-                <div className="relative z-10">
+                <div>
                   {/* Compact Category Header */}
                   <div className="flex items-center gap-2 mb-3">
-                    <Icon className="h-4 w-4 text-[var(--primary)] group-hover:scale-110 transition-transform" />
-                    <h3 className="text-sm font-semibold text-[var(--text)] group-hover:text-[var(--primary)] transition-colors">
+                    <Icon className="h-4 w-4 text-[var(--primary)]" />
+                    <h3 className="text-sm font-semibold text-[var(--text)]">
                       {category.name}
                     </h3>
                     <span className="ml-auto text-xs text-[var(--text-secondary)]">

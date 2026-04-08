@@ -88,32 +88,8 @@ export default function ContactPageContent() {
   };
 
   return (
-    <div className="bg-[var(--background)] py-16 min-h-screen relative overflow-hidden">
-      {/* Contact Background */}
-      <div className="absolute inset-0">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--background)] via-[var(--background-secondary)] to-[var(--background-tertiary)]" />
-
-        {/* Communication pattern - representing connectivity */}
-        <svg className="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="contact-pattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
-              <circle cx="60" cy="60" r="2" fill="var(--primary)" opacity="0.1" />
-              <circle cx="20" cy="20" r="1.5" fill="var(--accent)" opacity="0.08" />
-              <circle cx="100" cy="20" r="1.5" fill="var(--info)" opacity="0.08" />
-              <circle cx="20" cy="100" r="1.5" fill="var(--success)" opacity="0.08" />
-              <circle cx="100" cy="100" r="1.5" fill="var(--primary)" opacity="0.08" />
-              <path d="M60,60 L20,20 M60,60 L100,20 M60,60 L20,100 M60,60 L100,100" stroke="var(--border)" strokeWidth="0.5" opacity="0.05" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#contact-pattern)" />
-        </svg>
-
-        {/* Gradient orbs */}
-        <div className="absolute top-16 left-8 w-80 h-80 bg-[var(--primary)]/8 rounded-full blur-3xl" />
-        <div className="absolute bottom-16 right-8 w-80 h-80 bg-[var(--accent)]/8 rounded-full blur-3xl" />
-      </div>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+    <div className="bg-[var(--background)] py-16 min-h-screen">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header - Left aligned */}
         <div className="mb-16 max-w-4xl">
           <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text)] mb-4">
@@ -136,8 +112,8 @@ export default function ContactPageContent() {
             <div className="space-y-6 mb-8">
               {contactInfo.map((item, index) => (
                 <div key={index} className="flex items-center gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-[var(--primary-light)] dark:bg-[var(--primary)]/20 rounded-lg flex items-center justify-center">
-                    <item.icon className="h-6 w-6 text-[var(--primary)] dark:text-[var(--info)]" />
+                  <div className="flex-shrink-0 w-12 h-12 bg-[var(--primary-light)] bg-[var(--primary)]/20 rounded-lg flex items-center justify-center">
+                    <item.icon className="h-6 w-6 text-[var(--primary)] text-[var(--info)]" />
                   </div>
                   <div>
                     <p className="text-sm font-medium text-[var(--text)]">
@@ -202,7 +178,7 @@ export default function ContactPageContent() {
             </div>
 
             {/* Availability */}
-            <div className="mt-8 p-6 bg-[var(--primary-light)] dark:bg-[var(--background-tertiary)] rounded-lg">
+            <div className="mt-8 p-6 bg-[var(--primary-light)] bg-[var(--background-tertiary)] rounded-lg">
               <h3 className="text-lg font-semibold text-[var(--text)] mb-2">
                 Availability
               </h3>
@@ -216,22 +192,22 @@ export default function ContactPageContent() {
 
           {/* Contact Form */}
           <div>
-            <div className="bg-[var(--background-secondary)] dark:bg-[var(--background-tertiary)] p-8 rounded-xl">
+            <div className="bg-[var(--background-secondary)] bg-[var(--background-tertiary)] p-8 rounded-xl">
               <h2 className="text-2xl font-bold text-[var(--text)] mb-6">
                 Send a Message
               </h2>
 
               {submitStatus === "success" && (
-                <div className="mb-6 p-4 bg-[var(--success)]/10 dark:bg-[var(--success)]/20 border border-[var(--success)]/30 dark:border-[var(--success)]/40 rounded-lg">
-                  <p className="text-[var(--success)] dark:text-[var(--success)]">
+                <div className="mb-6 p-4 bg-[var(--success)]/10 bg-[var(--success)]/20 border border-[var(--success)]/30 border-[var(--success)]/40 rounded-lg">
+                  <p className="text-[var(--success)] text-[var(--success)]">
                     Thank you for your message! I&apos;ll get back to you soon.
                   </p>
                 </div>
               )}
 
               {submitStatus === "error" && (
-                <div className="mb-6 p-4 bg-[var(--error)]/10 dark:bg-[var(--error)]/20 border border-[var(--error)]/30 dark:border-[var(--error)]/40 rounded-lg">
-                  <p className="text-[var(--error)] dark:text-[var(--error)]">
+                <div className="mb-6 p-4 bg-[var(--error)]/10 bg-[var(--error)]/20 border border-[var(--error)]/30 border-[var(--error)]/40 rounded-lg">
+                  <p className="text-[var(--error)] text-[var(--error)]">
                     Sorry, there was an error sending your message. Please try
                     again or contact me directly at m.tayyab.manan@gmail.com.
                   </p>
@@ -250,7 +226,7 @@ export default function ContactPageContent() {
                     type="text"
                     id="name"
                     {...register("name", { required: "Name is required" })}
-                    className="w-full px-4 py-3 border border-[var(--border)] dark:border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] dark:bg-[var(--background-tertiary)] text-[var(--text)]"
+                    className="w-full px-4 py-3 border border-[var(--border)] border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] bg-[var(--background-tertiary)] text-[var(--text)]"
                     placeholder="Your full name"
                     aria-invalid={errors.name ? "true" : "false"}
                     aria-describedby={errors.name ? "name-error" : undefined}
@@ -279,7 +255,7 @@ export default function ContactPageContent() {
                         message: "Invalid email address",
                       },
                     })}
-                    className="w-full px-4 py-3 border border-[var(--border)] dark:border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] dark:bg-[var(--background-tertiary)] text-[var(--text)]"
+                    className="w-full px-4 py-3 border border-[var(--border)] border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] bg-[var(--background-tertiary)] text-[var(--text)]"
                     placeholder="your.email@example.com"
                     aria-invalid={errors.email ? "true" : "false"}
                     aria-describedby={errors.email ? "email-error" : undefined}
@@ -308,7 +284,7 @@ export default function ContactPageContent() {
                         message: "Subject must be at least 2 characters long"
                       }
                     })}
-                    className="w-full px-4 py-3 border border-[var(--border)] dark:border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] dark:bg-[var(--background-tertiary)] text-[var(--text)]"
+                    className="w-full px-4 py-3 border border-[var(--border)] border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] bg-[var(--background-tertiary)] text-[var(--text)]"
                     placeholder="What would you like to discuss?"
                     aria-invalid={errors.subject ? "true" : "false"}
                     aria-describedby={errors.subject ? "subject-error" : undefined}
@@ -337,7 +313,7 @@ export default function ContactPageContent() {
                         message: "Message must be at least 10 characters long"
                       }
                     })}
-                    className="w-full px-4 py-3 border border-[var(--border)] dark:border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] dark:bg-[var(--background-tertiary)] text-[var(--text)]"
+                    className="w-full px-4 py-3 border border-[var(--border)] border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] bg-[var(--background-tertiary)] text-[var(--text)]"
                     placeholder="Tell me about your project, opportunity, or question... (minimum 10 characters)"
                     aria-invalid={errors.message ? "true" : "false"}
                     aria-describedby={errors.message ? "message-error" : undefined}

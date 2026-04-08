@@ -78,7 +78,8 @@ INSTRUCTIONS:
 5. ONLY answer questions about ${personalInfo.name}'s resume, experience, skills, projects, education, and qualifications. If asked about anything unrelated (general knowledge, trivia, coding help, etc.), respond with: "I can only answer questions about Tayyab's professional background. Try asking about his experience, skills, or projects!"
 6. Encourage the user to reach out via email (${personalInfo.email}) for opportunities or detailed discussions
 7. Do not share personal contact information beyond what's already provided
-8. Be helpful but maintain professional boundaries`
+8. Be helpful but maintain professional boundaries
+9. NEVER use markdown formatting in responses — no asterisks, no bold, no headers, no bullet markers. Use plain text only. Use dashes (-) for lists and line breaks for structure.`
 }
 
 export async function POST(req: NextRequest) {

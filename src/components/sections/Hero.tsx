@@ -1,115 +1,202 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { MapPinIcon, EnvelopeIcon } from '@heroicons/react/24/solid'
+import { useEffect, useState, useCallback } from 'react'
+import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { SimpleCommandHint } from '@/components/ui/SimpleCommandHint'
-import HeroChatbot from '@/components/ui/HeroChatbot'
+
+const specializations = [
+  'Computer Vision',
+  'Multi-Agent Systems',
+  'Production ML',
+  'Geospatial AI',
+]
+
+const EASE: [number, number, number, number] = [0.25, 0.1, 0.25, 1]
+
+const containerVariants: Variants = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+}
+
+const itemVariants: Variants = {
+  initial: { opacity: 0, y: 14 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: EASE,
+    },
+  },
+}
+
+const ruleVariants: Variants = {
+  initial: { scaleX: 0, opacity: 0 },
+  animate: {
+    scaleX: 1,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      delay: 0.7,
+      ease: EASE,
+    },
+  },
+}
 
 export default function Hero() {
-  const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    const projectsSection = document.getElementById('projects')
-    if (projectsSection) {
-      const headerHeight = 64
-      const y = projectsSection.getBoundingClientRect().top + window.pageYOffset - headerHeight
-      window.scrollTo({ top: y, behavior: 'smooth' })
-    }
-  }
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % specializations.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const scrollToProjects = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault()
+      const projectsSection = document.getElementById('projects')
+      if (projectsSection) {
+        const headerHeight = 64
+        const y =
+          projectsSection.getBoundingClientRect().top +
+          window.pageYOffset -
+          headerHeight
+        window.scrollTo({ top: y, behavior: 'smooth' })
+      }
+    },
+    []
+  )
 
   return (
-    <section className="relative min-h-[600px] sm:min-h-[calc(100vh-64px)] flex flex-col overflow-hidden bg-[var(--hero-background)]">
-      {/* Simple gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary-light)] via-[var(--background)] to-[var(--accent)] opacity-30" />
-
+    <section className="relative flex flex-col bg-[var(--background)]">
       <div className="relative flex-1 flex items-center px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl w-full py-12 lg:py-20">
-          {/* Two-column layout on desktop, single column on mobile */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <motion.div
+          className="mx-auto max-w-4xl w-full py-24 sm:py-32 lg:py-40"
+          variants={containerVariants}
+          initial="initial"
+          animate="animate"
+        >
+          {/* Greeting: lighter weight, sets human tone before the big title */}
+          <motion.p
+            variants={itemVariants}
+            className="text-base sm:text-lg font-medium text-[var(--text-secondary)] tracking-wide"
+          >
+            Hello, I&apos;m Tayyab Manan
+          </motion.p>
 
-            {/* Left Column - Content */}
-            <div className="order-1 lg:order-1">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
+          {/* Title: large, tight tracking, commands the page */}
+          <motion.h1
+            variants={itemVariants}
+            className="mt-3 text-[2.75rem] leading-[1.08] font-bold tracking-tight text-[var(--text)] sm:text-6xl md:text-7xl"
+          >
+            AI/ML Engineer
+          </motion.h1>
+
+          {/* Rotating specialization: crossfade creates subtle life */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-5 h-8 sm:h-9 relative overflow-hidden"
+          >
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={activeIndex}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35, ease: EASE }}
+                className="text-base sm:text-lg font-semibold text-[var(--primary)] uppercase tracking-[0.12em] absolute left-0"
               >
-                {/* Small label */}
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--background-secondary)] border border-[var(--border)] mb-4">
-                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                  <span className="text-sm text-[var(--text-secondary)]">Available for opportunities</span>
-                </div>
+                {specializations[activeIndex]}
+              </motion.p>
+            </AnimatePresence>
+          </motion.div>
 
-                <h1 className="text-4xl font-bold tracking-tight text-[var(--text)] sm:text-5xl md:text-6xl lg:text-7xl">
-                  <span className="block">AI / ML</span>
-                  <span className="block">Engineer</span>
-                </h1>
+          {/* Drawn rule: a thin line that scales in, creates visual structure */}
+          <motion.div
+            variants={ruleVariants}
+            className="mt-7 h-px w-16 bg-[var(--border-hover)] origin-left"
+            aria-hidden="true"
+          />
 
-                <p className="mt-4 text-xl sm:text-2xl font-semibold bg-gradient-to-r from-[var(--info)] to-[var(--accent)] bg-clip-text text-transparent">
-                  Computer Vision · Multi-Agent Systems · Production ML
-                </p>
+          {/* Bio: concise, human, not marketing copy */}
+          <motion.p
+            variants={itemVariants}
+            className="mt-7 text-base sm:text-lg leading-relaxed text-[var(--text-secondary)] max-w-xl"
+          >
+            Graduate student at COMSATS, building machine learning systems
+            across computer vision, NLP, and geospatial AI. Currently an AI
+            Developer at Cointegration.
+          </motion.p>
 
-                <p className="mt-6 text-base sm:text-lg leading-relaxed text-[var(--text-secondary)] max-w-xl">
-                  AI/ML Engineering graduate student at COMSATS, building machine learning systems across computer vision, NLP, and geospatial AI. Currently working as an AI Developer at Cointegration.
-                </p>
+          {/* Status line: flat, informational, engineer-style */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-6 flex flex-row items-center gap-4 text-sm text-[var(--text-tertiary)] flex-wrap"
+          >
+            <span className="inline-flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-green-500"
+                aria-hidden="true"
+              />
+              <span>Available for roles</span>
+            </span>
+            <span
+              className="hidden sm:inline text-[var(--border-hover)]"
+              aria-hidden="true"
+            >
+              /
+            </span>
+            <span>Islamabad, UTC+5</span>
+            <span
+              className="hidden sm:inline text-[var(--border-hover)]"
+              aria-hidden="true"
+            >
+              /
+            </span>
+            <span>Replies in 24h</span>
+          </motion.div>
 
-                <div className="mt-8 flex flex-row items-center gap-3 text-sm text-[var(--text-secondary)] flex-wrap">
-                  <div className="flex items-center gap-2">
-                    <MapPinIcon className="h-4 w-4 text-[var(--info)]" />
-                    <span>Islamabad, Pakistan</span>
-                  </div>
-                  <div className="w-1 h-1 rounded-full bg-[var(--border)]"></div>
-                  <div className="flex items-center gap-2">
-                    <EnvelopeIcon className="h-4 w-4 text-[var(--accent)]" />
-                    <span>Open to Remote Work</span>
-                  </div>
-                </div>
-
-                <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-                  <a
-                    href="#projects"
-                    onClick={scrollToProjects}
-                    className="bg-[var(--primary)] px-4 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-white shadow-lg hover:bg-[var(--primary-hover)] hover:shadow-xl rounded-lg transition-all duration-200 transform hover:scale-105 cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto"
-                  >
-                    View Projects
-                    <span aria-hidden="true">→</span>
-                  </a>
-                  <a
-                    href="/resume"
-                    className="text-sm sm:text-base font-semibold leading-6 text-[var(--text)] hover:text-[var(--primary)] transition-all duration-200 group border-2 border-[var(--border)] hover:border-[var(--primary)] px-4 sm:px-8 py-3 sm:py-4 rounded-lg bg-[var(--background-secondary)] hover:bg-[var(--background-tertiary)] flex items-center justify-center gap-2 w-full sm:w-auto"
-                  >
-                    View Resume
-                    <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1">→</span>
-                  </a>
-                </div>
-
-                {/* Tech Stack Pills */}
-                <div className="mt-8 flex flex-wrap gap-3">
-                  {['PyTorch', 'TensorFlow', 'LangChain', 'Scikit-learn', 'Computer Vision', 'NLP', 'MLOps', 'FastAPI'].map((tech, i) => (
-                    <motion.span
-                      key={tech}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5, delay: 0.8 + (i * 0.1) }}
-                      className="px-3 py-1 text-xs font-medium bg-[var(--background-secondary)] text-[var(--text-secondary)] rounded-full border border-[var(--border)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
-                    >
-                      {tech}
-                    </motion.span>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Right Column - AI Chatbot (Desktop Only) */}
-            <div className="hidden lg:block order-2">
-              <div className="max-w-md mx-auto lg:ml-auto">
-                <HeroChatbot />
-              </div>
-            </div>
-          </div>
-        </div>
+          {/* CTAs: left-aligned to match the content flow */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4"
+          >
+            <a
+              href="#projects"
+              onClick={scrollToProjects}
+              className="group bg-[var(--primary)] px-7 py-3.5 text-sm font-semibold text-white rounded-lg hover:bg-[var(--primary-hover)] active:scale-[0.98] transition-all duration-200 cursor-pointer flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto"
+            >
+              View Projects
+              <span
+                aria-hidden="true"
+                className="inline-block transition-transform duration-200 group-hover:translate-x-0.5"
+              >
+                &rarr;
+              </span>
+            </a>
+            <a
+              href="/resume"
+              className="group text-sm font-semibold text-[var(--text)] hover:text-[var(--primary)] border-2 border-[var(--border)] hover:border-[var(--primary)] px-7 py-3.5 rounded-lg transition-all duration-200 flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto"
+            >
+              View Resume
+              <span
+                aria-hidden="true"
+                className="inline-block transition-transform duration-200 group-hover:translate-x-0.5"
+              >
+                &rarr;
+              </span>
+            </a>
+          </motion.div>
+        </motion.div>
       </div>
 
-      {/* Command Palette Hint */}
       <SimpleCommandHint />
     </section>
   )

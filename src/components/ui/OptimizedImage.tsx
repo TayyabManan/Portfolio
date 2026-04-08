@@ -70,10 +70,10 @@ export function OptimizedImage({
       )}
       
       {error && !fallback && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+        <div className="absolute inset-0 flex items-center justify-center bg-[var(--background-secondary)]">
           <div className="text-center p-4">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto h-12 w-12 text-[var(--text-tertiary)]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -86,7 +86,7 @@ export function OptimizedImage({
                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <p className="mt-2 text-sm text-gray-500">Failed to load image</p>
+            <p className="mt-2 text-sm text-[var(--text-secondary)]">Failed to load image</p>
           </div>
         </div>
       )}
@@ -198,7 +198,7 @@ export function LazyImage({
           {...props}
         />
       ) : (
-        <div className={cn('bg-gray-200 dark:bg-gray-700 animate-pulse', className)}>
+        <div className={cn('bg-[var(--background-tertiary)] animate-pulse', className)}>
           <div className="aspect-video" />
         </div>
       )}

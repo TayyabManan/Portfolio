@@ -96,7 +96,7 @@ export default function CurrentlyLearning() {
             return (
               <div
                 key={index}
-                className="bg-[var(--background-secondary)] border border-[var(--border)] rounded-2xl p-6 sm:p-8 hover:border-[var(--primary)] transition-all duration-300 hover:shadow-lg"
+                className="bg-[var(--background-secondary)] border border-[var(--border)] rounded-2xl p-6 sm:p-8 hover:border-[var(--primary)] transition-all duration-200 hover:shadow-md"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className={`p-3 ${colors.bg} rounded-xl border ${colors.border}`}>

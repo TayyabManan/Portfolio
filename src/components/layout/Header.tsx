@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Bars3Icon, XMarkIcon, MagnifyingGlassIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline'
 import Logo from '@/components/ui/Logo'
-import { ThemeSelector } from '@/components/ui/ThemeSelector'
 import { useCommandPalette } from '@/components/ui/CommandPalette'
 
 // Lazy load the CommandPalette component for better performance
@@ -192,9 +191,6 @@ export default function Header() {
               </div>
             </button>
 
-            {/* Theme Selector */}
-            <ThemeSelector isCompact={isScrolled} />
-
             {/* Resume Button */}
             <Link
               href="/resume"
@@ -274,9 +270,6 @@ export default function Header() {
                 >
                   <MagnifyingGlassIcon className="h-5 w-5" />
                 </button>
-
-                {/* Theme Selector */}
-                <ThemeSelector isCompact={true} />
 
                 {/* Hamburger Menu */}
                 <button

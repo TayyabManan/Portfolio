@@ -3,7 +3,6 @@
 import { useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from '@/components/ui/Toast'
-import { useTheme } from '@/contexts/ThemeContext'
 
 export interface ShortcutConfig {
   key: string
@@ -76,8 +75,6 @@ export function useKeyboardShortcuts(shortcuts: ShortcutConfig[]) {
 
 export function useGlobalKeyboardShortcuts() {
   const router = useRouter()
-  const { toggleTheme, actualTheme } = useTheme()
-
   const navigate = useCallback((path: string) => {
     // Use startTransition for smoother navigation
     router.push(path)
@@ -145,17 +142,6 @@ export function useGlobalKeyboardShortcuts() {
       },
       description: 'Go to Contact',
     },
-    // Theme shortcuts using Alt key
-    {
-      key: 't',
-      alt: true,
-      action: () => {
-        toggleTheme()
-        const newTheme = actualTheme === 'light' ? 'dark' : 'light'
-        toast.success(`Switched to ${newTheme === 'light' ? 'Light' : 'Dark'} theme`)
-      },
-      description: 'Toggle Theme',
-    },
     // External shortcuts
     {
       key: 'g',
@@ -197,7 +183,6 @@ function showShortcutsHelp() {
     { keys: 'Alt+A', description: 'Go to About' },
     { keys: 'Alt+R', description: 'Go to Resume' },
     { keys: 'Alt+C', description: 'Go to Contact' },
-    { keys: 'Alt+T', description: 'Toggle Theme' },
     { keys: '?', description: 'Show this help' },
   ]
 
@@ -206,21 +191,21 @@ function showShortcutsHelp() {
   modal.id = 'keyboard-shortcuts-modal'
   modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm'
   modal.innerHTML = `
-    <div class="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-6 max-w-md w-full">
-      <h2 class="text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">Keyboard Shortcuts</h2>
+    <div class="bg-[var(--background)] rounded-lg shadow-xl p-6 max-w-md w-full">
+      <h2 class="text-xl font-bold mb-4 text-[var(--text)]">Keyboard Shortcuts</h2>
       <div class="space-y-2">
         ${shortcuts.map(s => `
           <div class="flex justify-between items-center py-1">
-            <kbd class="px-2 py-1 text-sm font-semibold text-gray-800 bg-gray-100 dark:text-gray-100 dark:bg-gray-800 rounded">
+            <kbd class="px-2 py-1 text-sm font-semibold text-[var(--text)] bg-[var(--background-secondary)] rounded">
               ${s.keys}
             </kbd>
-            <span class="text-sm text-gray-600 dark:text-gray-400">${s.description}</span>
+            <span class="text-sm text-[var(--text-secondary)]">${s.description}</span>
           </div>
         `).join('')}
       </div>
-      <button 
-        onclick="this.closest('.fixed').remove()" 
-        class="mt-6 w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+      <button
+        onclick="this.closest('.fixed').remove()"
+        class="mt-6 w-full px-4 py-2 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-colors"
       >
         Close
       </button>

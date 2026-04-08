@@ -44,7 +44,7 @@ export default function Education() {
           {education.map((edu, index) => (
             <div
               key={index}
-              className="relative bg-[var(--background-secondary)] border border-[var(--border)] rounded-2xl p-6 sm:p-8 hover:border-[var(--primary)] transition-all duration-300 hover:shadow-lg"
+              className="relative bg-[var(--background-secondary)] border border-[var(--border)] rounded-2xl p-6 sm:p-8 hover:border-[var(--primary)] transition-all duration-200 hover:shadow-md"
             >
               {/* Status Badge */}
               <div className="absolute top-6 right-6">
