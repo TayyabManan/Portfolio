@@ -4,7 +4,7 @@ import { useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from '@/components/ui/Toast'
 
-export interface ShortcutConfig {
+interface ShortcutConfig {
   key: string
   ctrl?: boolean
   meta?: boolean
@@ -230,94 +230,3 @@ function showShortcutsHelp() {
   document.addEventListener('keydown', handleEscape)
 }
 
-export function useArrowKeyNavigation<T = unknown>(
-  items: T[],
-  onSelect: (item: T, index: number) => void,
-  options: {
-    vertical?: boolean
-    wrap?: boolean
-    enabled?: boolean
-  } = {}
-) {
-  const { vertical = true, wrap = true, enabled = true } = options
-  const selectedIndex = useRef(0)
-
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (!enabled || items.length === 0) return
-
-    const prevKey = vertical ? 'ArrowUp' : 'ArrowLeft'
-    const nextKey = vertical ? 'ArrowDown' : 'ArrowRight'
-
-    if (e.key === prevKey) {
-      e.preventDefault()
-      selectedIndex.current = wrap
-        ? (selectedIndex.current - 1 + items.length) % items.length
-        : Math.max(0, selectedIndex.current - 1)
-      onSelect(items[selectedIndex.current], selectedIndex.current)
-    } else if (e.key === nextKey) {
-      e.preventDefault()
-      selectedIndex.current = wrap
-        ? (selectedIndex.current + 1) % items.length
-        : Math.min(items.length - 1, selectedIndex.current + 1)
-      onSelect(items[selectedIndex.current], selectedIndex.current)
-    } else if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault()
-      if (items[selectedIndex.current]) {
-        onSelect(items[selectedIndex.current], selectedIndex.current)
-      }
-    }
-  }, [items, onSelect, vertical, wrap, enabled])
-
-  useEffect(() => {
-    if (enabled) {
-      document.addEventListener('keydown', handleKeyDown)
-      return () => document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [handleKeyDown, enabled])
-
-  return {
-    selectedIndex: selectedIndex.current,
-    setSelectedIndex: (index: number) => {
-      selectedIndex.current = index
-    },
-  }
-}
-
-export function useFocusTrap(containerRef: React.RefObject<HTMLElement>, enabled = true) {
-  useEffect(() => {
-    if (!enabled || !containerRef.current) return
-
-    const container = containerRef.current
-    const focusableElements = container.querySelectorAll<HTMLElement>(
-      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-    )
-
-    if (focusableElements.length === 0) return
-
-    const firstElement = focusableElements[0]
-    const lastElement = focusableElements[focusableElements.length - 1]
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== 'Tab') return
-
-      if (e.shiftKey) {
-        if (document.activeElement === firstElement) {
-          e.preventDefault()
-          lastElement.focus()
-        }
-      } else {
-        if (document.activeElement === lastElement) {
-          e.preventDefault()
-          firstElement.focus()
-        }
-      }
-    }
-
-    container.addEventListener('keydown', handleKeyDown)
-    firstElement.focus()
-
-    return () => {
-      container.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [containerRef, enabled])
-}

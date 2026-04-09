@@ -102,14 +102,6 @@ export function getFeaturedProjectsFromMarkdown(): Project[] {
   return getAllProjectsFromMarkdown().filter(project => project.featured)
 }
 
-/**
- * Validate project markdown frontmatter
- */
-export function validateProjectData(data: Record<string, unknown>): boolean {
-  const requiredFields = ['slug', 'title', 'description', 'category', 'date']
-  return requiredFields.every(field => data[field] !== undefined && data[field] !== '')
-}
-
 // ============================================================================
 // BLOG FUNCTIONS
 // ============================================================================
@@ -212,18 +204,3 @@ export function getAllBlogPosts(): BlogPost[] {
   }
 }
 
-/**
- * Get blog posts by category
- */
-export function getBlogPostsByCategory(category: string): BlogPost[] {
-  return getAllBlogPosts().filter(post => post.category.toLowerCase() === category.toLowerCase())
-}
-
-/**
- * Get blog posts by tag
- */
-export function getBlogPostsByTag(tag: string): BlogPost[] {
-  return getAllBlogPosts().filter(post =>
-    post.tags.some(t => t.toLowerCase() === tag.toLowerCase())
-  )
-}

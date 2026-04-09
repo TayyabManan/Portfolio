@@ -75,16 +75,13 @@ body {
   --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Smooth theme transitions - OPTIMIZED: Only apply to elements that need it */
-.theme-transition {
-  transition: background-color var(--transition-speed) var(--transition-timing),
-              border-color var(--transition-speed) var(--transition-timing),
-              color var(--transition-speed) var(--transition-timing);
+/* Pointer cursor on interactive elements (Tailwind v4 doesn't set this by default) */
+button, [role="button"], summary {
+  cursor: pointer;
 }
 
 /* Apply transitions only to interactive elements */
 button, a, input, select, textarea,
-.card, .project-card, .btn,
 [role="button"], [role="link"] {
   transition: background-color var(--transition-speed) var(--transition-timing),
               border-color var(--transition-speed) var(--transition-timing),
@@ -102,20 +99,6 @@ button, a, input, select, textarea,
   }
 }
 
-
-/* Custom Animations */
-@keyframes pulse-attention {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-.animate-pulse-attention {
-  animation: pulse-attention 2s ease-in-out infinite;
-}
 
 /* Base styles */
 html {
@@ -197,18 +180,6 @@ select {
   min-width: 44px;
 }
 
-/* Smaller elements that need padding for touch targets */
-.touch-target-sm {
-  position: relative;
-}
-
-.touch-target-sm::after {
-  content: '';
-  position: absolute;
-  inset: -8px;
-  z-index: -1;
-}
-
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 12px;
@@ -231,69 +202,6 @@ select {
 }
 
 
-/* Glass utility class - solid background */
-.glass {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-}
-
-/* Section backgrounds */
-.section-bg-transparent {
-  @apply bg-transparent;
-}
-
-.section-bg-light {
-  background-color: var(--background-secondary);
-}
-
-.section-bg-dark {
-  background-color: var(--background);
-}
-
-/* Card hover effects - Specific transitions */
-.card-hover {
-  @apply duration-300 ease-out;
-  transition: transform 300ms ease-out, box-shadow 300ms ease-out;
-  /* will-change now managed dynamically via JavaScript */
-}
-
-.card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-/* Enhanced project card animations - Reduced hover distance */
-.project-card {
-  @apply duration-300 ease-out;
-  transition: transform 300ms ease-out, box-shadow 300ms ease-out;
-  /* will-change now managed dynamically via JavaScript */
-}
-
-.project-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.project-card .project-image {
-  @apply transition-transform duration-500 ease-out;
-}
-
-.project-card:hover .project-image {
-  @apply scale-110;
-}
-
-/* Slide up reveal */
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Fade in animation */
 @keyframes fadeIn {
   from {
@@ -306,71 +214,7 @@ select {
   }
 }
 
-.slide-up {
-  animation: slideUp 0.6s ease-out forwards;
-}
-
-/* Stagger animation */
-.stagger-animation > * {
-  opacity: 0;
-  animation: slideUp 0.6s ease-out forwards;
-}
-
-.stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
-.stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
-.stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
-.stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
-.stagger-animation > *:nth-child(5) { animation-delay: 0.5s; }
-
-/* Link underline animation */
-.link-underline {
-  @apply relative no-underline;
-}
-
-.link-underline::after {
-  content: '';
-  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-current transition-all duration-200 ease-in-out;
-}
-
-.link-underline:hover::after {
-  @apply w-full;
-}
-
-/* Button styles */
-.btn-primary {
-  @apply relative overflow-hidden transition-all duration-200;
-  @apply bg-blue-600 text-white hover:bg-blue-700;
-}
-
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 600ms ease;
-}
-
-.btn-primary:hover::before {
-  left: 100%;
-}
-
 /* Loading animation */
-@keyframes pulse-subtle {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-.animate-pulse-subtle {
-  animation: pulse-subtle 2s ease-in-out infinite;
-}
-
 /* Fade animations */
 @keyframes fade-in {
   from {
@@ -407,57 +251,6 @@ select {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-}
-
-/* Section spacing */
-.section-padding {
-  @apply py-20 md:py-24;
-}
-
-/* Subtle text gradient for headings */
-.text-gradient {
-  background: linear-gradient(to right, var(--primary), var(--primary-hover));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Map container styles for GIS projects */
-.map-container {
-  @apply relative overflow-hidden rounded-xl;
-  box-shadow: var(--shadow-lg);
-}
-
-/* Skill bar animations */
-@keyframes skill-fill {
-  from {
-    width: 0%;
-  }
-}
-
-.skill-bar {
-  animation: skill-fill 1.5s ease-out forwards;
-}
-
-/* Professional tag styles */
-.tag {
-  @apply inline-flex items-center px-3 py-1 text-sm font-medium rounded-full transition-all duration-200;
-}
-
-.tag:hover {
-  @apply -translate-y-px shadow-md;
-}
-
-/* Respect reduced motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-
 }
 
 /* Print styles */
@@ -513,7 +306,7 @@ select {
   }
 
   /* Enhanced button styles */
-  button, .btn-primary, .btn-secondary {
+  button {
     @apply border-2 border-current;
   }
 
@@ -523,32 +316,10 @@ select {
     text-decoration-thickness: 2px;
     text-underline-offset: 2px;
   }
-
-  /* Card and section borders */
-  .card, .project-card, .glass {
-    border: 2px solid var(--border) !important;
-  }
-
-  /* Disable translucent backgrounds */
-  .glass, .section-bg-light, .section-bg-dark {
-    backdrop-filter: none;
-    background-color: var(--background) !important;
-  }
-}
-
-/* Micro-interactions and animations */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-  20%, 40%, 60%, 80% { transform: translateX(2px); }
 }
 
 .animate-fadeIn {
   animation: fadeIn 0.2s ease-out;
-}
-
-.shake-animation {
-  animation: shake 0.3s ease-in-out;
 }
 
 /* Skeleton loading animation */

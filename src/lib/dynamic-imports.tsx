@@ -17,24 +17,6 @@ export const DynamicResumeChatbot = dynamic(
   }
 )
 
-// CommandPalette is a named export, so we need to handle it differently
-export const DynamicCommandPalette = dynamic(
-  () => import('@/components/ui/CommandPalette').then(mod => ({ default: mod.CommandPalette })),
-  { 
-    loading: LoadingSpinner,
-    ssr: false 
-  }
-)
-
-// Lazy load framer-motion components for non-critical animations
-export const DynamicMotionDiv = dynamic(
-  () => import('framer-motion').then(mod => ({ default: mod.motion.div })),
-  {
-    loading: LoadingSpinner,
-    ssr: false
-  }
-)
-
 // Lazy load markdown renderer (react-markdown + remark-gfm)
 export const DynamicReactMarkdown = dynamic(
   () => import('@/components/ui/Markdown'),

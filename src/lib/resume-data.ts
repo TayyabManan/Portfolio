@@ -198,21 +198,6 @@ export const resumeData: ResumeData = {
         "Collaborated in Agile methodology with cross-functional teams for iterative development"
       ],
       technologies: ["LangChain", "OpenAISdk", "AutoGen", "Model Context Protocol", "CrewAI"]
-    },
-    {
-      title: "ML Engineer & Geospatial AI Developer",
-      company: "Freelance",
-      location: "Islamabad, Pakistan",
-      startDate: "2022-01",
-      endDate: "Present",
-      current: true,
-      description: [
-        "Built ML-powered geospatial applications achieving R²=0.89 for water resource prediction models",
-        "Deployed Flask REST APIs serving ML models for 145 districts with real-time satellite data processing",
-        "Reduced client data processing time by 60% through ML automation and predictive analytics",
-        "Developed computer vision solutions for remote sensing applications using TensorFlow and PyTorch"
-      ],
-      technologies: ["Python", "Scikit-learn", "TensorFlow", "Flask", "Google Earth Engine", "React", "Next.js", "PostgreSQL"]
     }
   ],
 

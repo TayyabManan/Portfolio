@@ -4,13 +4,6 @@ import { useEffect, useState, useCallback } from 'react'
 import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { SimpleCommandHint } from '@/components/ui/SimpleCommandHint'
 
-const specializations = [
-  'Computer Vision',
-  'Multi-Agent Systems',
-  'Production ML',
-  'Geospatial AI',
-]
-
 const EASE: [number, number, number, number] = [0.25, 0.1, 0.25, 1]
 
 const containerVariants: Variants = {
@@ -48,8 +41,20 @@ const ruleVariants: Variants = {
   },
 }
 
+const specializations = [
+  'Computer Vision',
+  'Multi-Agent Systems',
+  'Production ML',
+  'Geospatial AI',
+]
+
 export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+  }, [])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -75,10 +80,10 @@ export default function Hero() {
   )
 
   return (
-    <section className="relative flex flex-col bg-[var(--background)]">
-      <div className="relative flex-1 flex items-center px-4 sm:px-6 lg:px-8">
+    <section className="relative flex flex-col h-[calc(100svh-64px)] overflow-hidden bg-[var(--background)]">
+      <div className="relative flex-1 flex items-center px-4 sm:px-6 lg:px-8 overflow-hidden">
         <motion.div
-          className="mx-auto max-w-4xl w-full py-24 sm:py-32 lg:py-40"
+          className="mx-auto max-w-4xl w-full py-12 sm:py-16"
           variants={containerVariants}
           initial="initial"
           animate="animate"
@@ -99,7 +104,7 @@ export default function Hero() {
             AI/ML Engineer
           </motion.h1>
 
-          {/* Rotating specialization: crossfade creates subtle life */}
+          {/* Rotating specialization */}
           <motion.div
             variants={itemVariants}
             className="mt-5 h-8 sm:h-9 relative overflow-hidden"
@@ -130,9 +135,35 @@ export default function Hero() {
             variants={itemVariants}
             className="mt-7 text-base sm:text-lg leading-relaxed text-[var(--text-secondary)] max-w-xl"
           >
-            Graduate student at COMSATS, building machine learning systems
+            Graduate student at{' '}
+            <a
+              href="https://www.comsats.edu.pk/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-0.5 text-[var(--primary)] font-semibold underline underline-offset-2 decoration-[var(--primary)]/30 hover:decoration-[var(--primary)] transition-all"
+            >
+              COMSATS
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0 translate-y-[-1px]">
+                <path d="M3.5 2.5H9.5V8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9.5 2.5L2.5 9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
+            , building machine learning systems
             across computer vision, NLP, and geospatial AI. Currently an AI
-            Developer at Cointegration.
+            Developer at{' '}
+            <a
+              href="https://cointegration.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-0.5 text-[var(--primary)] font-semibold underline underline-offset-2 decoration-[var(--primary)]/30 hover:decoration-[var(--primary)] transition-all"
+            >
+              Cointegration
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0 translate-y-[-1px]">
+                <path d="M3.5 2.5H9.5V8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9.5 2.5L2.5 9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
+            .
           </motion.p>
 
           {/* Status line: flat, informational, engineer-style */}
@@ -194,6 +225,39 @@ export default function Hero() {
               </span>
             </a>
           </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Tech stack marquee */}
+      <div className="mt-auto overflow-hidden border-t border-[var(--border)] py-5 select-none" aria-hidden="true">
+        <motion.div
+          className="flex whitespace-nowrap"
+          animate={{ x: ['0%', '-50%'] }}
+          transition={{ duration: isMobile ? 12 : 25, ease: 'linear', repeat: Infinity }}
+        >
+          {[0, 1].map((i) => (
+            <div key={i} className="flex shrink-0 items-center">
+              {[
+                'PyTorch', 'TensorFlow', 'LangChain', 'Computer Vision',
+                'NLP', 'Geospatial AI', 'HuggingFace', 'OpenAI',
+                'Scikit-learn', 'FastAPI', 'Docker', 'MLOps',
+                'Multi-Agent Systems', 'Python', 'Deep Learning',
+                'Time Series', 'Remote Sensing', 'CrewAI',
+              ].map((item) => (
+                <span key={item} className="flex items-center">
+                  <span
+                    className="text-base font-medium text-[var(--text-secondary)] tracking-wide px-6"
+                    style={{ fontFamily: 'var(--font-heading), system-ui, sans-serif' }}
+                  >
+                    {item}
+                  </span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 text-[var(--primary)]">
+                    <path d="M8 0L9.79 6.21L16 8L9.79 9.79L8 16L6.21 9.79L0 8L6.21 6.21L8 0Z" fill="currentColor" />
+                  </svg>
+                </span>
+              ))}
+            </div>
+          ))}
         </motion.div>
       </div>
 
