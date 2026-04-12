@@ -2,8 +2,9 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeftIcon, ArrowTopRightOnSquareIcon, CodeBracketIcon, CalendarIcon, TagIcon } from '@heroicons/react/24/outline'
+import { ArrowLeftIcon, ArrowRightIcon, ArrowTopRightOnSquareIcon, CodeBracketIcon, CalendarIcon } from '@heroicons/react/24/outline'
 import { DynamicReactMarkdown } from '@/lib/dynamic-imports'
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 
 interface Project {
   slug: string
@@ -20,78 +21,73 @@ interface Project {
   content: string
 }
 
-interface ProjectPageClientProps {
-  project: Project
+interface AdjacentProject {
+  slug: string
+  title: string
 }
 
-export default function ProjectPageClient({ project }: ProjectPageClientProps) {
+interface ProjectPageClientProps {
+  project: Project
+  adjacentProjects?: { prev: AdjacentProject | null; next: AdjacentProject | null }
+}
+
+export default function ProjectPageClient({ project, adjacentProjects }: ProjectPageClientProps) {
   return (
     <div className="min-h-screen bg-[var(--background)]">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]">
-        <div className="absolute inset-0">
-          <svg className="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="hero-pattern" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
-                <polygon points="30,1 45,13 45,39 30,51 15,39 15,13" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#hero-pattern)" />
-          </svg>
-        </div>
-        
-        <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
+      <div className="bg-[var(--background)] pt-8 pb-16">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div>
-            <Link
-              href="/"
-              className="inline-flex items-center text-white/80 hover:text-white transition-colors mb-6"
-            >
-              <ArrowLeftIcon className="h-5 w-5 mr-2" />
-              Back to Portfolio
-            </Link>
-            
+            <div className="mb-6">
+              <Breadcrumbs
+                items={[
+                  { label: 'Home', href: '/' },
+                  { label: 'Projects', href: '/projects' },
+                  { label: project.category, current: true },
+                ]}
+                size="sm"
+                animated={false}
+              />
+            </div>
+
             <div className="flex flex-col lg:flex-row gap-8 items-start">
               <div className="flex-1 order-2 lg:order-1">
-                <div className="flex flex-wrap items-center gap-3 mb-4">
-                  <span className="inline-flex items-center rounded-full bg-white/20 backdrop-blur-sm px-3 py-1 text-sm font-medium text-white">
-                    <TagIcon className="h-4 w-4 mr-1" />
-                    {project.category}
-                  </span>
-                  {project.featured && (
-                    <span className="inline-flex items-center rounded-full bg-yellow-400/20 backdrop-blur-sm px-3 py-1 text-sm font-medium text-yellow-100">
-                      ⭐ Featured
+                {project.featured && (
+                  <div className="mb-4">
+                    <span className="inline-flex items-center rounded-full bg-[var(--warning)]/10 px-3 py-1 text-sm font-medium text-[var(--warning)]">
+                      Featured
                     </span>
-                  )}
-                </div>
-                
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+                  </div>
+                )}
+
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text)] mb-4">
                   {project.title}
                 </h1>
-                
+
                 {project.subtitle && (
-                  <p className="text-lg sm:text-xl text-white/90 mb-6">
+                  <p className="text-lg sm:text-xl text-[var(--text-secondary)] mb-6">
                     {project.subtitle}
                   </p>
                 )}
-                
-                <p className="text-base sm:text-lg text-white/80 mb-8">
+
+                <p className="text-base sm:text-lg text-[var(--text-secondary)] mb-8">
                   {project.description}
                 </p>
-                
-                <div className="flex items-center gap-4 text-white/70 mb-8">
+
+                <div className="flex items-center gap-4 text-[var(--text-tertiary)] mb-8">
                   <div className="flex items-center gap-2">
                     <CalendarIcon className="h-5 w-5" />
                     <span className="text-sm sm:text-base">{new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</span>
                   </div>
                 </div>
-                
-                <div className="flex flex-row gap-2 sm:gap-4">
+
+                <div className="flex flex-row gap-2 sm:gap-4 lg:hidden">
                   {project.demoUrl && (
                     <a
                       href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center bg-white text-[var(--primary)] px-3 xs:px-4 sm:px-6 py-3 rounded-lg text-xs xs:text-sm sm:text-base font-medium hover:bg-gray-100 transition-colors whitespace-nowrap"
+                      className="inline-flex items-center justify-center bg-[var(--primary)] text-white px-3 xs:px-4 sm:px-6 py-3 rounded-lg text-xs xs:text-sm sm:text-base font-medium hover:bg-[var(--primary-hover)] transition-colors whitespace-nowrap"
                     >
                       <ArrowTopRightOnSquareIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" />
                       <span className="hidden xs:inline">Live </span>Demo
@@ -102,7 +98,7 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm text-white border border-white/20 px-3 xs:px-4 sm:px-6 py-3 rounded-lg text-xs xs:text-sm sm:text-base font-medium hover:bg-white/20 transition-colors whitespace-nowrap"
+                      className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--text)] px-3 xs:px-4 sm:px-6 py-3 rounded-lg text-xs xs:text-sm sm:text-base font-medium hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors whitespace-nowrap"
                     >
                       <CodeBracketIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" />
                       <span className="hidden xs:inline">Source </span>Code
@@ -130,24 +126,8 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
       </div>
 
       {/* Content Section */}
-      <div className="relative py-16">
-        {/* Decorative background elements */}
-        <div className="absolute inset-0">
-          {/* Subtle grid pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" />
-          
-          {/* Floating hexagon pattern */}
-          <svg className="absolute inset-0 h-full w-full opacity-30" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="content-hexagon" x="0" y="0" width="80" height="69" patternUnits="userSpaceOnUse">
-                <polygon points="40,1 60,18 60,52 40,69 20,52 20,18" fill="none" stroke="#3b82f6" strokeWidth="0.3" opacity="0.1" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#content-hexagon)" />
-          </svg>
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Sidebar */}
             <div className="lg:col-span-1">
@@ -315,6 +295,39 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
                 )}
               </div>
             </div>
+          {/* Previous / Next Project Navigation */}
+          {adjacentProjects && (adjacentProjects.prev || adjacentProjects.next) && (
+            <nav className="mt-12" aria-label="Adjacent projects">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {adjacentProjects.prev ? (
+                  <Link
+                    href={`/projects/${adjacentProjects.prev.slug}`}
+                    className="group flex flex-col gap-1 p-4 rounded-lg border border-[var(--border)] hover:border-[var(--primary)] transition-colors"
+                  >
+                    <span className="text-xs text-[var(--text-tertiary)] flex items-center gap-1">
+                      <ArrowLeftIcon className="h-3 w-3" /> Previous project
+                    </span>
+                    <span className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--primary)] transition-colors">
+                      {adjacentProjects.prev.title}
+                    </span>
+                  </Link>
+                ) : <div />}
+                {adjacentProjects.next && (
+                  <Link
+                    href={`/projects/${adjacentProjects.next.slug}`}
+                    className="group flex flex-col items-end gap-1 p-4 rounded-lg border border-[var(--border)] hover:border-[var(--primary)] transition-colors sm:col-start-2"
+                  >
+                    <span className="text-xs text-[var(--text-tertiary)] flex items-center gap-1">
+                      Next project <ArrowRightIcon className="h-3 w-3" />
+                    </span>
+                    <span className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--primary)] transition-colors text-left">
+                      {adjacentProjects.next.title}
+                    </span>
+                  </Link>
+                )}
+              </div>
+            </nav>
+          )}
           </div>
         </div>
       </div>

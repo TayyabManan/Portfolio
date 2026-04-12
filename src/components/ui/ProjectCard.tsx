@@ -68,7 +68,7 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-[var(--text-tertiary)]">
-            <CodeBracketIcon className="h-12 w-12 opacity-20" />
+            <CodeBracketIcon className="h-12 w-12 opacity-20" aria-hidden="true" />
           </div>
         )}
         {project.category === 'Full Stack' ? (
@@ -81,7 +81,7 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
           </div>
         ) : null}
         {/* Gradient overlay for better text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--text)]/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
       <div className="p-6 transition-all duration-300">

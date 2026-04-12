@@ -50,7 +50,7 @@ const experience = [
 
 export default function AboutPage() {
   return (
-    <div className="relative bg-[var(--background)] py-16 min-h-screen">
+    <div className="relative bg-[var(--background)] py-16 sm:py-24 min-h-screen">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header - Left aligned */}
         <div className="mb-16 max-w-4xl">

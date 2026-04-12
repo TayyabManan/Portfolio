@@ -28,7 +28,7 @@ export default function BlogPageContent({ posts }: BlogPageContentProps) {
   }
 
   return (
-    <div className="min-h-screen py-24 bg-[var(--background)]">
+    <div className="min-h-screen py-16 sm:py-24 bg-[var(--background)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-12">
@@ -60,9 +60,26 @@ export default function BlogPageContent({ posts }: BlogPageContentProps) {
         {/* Blog Posts Grid */}
         {filteredPosts.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-lg text-[var(--text-secondary)]">
-              No blog posts yet. Check back soon!
+            <p className="text-lg text-[var(--text-secondary)] mb-4">
+              {selectedCategory !== 'all'
+                ? 'No posts in this category yet.'
+                : 'No blog posts yet.'}
             </p>
+            {selectedCategory !== 'all' ? (
+              <button
+                onClick={() => setSelectedCategory('all')}
+                className="text-[var(--primary)] font-medium hover:underline"
+              >
+                Show all posts
+              </button>
+            ) : (
+              <Link
+                href="/projects"
+                className="text-[var(--primary)] font-medium hover:underline"
+              >
+                Browse projects instead
+              </Link>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -76,7 +93,7 @@ export default function BlogPageContent({ posts }: BlogPageContentProps) {
                   {post.image && (
                     <div className="relative h-48 overflow-hidden">
                       <div
-                        className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
                         style={{ backgroundImage: `url(${post.image})` }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent opacity-60" />

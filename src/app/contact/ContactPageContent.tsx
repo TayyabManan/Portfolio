@@ -46,7 +46,7 @@ export default function ContactPageContent() {
     watch,
     formState: { errors },
   } = useForm<ContactForm>({
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
   // Auto-dismiss success message after 5 seconds
@@ -61,6 +61,9 @@ export default function ContactPageContent() {
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -68,6 +71,7 @@ export default function ContactPageContent() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
+        signal: controller.signal,
       });
 
       const result = await response.json();
@@ -77,18 +81,19 @@ export default function ContactPageContent() {
       }
 
       setSubmitStatus("success");
-      toast.success("Message sent successfully!", "Thank you for reaching out. I'll get back to you soon.");
+      toast.success("Message sent", "I'll get back to you within 24 hours.");
       reset();
     } catch {
       setSubmitStatus("error");
-      toast.error("Failed to send message", "Please try again or contact me directly at m.tayyab.manan@gmail.com");
+      toast.error("Couldn't send your message", "Try again or email me directly at m.tayyab.manan@gmail.com");
     } finally {
+      clearTimeout(timeout);
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-[var(--background)] py-16 min-h-screen">
+    <div className="bg-[var(--background)] py-16 sm:py-24 min-h-screen">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header - Left aligned */}
         <div className="mb-16 max-w-4xl">
@@ -112,8 +117,8 @@ export default function ContactPageContent() {
             <div className="space-y-6 mb-8">
               {contactInfo.map((item, index) => (
                 <div key={index} className="flex items-center gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-[var(--primary-light)] bg-[var(--primary)]/20 rounded-lg flex items-center justify-center">
-                    <item.icon className="h-6 w-6 text-[var(--primary)] text-[var(--info)]" />
+                  <div className="flex-shrink-0 w-12 h-12 bg-[var(--primary)]/10 rounded-lg flex items-center justify-center">
+                    <item.icon className="h-6 w-6 text-[var(--primary)]" />
                   </div>
                   <div>
                     <p className="text-sm font-medium text-[var(--text)]">
@@ -147,7 +152,7 @@ export default function ContactPageContent() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-[border-color,color] text-[var(--primary)] hover:text-[var(--primary-hover)]"
-                  title="LinkedIn"
+                  aria-label="LinkedIn (opens in new window)"
                 >
                   <Linkedin className="h-6 w-6" />
                   <ArrowTopRightOnSquareIcon className="absolute -top-1 -right-1 h-3 w-3 bg-[var(--background)] rounded" />
@@ -157,7 +162,7 @@ export default function ContactPageContent() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-[border-color,color] text-[var(--text)] hover:text-[var(--text-secondary)]"
-                  title="GitHub"
+                  aria-label="GitHub (opens in new window)"
                 >
                   <Github className="h-6 w-6" />
                   <ArrowTopRightOnSquareIcon className="absolute -top-1 -right-1 h-3 w-3 bg-[var(--background)] rounded" />
@@ -167,7 +172,7 @@ export default function ContactPageContent() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-[border-color,color] text-[var(--success)] hover:text-[var(--success)]/80"
-                  title="Upwork"
+                  aria-label="Upwork (opens in new window)"
                 >
                   <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-2.539 0-4.51 1.649-5.31 4.366-1.22-1.834-2.148-4.036-2.687-5.892H7.828v7.112c-.002 1.406-1.141 2.546-2.547 2.548-1.405-.002-2.543-1.143-2.545-2.548V3.492H0v7.112c0 2.914 2.37 5.303 5.281 5.303 2.913 0 5.283-2.389 5.283-5.303v-1.19c.529 1.107 1.182 2.229 1.974 3.221l-1.673 7.873h2.797l1.213-5.71c1.063.679 2.285 1.109 3.686 1.109 3 0 5.439-2.452 5.439-5.45 0-3-2.439-5.439-5.439-5.439z"/>
@@ -178,7 +183,7 @@ export default function ContactPageContent() {
             </div>
 
             {/* Availability */}
-            <div className="mt-8 p-6 bg-[var(--primary-light)] bg-[var(--background-tertiary)] rounded-lg">
+            <div className="mt-8 p-6 bg-[var(--background-secondary)] rounded-lg">
               <h3 className="text-lg font-semibold text-[var(--text)] mb-2">
                 Availability
               </h3>
@@ -192,24 +197,23 @@ export default function ContactPageContent() {
 
           {/* Contact Form */}
           <div>
-            <div className="bg-[var(--background-secondary)] bg-[var(--background-tertiary)] p-8 rounded-xl">
+            <div className="bg-[var(--background-secondary)] p-8 rounded-xl">
               <h2 className="text-2xl font-bold text-[var(--text)] mb-6">
                 Send a Message
               </h2>
 
               {submitStatus === "success" && (
-                <div className="mb-6 p-4 bg-[var(--success)]/10 bg-[var(--success)]/20 border border-[var(--success)]/30 border-[var(--success)]/40 rounded-lg">
-                  <p className="text-[var(--success)] text-[var(--success)]">
-                    Thank you for your message! I&apos;ll get back to you soon.
+                <div className="mb-6 p-4 bg-[var(--success)]/10 border border-[var(--success)]/20 rounded-lg">
+                  <p className="text-[var(--success)]">
+                    Message sent — I&apos;ll reply within 24 hours.
                   </p>
                 </div>
               )}
 
               {submitStatus === "error" && (
-                <div className="mb-6 p-4 bg-[var(--error)]/10 bg-[var(--error)]/20 border border-[var(--error)]/30 border-[var(--error)]/40 rounded-lg">
-                  <p className="text-[var(--error)] text-[var(--error)]">
-                    Sorry, there was an error sending your message. Please try
-                    again or contact me directly at m.tayyab.manan@gmail.com.
+                <div className="mb-6 p-4 bg-[var(--error)]/10 border border-[var(--error)]/20 rounded-lg">
+                  <p className="text-[var(--error)]">
+                    Couldn&apos;t send your message. Try again or email me directly at m.tayyab.manan@gmail.com.
                   </p>
                 </div>
               )}
@@ -226,8 +230,10 @@ export default function ContactPageContent() {
                     type="text"
                     id="name"
                     {...register("name", { required: "Name is required" })}
-                    className="w-full px-4 py-3 border border-[var(--border)] border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] bg-[var(--background-tertiary)] text-[var(--text)]"
-                    placeholder="Your full name"
+                    className="w-full px-4 py-3 border border-[var(--border)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] text-[var(--text)]"
+                    placeholder="Jane Smith"
+                    autoComplete="name"
+                    aria-required="true"
                     aria-invalid={errors.name ? "true" : "false"}
                     aria-describedby={errors.name ? "name-error" : undefined}
                   />
@@ -252,11 +258,13 @@ export default function ContactPageContent() {
                       required: "Email is required",
                       pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: "Invalid email address",
+                        message: "Enter a valid email address",
                       },
                     })}
-                    className="w-full px-4 py-3 border border-[var(--border)] border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] bg-[var(--background-tertiary)] text-[var(--text)]"
+                    className="w-full px-4 py-3 border border-[var(--border)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] text-[var(--text)]"
                     placeholder="your.email@example.com"
+                    autoComplete="email"
+                    aria-required="true"
                     aria-invalid={errors.email ? "true" : "false"}
                     aria-describedby={errors.email ? "email-error" : undefined}
                   />
@@ -284,8 +292,9 @@ export default function ContactPageContent() {
                         message: "Subject must be at least 2 characters long"
                       }
                     })}
-                    className="w-full px-4 py-3 border border-[var(--border)] border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] bg-[var(--background-tertiary)] text-[var(--text)]"
-                    placeholder="What would you like to discuss?"
+                    className="w-full px-4 py-3 border border-[var(--border)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] text-[var(--text)]"
+                    placeholder="Project collaboration, job opportunity..."
+                    aria-required="true"
                     aria-invalid={errors.subject ? "true" : "false"}
                     aria-describedby={errors.subject ? "subject-error" : undefined}
                   />
@@ -313,8 +322,9 @@ export default function ContactPageContent() {
                         message: "Message must be at least 10 characters long"
                       }
                     })}
-                    className="w-full px-4 py-3 border border-[var(--border)] border-[var(--border-hover)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] bg-[var(--background-tertiary)] text-[var(--text)]"
-                    placeholder="Tell me about your project, opportunity, or question... (minimum 10 characters)"
+                    className="w-full px-4 py-3 border border-[var(--border)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent bg-[var(--background)] text-[var(--text)]"
+                    placeholder="Tell me about your project, opportunity, or question..."
+                    aria-required="true"
                     aria-invalid={errors.message ? "true" : "false"}
                     aria-describedby={errors.message ? "message-error" : undefined}
                   />
@@ -346,7 +356,7 @@ export default function ContactPageContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[var(--primary)] text-white px-6 py-3 rounded-lg font-medium hover:bg-[var(--primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 active:scale-95 transition-[colors,transform]"
+                  className="w-full bg-[var(--primary)] text-white px-6 py-3 rounded-lg font-medium hover:bg-[var(--primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 active:scale-[0.98] transition-[colors,transform]"
                 >
                   {isSubmitting && (
                     <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">

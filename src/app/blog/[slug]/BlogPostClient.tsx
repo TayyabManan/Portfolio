@@ -3,20 +3,22 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { DynamicReactMarkdown } from '@/lib/dynamic-imports'
-import { CalendarIcon, ClockIcon, UserIcon, ArrowLeftIcon, TagIcon } from '@heroicons/react/24/outline'
-import { BlogPostWithContent } from '@/lib/markdown'
+import { CalendarIcon, ClockIcon, UserIcon, ArrowLeftIcon, ArrowRightIcon, TagIcon } from '@heroicons/react/24/outline'
+import { BlogPostWithContent, BlogPost } from '@/lib/markdown'
 import ReadingProgress from '@/components/ui/ReadingProgress'
 import ShareButtons from '@/components/ui/ShareButtons'
 import CodeBlock from '@/components/ui/CodeBlock'
 import TableOfContents from '@/components/ui/TableOfContents'
 import BackToTop from '@/components/ui/BackToTop'
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { extractTextContent } from '@/lib/utils'
 
 interface BlogPostClientProps {
   post: BlogPostWithContent
+  adjacentPosts?: { prev: BlogPost | null; next: BlogPost | null }
 }
 
-export default function BlogPostClient({ post }: BlogPostClientProps) {
+export default function BlogPostClient({ post, adjacentPosts }: BlogPostClientProps) {
   const postUrl = `https://tayyabmanan.com/blog/${post.slug}`
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -55,17 +57,19 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
   return (
     <>
       <ReadingProgress />
-      <div className="min-h-screen py-24 bg-[var(--background)]">
+      <div className="min-h-screen py-16 sm:py-24 bg-[var(--background)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Back Button */}
+        {/* Breadcrumbs */}
         <div className="mb-8">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors"
-          >
-            <ArrowLeftIcon className="h-4 w-4" />
-            <span>Back to Blog</span>
-          </Link>
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog', href: '/blog' },
+              { label: post.category, current: true },
+            ]}
+            size="sm"
+            animated={false}
+          />
         </div>
 
         {/* Two-column layout: Content + TOC */}
@@ -74,13 +78,6 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
           <article className="min-w-0">
             {/* Header */}
             <header className="mb-8">
-          {/* Category Badge */}
-          <div className="mb-4">
-            <span className="inline-block px-3 py-1 text-xs font-medium bg-[var(--primary)]/10 text-[var(--primary)] rounded-full">
-              {post.category}
-            </span>
-          </div>
-
           {/* Title */}
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-[var(--text)] mb-4">
             {post.title}
@@ -248,8 +245,42 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
               </DynamicReactMarkdown>
             </div>
 
+            {/* Previous / Next Post Navigation */}
+            {adjacentPosts && (adjacentPosts.prev || adjacentPosts.next) && (
+              <nav className="mt-12 pt-8 border-t border-[var(--border)]" aria-label="Adjacent posts">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {adjacentPosts.prev ? (
+                    <Link
+                      href={`/blog/${adjacentPosts.prev.slug}`}
+                      className="group flex flex-col gap-1 p-4 rounded-lg border border-[var(--border)] hover:border-[var(--primary)] transition-colors"
+                    >
+                      <span className="text-xs text-[var(--text-tertiary)] flex items-center gap-1">
+                        <ArrowLeftIcon className="h-3 w-3" /> Previous
+                      </span>
+                      <span className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--primary)] transition-colors">
+                        {adjacentPosts.prev.title}
+                      </span>
+                    </Link>
+                  ) : <div />}
+                  {adjacentPosts.next && (
+                    <Link
+                      href={`/blog/${adjacentPosts.next.slug}`}
+                      className="group flex flex-col items-end gap-1 p-4 rounded-lg border border-[var(--border)] hover:border-[var(--primary)] transition-colors sm:col-start-2"
+                    >
+                      <span className="text-xs text-[var(--text-tertiary)] flex items-center gap-1">
+                        Next <ArrowRightIcon className="h-3 w-3" />
+                      </span>
+                      <span className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--primary)] transition-colors text-left">
+                        {adjacentPosts.next.title}
+                      </span>
+                    </Link>
+                  )}
+                </div>
+              </nav>
+            )}
+
             {/* Share Section */}
-            <div className="mt-12 pt-8 border-t border-[var(--border)]">
+            <div className="mt-8 pt-8 border-t border-[var(--border)]">
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <Link
                   href="/blog"

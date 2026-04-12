@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getProjectBySlug, getAllProjectSlugs } from '@/lib/markdown'
+import { getProjectBySlug, getAllProjectSlugs, getAdjacentProjects } from '@/lib/markdown'
 import ProjectPageClient from './ProjectPageClient'
 
 // Force static generation for all project pages
@@ -194,7 +194,7 @@ export default async function ProjectPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify([softwareSchema, creativeWorkSchema, breadcrumbSchema]) }}
       />
-      <ProjectPageClient project={project} />
+      <ProjectPageClient project={project} adjacentProjects={getAdjacentProjects(slug)} />
     </>
   )
 }

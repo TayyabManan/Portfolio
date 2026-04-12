@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Contact Tayyab Manan - AI/ML Engineer',
     description: 'Get in touch for collaboration opportunities or AI/ML project discussions.',
     images: ['/images/profile-picture.webp'],

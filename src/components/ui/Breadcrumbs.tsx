@@ -258,7 +258,7 @@ export function MobileBreadcrumbs({ items, ...props }: BreadcrumbsProps) {
         </button>
 
         {isOpen && (
-          <div className="absolute top-full left-0 mt-1 bg-[var(--background)] border border-[var(--border)] rounded-md shadow-lg z-10">
+          <div className="absolute top-full left-0 mt-1 bg-[var(--background)] border border-[var(--border)] rounded-lg shadow-lg z-30">
             {middleItems.map((item, index) => (
               <Link
                 key={index}

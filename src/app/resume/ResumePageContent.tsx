@@ -5,6 +5,7 @@ import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { resumeData, formatDate } from '@/lib/resume-data'
 import { generateResumePDF } from '@/lib/pdf-utils'
 import { DynamicResumeChatbot } from '@/lib/dynamic-imports'
+import { toast } from '@/components/ui/Toast'
 
 export default function ResumePageContent() {
   const [downloading, setDownloading] = useState(false)
@@ -13,8 +14,9 @@ export default function ResumePageContent() {
     setDownloading(true)
     try {
       await generateResumePDF(resumeData)
+      toast.success('Resume downloaded')
     } catch {
-      // Error is handled in generateResumePDF
+      toast.error('Couldn\'t generate PDF', 'Try again or use your browser\'s print function.')
     } finally {
       setDownloading(false)
     }
@@ -81,7 +83,7 @@ export default function ResumePageContent() {
 
           {/* Professional Summary */}
           <div className="mb-8">
-            <h2 className="text-lg font-bold text-[var(--text)] mb-3 uppercase border-b border-[var(--border)]">
+            <h2 className="text-lg font-bold text-[var(--text)] mb-3 uppercase tracking-wide border-b border-[var(--border)]">
               Professional Summary
             </h2>
             <p className="text-[var(--text-secondary)] leading-relaxed">
@@ -91,7 +93,7 @@ export default function ResumePageContent() {
 
           {/* Experience */}
           <div className="mb-8">
-            <h2 className="text-lg font-bold text-[var(--text)] mb-4 uppercase border-b border-[var(--border)]">
+            <h2 className="text-lg font-bold text-[var(--text)] mb-4 uppercase tracking-wide border-b border-[var(--border)]">
               Professional Experience
             </h2>
             {resumeData.experience.map((job, index) => (
@@ -123,7 +125,7 @@ export default function ResumePageContent() {
 
           {/* Education */}
           <div className="mb-8">
-            <h2 className="text-lg font-bold text-[var(--text)] mb-4 uppercase border-b border-[var(--border)]">
+            <h2 className="text-lg font-bold text-[var(--text)] mb-4 uppercase tracking-wide border-b border-[var(--border)]">
               Education
             </h2>
             {resumeData.education.map((edu, index) => (
@@ -155,7 +157,7 @@ export default function ResumePageContent() {
 
           {/* Skills */}
           <div className="mb-8">
-            <h2 className="text-lg font-bold text-[var(--text)] mb-4 uppercase border-b border-[var(--border)]">
+            <h2 className="text-lg font-bold text-[var(--text)] mb-4 uppercase tracking-wide border-b border-[var(--border)]">
               Technical Skills
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -174,7 +176,7 @@ export default function ResumePageContent() {
 
           {/* Projects */}
           <div className="mb-8">
-            <h2 className="text-lg font-bold text-[var(--text)] mb-4 uppercase border-b border-[var(--border)]">
+            <h2 className="text-lg font-bold text-[var(--text)] mb-4 uppercase tracking-wide border-b border-[var(--border)]">
               Key Projects
             </h2>
             {resumeData.projects.map((project, index) => (
@@ -210,7 +212,7 @@ export default function ResumePageContent() {
           {/* Certifications */}
           {resumeData.certifications.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-lg font-bold text-[var(--text)] mb-4 uppercase border-b border-[var(--border)]">
+              <h2 className="text-lg font-bold text-[var(--text)] mb-4 uppercase tracking-wide border-b border-[var(--border)]">
                 Certifications
               </h2>
               {resumeData.certifications.map((cert, index) => (
@@ -232,7 +234,7 @@ export default function ResumePageContent() {
           {/* Achievements */}
           {resumeData.achievements.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-lg font-bold text-[var(--text)] mb-4 uppercase border-b border-[var(--border)]">
+              <h2 className="text-lg font-bold text-[var(--text)] mb-4 uppercase tracking-wide border-b border-[var(--border)]">
                 Achievements
               </h2>
               {resumeData.achievements.map((achievement, index) => (

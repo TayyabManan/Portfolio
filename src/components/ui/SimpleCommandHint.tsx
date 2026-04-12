@@ -84,11 +84,11 @@ export function SimpleCommandHint() {
 
   return (
     <div className="fixed bottom-4 right-4 z-50 animate-fade-in">
-      <div className="relative bg-blue-600 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-200">
+      <div className="relative bg-[var(--primary)] text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-200">
         <div className="flex items-center">
           <button
             onClick={openCommandPalette}
-            className="flex-1 px-4 py-3 flex items-center gap-3 group rounded-l-lg hover:bg-blue-700 transition-colors"
+            className="flex-1 px-4 py-3 flex items-center gap-3 group rounded-l-lg hover:bg-[var(--primary-hover)] transition-colors"
           >
             <CommandLineIcon className="w-5 h-5" />
             <div className="text-left">
@@ -100,7 +100,7 @@ export function SimpleCommandHint() {
           {/* Dismiss button as part of the main component */}
           <button
             onClick={handleDismiss}
-            className="px-3 py-3 hover:bg-blue-700 rounded-r-lg border-l border-blue-700 transition-colors group"
+            className="px-3 py-3 hover:bg-[var(--primary-hover)] rounded-r-lg border-l border-[var(--primary-hover)] transition-colors group"
             aria-label="Dismiss hint"
             title="Dismiss for 30 seconds"
           >

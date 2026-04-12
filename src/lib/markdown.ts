@@ -96,6 +96,18 @@ export function getAllProjectsFromMarkdown(): Project[] {
 }
 
 /**
+ * Get adjacent (previous/next) projects for navigation
+ */
+export function getAdjacentProjects(slug: string): { prev: Project | null; next: Project | null } {
+  const allProjects = getAllProjectsFromMarkdown()
+  const index = allProjects.findIndex(p => p.slug === slug)
+  return {
+    prev: index < allProjects.length - 1 ? allProjects[index + 1] : null,
+    next: index > 0 ? allProjects[index - 1] : null,
+  }
+}
+
+/**
  * Get featured projects from markdown files
  */
 export function getFeaturedProjectsFromMarkdown(): Project[] {
@@ -178,6 +190,18 @@ export function getBlogPostBySlug(slug: string): BlogPostWithContent | null {
     }
   } catch {
     return null
+  }
+}
+
+/**
+ * Get adjacent (previous/next) blog posts for navigation
+ */
+export function getAdjacentBlogPosts(slug: string): { prev: BlogPost | null; next: BlogPost | null } {
+  const allPosts = getAllBlogPosts()
+  const index = allPosts.findIndex(p => p.slug === slug)
+  return {
+    prev: index < allPosts.length - 1 ? allPosts[index + 1] : null,
+    next: index > 0 ? allPosts[index - 1] : null,
   }
 }
 

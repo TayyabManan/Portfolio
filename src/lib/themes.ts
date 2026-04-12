@@ -39,7 +39,49 @@ export const themes = {
     shadowSm: '0 1px 2px 0 rgb(28 25 23 / 0.05)',
     shadowMd: '0 4px 6px -1px rgb(28 25 23 / 0.07), 0 2px 4px -2px rgb(28 25 23 / 0.05)',
     shadowLg: '0 10px 15px -3px rgb(28 25 23 / 0.07), 0 4px 6px -4px rgb(28 25 23 / 0.05)',
-  }
+  },
+
+  dark: {
+    // Accent — slightly lighter blue, legible on dark surfaces
+    primary: '#3b82f6',
+    primaryHover: '#60a5fa',
+    primaryLight: 'rgba(59, 130, 246, 0.15)',
+
+    // Backgrounds — warm stone, lifted (library evening, not midnight)
+    background: '#1c1917',
+    backgroundSecondary: '#292524',
+    backgroundTertiary: '#3b3835',
+
+    // Text — warm off-whites
+    text: '#edebe8',
+    textSecondary: '#a8a29e',
+    textTertiary: '#78716c',
+
+    // Borders — warm stone, clearly visible
+    border: '#3b3835',
+    borderHover: '#57534e',
+
+    // Status — lighter for dark backgrounds
+    success: '#4ade80',
+    error: '#f87171',
+    warning: '#fbbf24',
+
+    // Aliases
+    accent: '#4ade80',
+    info: '#3b82f6',
+    highlight: '#fbbf24',
+
+    // Hero background
+    heroBackground: '#1c1917',
+    heroGradientStart: '#1c1917',
+    heroGradientMid: '#1c1917',
+    heroGradientEnd: '#1c1917',
+
+    // Shadows — heavier on dark to create depth
+    shadowSm: '0 1px 2px 0 rgb(0 0 0 / 0.3)',
+    shadowMd: '0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3)',
+    shadowLg: '0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3)',
+  },
 } as const;
 
 export type Theme = typeof themes.light;

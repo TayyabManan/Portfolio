@@ -68,9 +68,9 @@ export default function CurrentlyLearning() {
       border: "border-[var(--info)]/20"
     },
     warning: {
-      bg: "bg-amber-500/10",
-      text: "text-amber-500",
-      border: "border-amber-500/20"
+      bg: "bg-[var(--warning)]/10",
+      text: "text-[var(--warning)]",
+      border: "border-[var(--warning)]/20"
     }
   }
 
@@ -82,10 +82,10 @@ export default function CurrentlyLearning() {
             <SparklesIcon className="h-5 w-5 text-[var(--accent)]" />
             <span className="text-sm font-semibold text-[var(--text-secondary)]">Continuous Learning</span>
           </div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-[var(--text)] sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-[var(--text)] sm:text-4xl">
             Currently Learning & Exploring
           </h2>
-          <p className="mt-4 text-lg font-semibold text-[var(--text-secondary)] max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
             Actively expanding my skills and knowledge in AI/ML through courses, experiments, and research
           </p>
         </div>
@@ -102,7 +102,7 @@ export default function CurrentlyLearning() {
                   <div className={`p-3 ${colors.bg} rounded-xl border ${colors.border}`}>
                     <section.icon className={`h-6 w-6 ${colors.text}`} />
                   </div>
-                  <h3 className="text-xl font-extrabold text-[var(--text)]">
+                  <h3 className="text-xl font-bold text-[var(--text)]">
                     {section.category}
                   </h3>
                 </div>

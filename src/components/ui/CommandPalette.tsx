@@ -13,9 +13,13 @@ import {
   CommandLineIcon,
   ArrowRightIcon,
   NewspaperIcon,
+  SunIcon,
+  MoonIcon,
+  ComputerDesktopIcon,
 } from '@heroicons/react/24/outline'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
+import { useTheme } from '@/contexts/ThemeContext'
 
 interface CommandItem {
   id: string
@@ -36,6 +40,7 @@ interface CommandPaletteProps {
 
 export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: CommandPaletteProps) {
   const router = useRouter()
+  const { theme, preference, setPreference, toggleTheme } = useTheme()
   const [search, setSearch] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [recentCommands, setRecentCommands] = useState<string[]>([])
@@ -144,7 +149,31 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       category: 'External',
       shortcut: 'Alt+G',
     },
-  ], [navigate, onClose])
+    {
+      id: 'toggle-theme',
+      title: theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode',
+      description: theme === 'dark' ? 'Use the light color scheme' : 'Use the dark color scheme',
+      icon: theme === 'dark' ? SunIcon : MoonIcon,
+      action: () => {
+        toggleTheme()
+        onClose()
+      },
+      keywords: ['theme', 'dark', 'light', 'mode', 'toggle'],
+      category: 'Settings',
+    },
+    ...(preference !== 'system' ? [{
+      id: 'system-theme',
+      title: 'Use System Theme',
+      description: 'Follow your operating system preference',
+      icon: ComputerDesktopIcon,
+      action: () => {
+        setPreference('system')
+        onClose()
+      },
+      keywords: ['theme', 'system', 'auto', 'os'],
+      category: 'Settings',
+    }] : []),
+  ], [navigate, onClose, theme, preference, toggleTheme, setPreference])
 
   // Load recent commands from localStorage
   useEffect(() => {
@@ -366,7 +395,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="mx-auto max-w-2xl transform divide-y divide-[var(--border)] overflow-hidden rounded-xl bg-[var(--background)] shadow-2xl ring-1 ring-black/5 transition-all">
+            <Dialog.Panel className="mx-auto max-w-2xl transform divide-y divide-[var(--border)] overflow-hidden rounded-xl bg-[var(--background)] shadow-2xl ring-1 ring-[var(--border)] transition-all">
               <div className="relative">
                 <MagnifyingGlassIcon
                   className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-[var(--text-tertiary)]"
@@ -376,6 +405,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
                   type="text"
                   className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-[var(--text)] placeholder:text-[var(--text-tertiary)] focus:ring-0 sm:text-sm"
                   placeholder="Search commands..."
+                  aria-label="Search commands"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   autoFocus
@@ -432,7 +462,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
                                   {command.description && (
                                     <p className={cn(
                                       'text-xs',
-                                      isSelected ? 'text-blue-100' : 'text-[var(--text-secondary)]'
+                                      isSelected ? 'text-white/80' : 'text-[var(--text-secondary)]'
                                     )}>
                                       {command.description}
                                     </p>

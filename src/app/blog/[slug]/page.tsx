@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getBlogPostBySlug, getAllBlogSlugs } from '@/lib/markdown'
+import { getBlogPostBySlug, getAllBlogSlugs, getAdjacentBlogPosts } from '@/lib/markdown'
 import BlogPostClient from './BlogPostClient'
 
 // Force static generation for all blog pages
@@ -162,7 +162,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify([articleSchema, breadcrumbSchema]) }}
       />
-      <BlogPostClient post={post} />
+      <BlogPostClient post={post} adjacentPosts={getAdjacentBlogPosts(slug)} />
     </>
   )
 }

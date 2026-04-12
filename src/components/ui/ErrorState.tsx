@@ -45,38 +45,38 @@ const errorConfig: Record<ErrorType, {
   network: {
     icon: WifiIcon,
     title: 'Connection Error',
-    description: 'Please check your internet connection and try again.',
-    color: 'text-orange-500',
+    description: 'Check your connection and try again.',
+    color: 'text-[var(--warning)]',
   },
   server: {
     icon: ServerIcon,
     title: 'Server Error',
-    description: 'Something went wrong on our end. Please try again later.',
-    color: 'text-red-500',
+    description: 'The server didn\'t respond. Try again in a few seconds.',
+    color: 'text-[var(--error)]',
   },
   timeout: {
     icon: ClockIcon,
     title: 'Request Timeout',
-    description: 'The request took too long. Please try again.',
-    color: 'text-yellow-500',
+    description: 'This took too long. Check your connection and try again.',
+    color: 'text-[var(--warning)]',
   },
   permission: {
     icon: ShieldExclamationIcon,
     title: 'Permission Denied',
-    description: 'You don\'t have permission to access this resource.',
-    color: 'text-purple-500',
+    description: 'You don\'t have access to this page.',
+    color: 'text-[var(--primary)]',
   },
   notfound: {
     icon: ExclamationTriangleIcon,
     title: 'Not Found',
-    description: 'The requested resource could not be found.',
-    color: 'text-gray-500',
+    description: 'This page doesn\'t exist or has been moved.',
+    color: 'text-[var(--text-tertiary)]',
   },
   generic: {
     icon: ExclamationTriangleIcon,
     title: 'Something went wrong',
-    description: 'An unexpected error occurred. Please try again.',
-    color: 'text-red-500',
+    description: 'Something went wrong. Try again in a moment.',
+    color: 'text-[var(--error)]',
   },
 }
 
@@ -249,7 +249,7 @@ export function ErrorState({
           className="mt-4 p-3 bg-[var(--error)]/10 border border-[var(--error)]/20 rounded-md"
         >
           <p className="text-sm text-[var(--error)]">
-            Maximum retry attempts reached. Please try again later or contact support.
+            Still not working. Try refreshing the page or come back later.
           </p>
         </motion.div>
       )}
@@ -272,7 +272,7 @@ export function ErrorBoundaryFallback({
         error={error}
         errorType="generic"
         title="Application Error"
-        description="Something went wrong in the application. The error has been logged and we'll look into it."
+        description="Something went wrong. Try reloading the page."
         onRetry={resetErrorBoundary}
         action="Reload Application"
         variant="card"
@@ -300,7 +300,7 @@ export function LoadingError({
     <ErrorState
       errorType="generic"
       title={`Failed to load ${resource}`}
-      description={`We couldn't load the ${resource}. Please check your connection and try again.`}
+      description={`Couldn't load ${resource}. Check your connection and try again.`}
       onRetry={onRetry}
       variant="minimal"
     />

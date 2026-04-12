@@ -7,7 +7,7 @@ import { type Project } from '@/lib/projects'
 import { LoadingError } from '@/components/ui/ErrorState'
 import { toast } from '@/components/ui/Toast'
 
-const categories = ['All', 'Geospatial AI & Predictive Analytics', 'Geospatial AI & Optimization', 'Computer Vision', 'Natural Language Processing', 'Machine Learning & MLOps', 'Web Application']
+const categories = ['All', 'Geospatial AI', 'Computer Vision', 'Natural Language Processing', 'Machine Learning & MLOps', 'Web Application']
 
 const PROJECTS_PER_PAGE = 6
 
@@ -33,7 +33,7 @@ export default function ProjectsPageContent() {
       } catch (err) {
         setError(err as Error)
         setProjects([])
-        toast.error('Failed to load projects', 'Please try refreshing the page')
+        toast.error('Couldn\'t load projects', 'Try refreshing the page')
       } finally {
         setLoading(false)
       }
@@ -68,7 +68,7 @@ export default function ProjectsPageContent() {
   }, [selectedCategory])
 
   return (
-    <div className="relative py-16 min-h-screen bg-[var(--background)]">
+    <div className="relative py-16 sm:py-24 min-h-screen bg-[var(--background)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header - Left aligned */}
         <div className="mb-12 max-w-4xl">
@@ -115,7 +115,7 @@ export default function ProjectsPageContent() {
                 })
                 .catch(err => {
                   setError(err)
-                  toast.error('Failed to load projects')
+                  toast.error('Couldn\'t load projects')
                 })
                 .finally(() => setLoading(false))
             }}
@@ -156,7 +156,13 @@ export default function ProjectsPageContent() {
             {/* Empty State */}
             {filteredProjects.length === 0 && !error && (
               <div className="text-center py-12">
-                <p className="text-[var(--text-secondary)]">No projects found in this category.</p>
+                <p className="text-[var(--text-secondary)] mb-4">No projects in this category yet.</p>
+                <button
+                  onClick={() => setSelectedCategory('All')}
+                  className="text-[var(--primary)] font-medium hover:underline"
+                >
+                  Show all projects
+                </button>
               </div>
             )}
           </>

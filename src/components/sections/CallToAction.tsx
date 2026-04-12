@@ -5,7 +5,7 @@ import { ArrowRightIcon, SparklesIcon } from '@heroicons/react/24/outline'
 
 export default function CallToAction() {
   return (
-    <section className="relative min-h-[50vh] py-16 sm:py-20 lg:py-24 flex items-center bg-transparent border-y border-[var(--border)]">
+    <section className="relative min-h-[50vh] py-16 sm:py-24 flex items-center bg-transparent border-y border-[var(--border)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div className="max-w-2xl mx-auto text-center">
           <div className="mb-8">

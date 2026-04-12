@@ -143,7 +143,7 @@ export default function Hero() {
               className="inline-flex items-center gap-0.5 text-[var(--primary)] font-semibold underline underline-offset-2 decoration-[var(--primary)]/30 hover:decoration-[var(--primary)] transition-all"
             >
               COMSATS
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0 translate-y-[-1px]">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0 translate-y-[-1px]" aria-hidden="true">
                 <path d="M3.5 2.5H9.5V8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M9.5 2.5L2.5 9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -158,7 +158,7 @@ export default function Hero() {
               className="inline-flex items-center gap-0.5 text-[var(--primary)] font-semibold underline underline-offset-2 decoration-[var(--primary)]/30 hover:decoration-[var(--primary)] transition-all"
             >
               Cointegration
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0 translate-y-[-1px]">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0 translate-y-[-1px]" aria-hidden="true">
                 <path d="M3.5 2.5H9.5V8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M9.5 2.5L2.5 9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -173,7 +173,7 @@ export default function Hero() {
           >
             <span className="inline-flex items-center gap-2">
               <span
-                className="w-1.5 h-1.5 rounded-full bg-green-500"
+                className="w-1.5 h-1.5 rounded-full bg-[var(--success)]"
                 aria-hidden="true"
               />
               <span>Available for roles</span>
@@ -251,7 +251,7 @@ export default function Hero() {
                   >
                     {item}
                   </span>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 text-[var(--primary)]">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 text-[var(--primary)]" aria-hidden="true">
                     <path d="M8 0L9.79 6.21L16 8L9.79 9.79L8 16L6.21 9.79L0 8L6.21 6.21L8 0Z" fill="currentColor" />
                   </svg>
                 </span>

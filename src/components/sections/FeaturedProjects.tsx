@@ -11,8 +11,13 @@ export default function FeaturedProjects() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
-  useEffect(() => {
-    fetch('/api/projects')
+  const loadProjects = () => {
+    setError(false)
+    setLoading(true)
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 15000)
+
+    fetch('/api/projects', { signal: controller.signal })
       .then(res => res.json())
       .then(data => {
         const featured = data.filter((project: Project) => project.featured).slice(0, 3)
@@ -23,10 +28,15 @@ export default function FeaturedProjects() {
         setError(true)
         setLoading(false)
       })
+      .finally(() => clearTimeout(timeout))
+  }
+
+  useEffect(() => {
+    loadProjects()
   }, [])
 
   return (
-    <section id="projects" className="relative pt-20 pb-16">
+    <section id="projects" className="relative py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 max-w-4xl">
           <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)] mb-4">Featured Projects</h2>
@@ -45,33 +55,19 @@ export default function FeaturedProjects() {
         ) : error ? (
           <div className="text-center py-12">
             <p className="text-[var(--text-secondary)] mb-4">
-              Failed to load projects. Please try again.
+              Couldn&apos;t load projects. Check your connection and try again.
             </p>
             <button
-              onClick={() => {
-                setError(false)
-                setLoading(true)
-                fetch('/api/projects')
-                  .then(res => res.json())
-                  .then(data => {
-                    const featured = data.filter((project: Project) => project.featured).slice(0, 3)
-                    setFeaturedProjects(featured)
-                    setLoading(false)
-                  })
-                  .catch(() => {
-                    setError(true)
-                    setLoading(false)
-                  })
-              }}
-              className="bg-[var(--primary)] text-white px-6 py-2 rounded-md font-medium hover:bg-[var(--primary-hover)] transition-colors"
+              onClick={loadProjects}
+              className="bg-[var(--primary)] text-white px-6 py-2 rounded-lg font-medium hover:bg-[var(--primary-hover)] transition-colors"
             >
-              Retry
+              Load projects
             </button>
           </div>
         ) : featuredProjects.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-[var(--text-secondary)] mb-4">
-              No projects to display right now.
+              No projects found. Try refreshing the page.
             </p>
             <button
               onClick={() => window.location.reload()}
@@ -93,7 +89,7 @@ export default function FeaturedProjects() {
         <div className="text-center">
           <Link
             href="/projects"
-            className="inline-flex items-center bg-[var(--primary)] text-white px-6 py-3 rounded-md font-medium hover:bg-[var(--primary-hover)] transition-colors shadow-lg"
+            className="inline-flex items-center bg-[var(--primary)] text-white px-6 py-3 rounded-lg font-medium hover:bg-[var(--primary-hover)] transition-colors shadow-lg"
           >
             View All Projects
           </Link>

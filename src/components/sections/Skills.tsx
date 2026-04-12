@@ -34,7 +34,7 @@ const SkillBadge = ({ name }: { name: string }) => {
 export default function Skills() {
   return (
     <section className="relative min-h-screen flex items-center">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full py-16 sm:py-24">
         <div className="mb-12 max-w-4xl">
           <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)] mb-4">Skills & Expertise</h2>
           <p className="text-base sm:text-lg text-[var(--text-secondary)]">

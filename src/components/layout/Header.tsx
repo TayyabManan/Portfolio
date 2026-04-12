@@ -3,9 +3,10 @@
 import { useState, useEffect, lazy, Suspense } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Bars3Icon, XMarkIcon, MagnifyingGlassIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, MagnifyingGlassIcon, ChatBubbleLeftRightIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline'
 import Logo from '@/components/ui/Logo'
 import { useCommandPalette } from '@/components/ui/CommandPalette'
+import { useTheme } from '@/contexts/ThemeContext'
 
 // Lazy load the CommandPalette component for better performance
 const CommandPalette = lazy(() => import('@/components/ui/CommandPalette').then(mod => ({ default: mod.CommandPalette })))
@@ -22,6 +23,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const { isOpen, open: openCommandPalette, close: closeCommandPalette } = useCommandPalette()
+  const { theme, toggleTheme } = useTheme()
 
   const pathname = usePathname()
 
@@ -191,6 +193,20 @@ export default function Header() {
               </div>
             </button>
 
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              type="button"
+              className="p-2 min-h-[44px] min-w-[44px] rounded-lg transition-all duration-200 group flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--primary)] hover:bg-[var(--background-secondary)]"
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {theme === 'dark' ? (
+                <SunIcon className="h-5 w-5" />
+              ) : (
+                <MoonIcon className="h-5 w-5" />
+              )}
+            </button>
+
             {/* Resume Button */}
             <Link
               href="/resume"
@@ -260,7 +276,7 @@ export default function Header() {
               </Link>
 
               {/* Mobile Controls */}
-              <div className="flex items-center gap-2 z-10">
+              <div className="flex items-center gap-1 z-10">
                 {/* Mobile Search */}
                 <button
                   onClick={openCommandPalette}
@@ -269,6 +285,20 @@ export default function Header() {
                   aria-label="Open search"
                 >
                   <MagnifyingGlassIcon className="h-5 w-5" />
+                </button>
+
+                {/* Mobile Theme Toggle */}
+                <button
+                  onClick={toggleTheme}
+                  type="button"
+                  className="p-2 min-h-[44px] min-w-[44px] transition-colors rounded-lg flex items-center justify-center text-[var(--text-secondary)] active:text-[var(--primary)] active:bg-[var(--background-secondary)]"
+                  aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                >
+                  {theme === 'dark' ? (
+                    <SunIcon className="h-5 w-5" />
+                  ) : (
+                    <MoonIcon className="h-5 w-5" />
+                  )}
                 </button>
 
                 {/* Hamburger Menu */}
@@ -329,7 +359,7 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`flex items-center justify-between px-4 py-3 rounded-xl font-medium transition-all duration-200 active:scale-95 ${
+                    className={`flex items-center justify-between px-4 py-3 rounded-xl font-medium transition-all duration-200 active:scale-[0.98] ${
                       active
                         ? 'text-[var(--primary)]'
                         : 'text-[var(--text)] active:bg-[var(--background-secondary)]'
@@ -348,7 +378,7 @@ export default function Header() {
               {/* Resume Button */}
               <Link
                 href="/resume"
-                className="flex items-center justify-center px-4 py-3 mt-2 text-white font-medium rounded-xl transition-all duration-200 active:scale-95 gap-2 bg-[var(--primary)] active:bg-[var(--primary-hover)]"
+                className="flex items-center justify-center px-4 py-3 mt-2 text-white font-medium rounded-xl transition-all duration-200 active:scale-[0.98] gap-2 bg-[var(--primary)] active:bg-[var(--primary-hover)]"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Resume

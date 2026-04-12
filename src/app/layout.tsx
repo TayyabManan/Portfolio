@@ -355,8 +355,13 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var t = ${JSON.stringify(themes.light)};
+                  var themes = ${JSON.stringify(themes)};
+                  var saved = localStorage.getItem('theme');
+                  var key = (saved === 'dark' || saved === 'light') ? saved :
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                  var t = themes[key];
                   var r = document.documentElement;
+                  r.setAttribute('data-theme', key);
                   Object.entries(t).forEach(function(e) {
                     r.style.setProperty('--' + e[0].replace(/([A-Z])/g, '-$1').toLowerCase(), e[1]);
                   });

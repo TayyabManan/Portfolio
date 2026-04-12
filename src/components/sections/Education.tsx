@@ -50,11 +50,11 @@ export default function Education() {
               <div className="absolute top-6 right-6">
                 <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${
                   edu.status === 'In Progress'
-                    ? 'bg-green-500/10 text-green-500 border border-green-500/20'
-                    : 'bg-blue-500/10 text-blue-500 border border-blue-500/20'
+                    ? 'bg-[var(--success)]/10 text-[var(--success)] border border-[var(--success)]/20'
+                    : 'bg-[var(--primary)]/10 text-[var(--primary)] border border-[var(--primary)]/20'
                 }`}>
                   {edu.status === 'In Progress' && (
-                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    <span className="w-2 h-2 rounded-full bg-[var(--success)] animate-pulse"></span>
                   )}
                   {edu.status}
                 </span>

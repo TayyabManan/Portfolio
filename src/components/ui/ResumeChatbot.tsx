@@ -70,6 +70,9 @@ export default function ResumeChatbot() {
     setIsLoading(true)
     setError(null)
 
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 30000)
+
     try {
       const response = await fetch('/api/chatbot', {
         method: 'POST',
@@ -82,6 +85,7 @@ export default function ResumeChatbot() {
             content: m.content
           }))
         }),
+        signal: controller.signal,
       })
 
       if (!response.ok) {
@@ -126,17 +130,18 @@ export default function ResumeChatbot() {
       if (error?.status === 429 || error?.message?.includes('429')) {
         const errorMsg = 'Too many messages. Please wait a moment before sending another.'
         setError(errorMsg)
-        toast.warning('Rate limit exceeded', errorMsg)
+        toast.warning('Slow down', errorMsg)
       } else if (error?.status === 503 || error?.message?.includes('503')) {
         const errorMsg = 'Chat service is temporarily unavailable. Please try again later.'
         setError(errorMsg)
-        toast.error('Service unavailable', errorMsg)
+        toast.error('Chat is down', errorMsg)
       } else {
         const errorMsg = 'Failed to get response. Please try again.'
         setError(errorMsg)
-        toast.error('Chat error', errorMsg)
+        toast.error('Couldn\'t get a response', errorMsg)
       }
     } finally {
+      clearTimeout(timeout)
       setIsLoading(false)
     }
   }
@@ -264,7 +269,7 @@ export default function ResumeChatbot() {
                 )}
                 {error && (
                   <div className="flex justify-center">
-                    <div className="bg-red-100 text-red-600 rounded-lg px-4 py-2 text-sm">
+                    <div className="bg-[var(--error)]/10 text-[var(--error)] rounded-lg px-4 py-2 text-sm">
                       {error}
                     </div>
                   </div>

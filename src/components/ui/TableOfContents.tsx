@@ -301,7 +301,7 @@ export default function TableOfContents({ content, variant = 'both' }: TableOfCo
 
         {isOpen && (
           <div className="mt-2 p-4 bg-[var(--background-secondary)] rounded-lg border border-[var(--border)] animate-fadeIn">
-            <nav>
+            <nav aria-label="Table of contents">
               <ul className="space-y-2">
                 {tocItems.map((item) => (
                   <li key={item.id} style={{ paddingLeft: `${(item.level - 2) * 1}rem` }}>
@@ -348,6 +348,7 @@ export default function TableOfContents({ content, variant = 'both' }: TableOfCo
             </div>
 
             <nav
+              aria-label="Table of contents"
               ref={navRef}
               className={`flex-1 overscroll-contain ${hasOverflow ? 'overflow-y-auto' : 'overflow-y-hidden'}`}
               style={{ scrollbarWidth: 'thin' }}
