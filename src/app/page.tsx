@@ -2,7 +2,6 @@ import { Metadata } from 'next'
 import Hero from '@/components/sections/Hero'
 import Education from '@/components/sections/Education'
 import FeaturedProjects from '@/components/sections/FeaturedProjects'
-import Skills from '@/components/sections/Skills'
 import CurrentlyLearning from '@/components/sections/CurrentlyLearning'
 import CallToAction from '@/components/sections/CallToAction'
 
@@ -41,7 +40,6 @@ export default function HomePage() {
     <>
       <Hero />
       <FeaturedProjects />
-      <Skills />
       <Education />
       <CurrentlyLearning />
       <CallToAction />

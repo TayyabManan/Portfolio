@@ -1,15 +1,12 @@
 'use client'
 
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Bars3Icon, XMarkIcon, MagnifyingGlassIcon, ChatBubbleLeftRightIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline'
 import Logo from '@/components/ui/Logo'
-import { useCommandPalette } from '@/components/ui/CommandPalette'
+import { CommandPalette, useCommandPalette } from '@/components/ui/CommandPalette'
 import { useTheme } from '@/contexts/ThemeContext'
-
-// Lazy load the CommandPalette component for better performance
-const CommandPalette = lazy(() => import('@/components/ui/CommandPalette').then(mod => ({ default: mod.CommandPalette })))
 
 const navigationItems = [
   { name: 'Home', href: '/', shortcut: 'Alt+H' },
@@ -188,9 +185,6 @@ export default function Header() {
               aria-label="Open command palette"
             >
               <MagnifyingGlassIcon className="h-5 w-5" />
-              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 bg-[var(--background-tertiary)] text-[var(--text)] border border-[var(--border)]">
-                ⌘K
-              </div>
             </button>
 
             {/* Theme Toggle */}
@@ -393,11 +387,7 @@ export default function Header() {
       <div className="h-16" />
 
       {/* Command Palette */}
-      {isOpen && (
-        <Suspense fallback={<div className="fixed inset-0 z-[110] bg-black/50" />}>
-          <CommandPalette isOpen={isOpen} onClose={closeCommandPalette} />
-        </Suspense>
-      )}
+      <CommandPalette isOpen={isOpen} onClose={closeCommandPalette} />
     </>
   )
 }

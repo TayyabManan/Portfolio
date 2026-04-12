@@ -53,7 +53,10 @@ export default function Hero() {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768)
+    const update = () => setIsMobile(window.innerWidth < 768)
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
   }, [])
 
   useEffect(() => {
@@ -233,7 +236,7 @@ export default function Hero() {
         <motion.div
           className="flex whitespace-nowrap"
           animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: isMobile ? 12 : 25, ease: 'linear', repeat: Infinity }}
+          transition={{ duration: isMobile ? 8 : 25, ease: 'linear', repeat: Infinity }}
         >
           {[0, 1].map((i) => (
             <div key={i} className="flex shrink-0 items-center">

@@ -1,8 +1,6 @@
 'use client'
 
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
+import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react'
 import {
   MagnifyingGlassIcon,
   HomeIcon,
@@ -44,12 +42,12 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
   const [search, setSearch] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [recentCommands, setRecentCommands] = useState<string[]>([])
-  const listRef = React.useRef<HTMLUListElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [visible, setVisible] = useState(false)
 
   const navigate = useCallback((path: string) => {
-    // Use router.push for smooth navigation
     router.push(path)
-    // Add fallback to ensure navigation completes
     setTimeout(() => {
       if (window.location.pathname !== path) {
         window.location.href = path
@@ -63,10 +61,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       title: 'Go to Home',
       description: 'Navigate to the homepage',
       icon: HomeIcon,
-      action: () => {
-        navigate('/')
-        onClose()
-      },
+      action: () => { navigate('/'); onClose() },
       keywords: ['home', 'main', 'index'],
       category: 'Navigation',
       shortcut: 'Alt+H',
@@ -76,10 +71,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       title: 'View Projects',
       description: 'Browse all projects',
       icon: BriefcaseIcon,
-      action: () => {
-        navigate('/projects')
-        onClose()
-      },
+      action: () => { navigate('/projects'); onClose() },
       keywords: ['work', 'portfolio', 'gis'],
       category: 'Navigation',
       shortcut: 'Alt+P',
@@ -89,10 +81,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       title: 'Read Blog',
       description: 'Browse blog posts and articles',
       icon: NewspaperIcon,
-      action: () => {
-        navigate('/blog')
-        onClose()
-      },
+      action: () => { navigate('/blog'); onClose() },
       keywords: ['blog', 'articles', 'posts', 'writing'],
       category: 'Navigation',
       shortcut: 'Alt+B',
@@ -102,10 +91,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       title: 'About Me',
       description: 'Learn more about my background',
       icon: UserIcon,
-      action: () => {
-        navigate('/about')
-        onClose()
-      },
+      action: () => { navigate('/about'); onClose() },
       keywords: ['bio', 'background', 'experience'],
       category: 'Navigation',
       shortcut: 'Alt+A',
@@ -115,10 +101,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       title: 'View Resume',
       description: 'Download or view my resume',
       icon: DocumentTextIcon,
-      action: () => {
-        navigate('/resume')
-        onClose()
-      },
+      action: () => { navigate('/resume'); onClose() },
       keywords: ['cv', 'download', 'pdf'],
       category: 'Navigation',
       shortcut: 'Alt+R',
@@ -128,10 +111,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       title: 'Contact Me',
       description: 'Get in touch',
       icon: EnvelopeIcon,
-      action: () => {
-        navigate('/contact')
-        onClose()
-      },
+      action: () => { navigate('/contact'); onClose() },
       keywords: ['email', 'message', 'reach'],
       category: 'Navigation',
       shortcut: 'Alt+C',
@@ -141,10 +121,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       title: 'View Source Code',
       description: 'Open GitHub repository',
       icon: CommandLineIcon,
-      action: () => {
-        window.open('https://github.com/TayyabManan/GIS-Portfolio', '_blank')
-        onClose()
-      },
+      action: () => { window.open('https://github.com/TayyabManan/GIS-Portfolio', '_blank'); onClose() },
       keywords: ['github', 'code', 'repository'],
       category: 'External',
       shortcut: 'Alt+G',
@@ -154,10 +131,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       title: theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode',
       description: theme === 'dark' ? 'Use the light color scheme' : 'Use the dark color scheme',
       icon: theme === 'dark' ? SunIcon : MoonIcon,
-      action: () => {
-        toggleTheme()
-        onClose()
-      },
+      action: () => { toggleTheme(); onClose() },
       keywords: ['theme', 'dark', 'light', 'mode', 'toggle'],
       category: 'Settings',
     },
@@ -166,370 +140,275 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       title: 'Use System Theme',
       description: 'Follow your operating system preference',
       icon: ComputerDesktopIcon,
-      action: () => {
-        setPreference('system')
-        onClose()
-      },
+      action: () => { setPreference('system'); onClose() },
       keywords: ['theme', 'system', 'auto', 'os'],
       category: 'Settings',
     }] : []),
   ], [navigate, onClose, theme, preference, toggleTheme, setPreference])
 
-  // Load recent commands from localStorage
+  // Load recent commands
   useEffect(() => {
     const saved = localStorage.getItem('recentCommands')
     if (saved) {
-      try {
-        setRecentCommands(JSON.parse(saved))
-      } catch {
-        // Invalid JSON in localStorage - ignore and use empty array
-      }
+      try { setRecentCommands(JSON.parse(saved)) } catch { /* ignore */ }
     }
   }, [])
 
-  // Update recent commands when a command is executed
   const executeCommand = useCallback((command: CommandItem) => {
-    // Update recent commands
     const updated = [command.id, ...recentCommands.filter(id => id !== command.id)].slice(0, 5)
     setRecentCommands(updated)
     localStorage.setItem('recentCommands', JSON.stringify(updated))
-
-    // Execute the command action
     command.action()
   }, [recentCommands])
 
-  const allCommands = useMemo(() => {
-    return [...defaultCommands, ...additionalCommands]
-  }, [defaultCommands, additionalCommands])
+  const allCommands = useMemo(() => [...defaultCommands, ...additionalCommands], [defaultCommands, additionalCommands])
 
   const filteredCommands = useMemo(() => {
     if (!search) return allCommands
-
     const searchLower = search.toLowerCase()
     return allCommands.filter(command => {
-      const titleMatch = command.title.toLowerCase().includes(searchLower)
-      const descMatch = command.description?.toLowerCase().includes(searchLower)
-      const keywordMatch = command.keywords?.some(k => k.toLowerCase().includes(searchLower))
-      const categoryMatch = command.category?.toLowerCase().includes(searchLower)
-      
-      return titleMatch || descMatch || keywordMatch || categoryMatch
+      return command.title.toLowerCase().includes(searchLower)
+        || command.description?.toLowerCase().includes(searchLower)
+        || command.keywords?.some(k => k.toLowerCase().includes(searchLower))
+        || command.category?.toLowerCase().includes(searchLower)
     })
   }, [search, allCommands])
 
   const groupedCommands = useMemo(() => {
     const groups: Record<string, CommandItem[]> = {}
 
-    // Add recent commands as the first group if no search and recent commands exist
     if (!search && recentCommands.length > 0) {
-      const recentCommandItems = recentCommands
+      const recentItems = recentCommands
         .map(id => allCommands.find(cmd => cmd.id === id))
         .filter(Boolean) as CommandItem[]
-
-      if (recentCommandItems.length > 0) {
-        groups['Recent'] = recentCommandItems
-      }
+      if (recentItems.length > 0) groups['Recent'] = recentItems
     }
 
-    // Group remaining commands
     filteredCommands.forEach(command => {
-      // Skip if already in recent commands
-      if (!search && recentCommands.includes(command.id)) {
-        return
-      }
-
+      if (!search && recentCommands.includes(command.id)) return
       const category = command.category || 'Other'
-      if (!groups[category]) {
-        groups[category] = []
-      }
+      if (!groups[category]) groups[category] = []
       groups[category].push(command)
     })
 
     return groups
   }, [filteredCommands, search, recentCommands, allCommands])
 
-  // Flat array of commands in display order for keyboard navigation
-  const displayOrderCommands = useMemo(() => {
-    const commands: CommandItem[] = []
-    Object.values(groupedCommands).forEach(group => {
-      commands.push(...group)
-    })
-    return commands
+  // Flat list for keyboard nav
+  const flatCommands = useMemo(() => {
+    return Object.values(groupedCommands).flat()
   }, [groupedCommands])
 
-  const scrollToItem = useCallback((index: number) => {
-    requestAnimationFrame(() => {
-      const selectedElement = document.querySelector(`[data-command-index="${index}"]`) as HTMLElement
-      const container = listRef.current
-      
-      if (selectedElement && container) {
-        const containerRect = container.getBoundingClientRect()
-        const elementRect = selectedElement.getBoundingClientRect()
-        
-        if (elementRect.bottom > containerRect.bottom) {
-          container.scrollTop += elementRect.bottom - containerRect.bottom + 10
-        } else if (elementRect.top < containerRect.top) {
-          container.scrollTop -= containerRect.top - elementRect.top + 10
-        }
-      }
-    })
-  }, [])
-
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (!isOpen) return
-
-    if (e.key === 'Escape') {
-      e.preventDefault()
-      e.stopPropagation()
-      onClose()
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault()
-      e.stopPropagation()
-      setSelectedIndex(prev => {
-        const newIndex = prev < displayOrderCommands.length - 1 ? prev + 1 : 0
-        scrollToItem(newIndex)
-        return newIndex
-      })
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      e.stopPropagation()
-      setSelectedIndex(prev => {
-        const newIndex = prev > 0 ? prev - 1 : displayOrderCommands.length - 1
-        scrollToItem(newIndex)
-        return newIndex
-      })
-    } else if (e.key === 'Enter' && displayOrderCommands[selectedIndex]) {
-      e.preventDefault()
-      e.stopPropagation()
-      executeCommand(displayOrderCommands[selectedIndex])
-    }
-  }, [displayOrderCommands, selectedIndex, isOpen, scrollToItem, onClose, executeCommand])
-
-  useEffect(() => {
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown)
-      return () => document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [isOpen, handleKeyDown])
-
-  useEffect(() => {
-    setSelectedIndex(0)
-  }, [search])
-
+  // Animate in/out
   useEffect(() => {
     if (isOpen) {
       setSearch('')
       setSelectedIndex(0)
+      // Trigger animation on next frame
+      requestAnimationFrame(() => setVisible(true))
+    } else {
+      setVisible(false)
     }
   }, [isOpen])
 
-  // Lock body scroll when command palette is open
+  // Focus input when opened
+  useEffect(() => {
+    if (isOpen && visible) {
+      inputRef.current?.focus()
+    }
+  }, [isOpen, visible])
+
+  // Reset selection on search change
+  useEffect(() => { setSelectedIndex(0) }, [search])
+
+  // Keyboard handling
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case 'Escape':
+          e.preventDefault()
+          onClose()
+          break
+        case 'ArrowDown':
+          e.preventDefault()
+          setSelectedIndex(prev => (prev + 1) % flatCommands.length)
+          break
+        case 'ArrowUp':
+          e.preventDefault()
+          setSelectedIndex(prev => (prev - 1 + flatCommands.length) % flatCommands.length)
+          break
+        case 'Enter':
+          e.preventDefault()
+          if (flatCommands[selectedIndex]) executeCommand(flatCommands[selectedIndex])
+          break
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, flatCommands, selectedIndex, onClose, executeCommand])
+
+  // Scroll selected item into view
+  useEffect(() => {
+    if (!listRef.current) return
+    const selected = listRef.current.querySelector(`[data-index="${selectedIndex}"]`) as HTMLElement
+    if (selected) {
+      selected.scrollIntoView({ block: 'nearest' })
+    }
+  }, [selectedIndex])
+
+  // Lock body scroll
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
     }
-    return () => {
-      document.body.style.overflow = ''
-    }
+    return () => { document.body.style.overflow = '' }
   }, [isOpen])
 
-  // Prevent background scroll when scrolling inside command palette
-  useEffect(() => {
-    const list = listRef.current
-    if (!list || !isOpen) return
+  if (!isOpen) return null
 
-    const handleWheel = (e: WheelEvent) => {
-      const atTop = list.scrollTop === 0
-      const atBottom = list.scrollTop + list.clientHeight >= list.scrollHeight - 1
-
-      // If scrolling up and at top, or scrolling down and at bottom, prevent it
-      // Otherwise, stop propagation to prevent background scroll
-      if ((e.deltaY < 0 && atTop) || (e.deltaY > 0 && atBottom)) {
-        e.preventDefault()
-      } else {
-        e.stopPropagation()
-      }
-    }
-
-    list.addEventListener('wheel', handleWheel, { passive: false })
-
-    return () => list.removeEventListener('wheel', handleWheel)
-  }, [isOpen])
-
-  let currentIndex = -1
+  let itemIndex = -1
 
   return (
-    <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-[120]"
-        onClose={onClose}
-        onKeyDown={(e: React.KeyboardEvent) => {
-          if (e.key === 'Escape') {
-            e.preventDefault()
-            e.stopPropagation()
-            onClose()
-          }
-        }}
-      >
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-150"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-100"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+    <div className="fixed inset-0 z-[120]" onWheel={(e) => e.stopPropagation()} data-lenis-prevent>
+      {/* Backdrop */}
+      <div
+        className={cn(
+          'absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-200',
+          visible ? 'opacity-100' : 'opacity-0'
+        )}
+        onClick={onClose}
+      />
+
+      {/* Dialog */}
+      <div className="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20" onClick={onClose}>
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className={cn(
+            'mx-auto max-w-2xl divide-y divide-[var(--border)] overflow-hidden rounded-xl bg-[var(--background)] shadow-2xl ring-1 ring-[var(--border)] transition-all duration-200',
+            visible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-4'
+          )}
         >
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
-        </Transition.Child>
+          {/* Search Input */}
+          <div className="relative">
+            <MagnifyingGlassIcon
+              className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-[var(--text-tertiary)]"
+              aria-hidden="true"
+            />
+            <input
+              ref={inputRef}
+              type="text"
+              className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-[var(--text)] placeholder:text-[var(--text-tertiary)] focus:ring-0 focus:outline-none sm:text-sm"
+              placeholder="Search commands..."
+              aria-label="Search commands"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <div className="absolute right-4 top-3 text-xs text-[var(--text-tertiary)]">
+              Press <kbd className="px-1.5 py-0.5 bg-[var(--background-secondary)] rounded">ESC</kbd> to close
+            </div>
+          </div>
 
-        <div className="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20">
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-150"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
-            leave="ease-in duration-100"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
-          >
-            <Dialog.Panel className="mx-auto max-w-2xl transform divide-y divide-[var(--border)] overflow-hidden rounded-xl bg-[var(--background)] shadow-2xl ring-1 ring-[var(--border)] transition-all">
-              <div className="relative">
-                <MagnifyingGlassIcon
-                  className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-[var(--text-tertiary)]"
-                  aria-hidden="true"
-                />
-                <input
-                  type="text"
-                  className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-[var(--text)] placeholder:text-[var(--text-tertiary)] focus:ring-0 sm:text-sm"
-                  placeholder="Search commands..."
-                  aria-label="Search commands"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  autoFocus
-                />
-                <div className="absolute right-4 top-3 text-xs text-[var(--text-tertiary)]">
-                  Press <kbd className="px-1.5 py-0.5 bg-[var(--background-secondary)] rounded">ESC</kbd> to close
+          {/* Results */}
+          {flatCommands.length > 0 ? (
+            <div ref={listRef} className="max-h-80 overflow-y-auto overscroll-contain py-2 text-sm text-[var(--text)]">
+              {Object.entries(groupedCommands).map(([category, commands]) => (
+                <div key={category}>
+                  <div className="bg-[var(--background-secondary)] px-4 py-2 text-xs font-semibold text-[var(--text-secondary)]">
+                    {category}
+                  </div>
+                  {commands.map((command) => {
+                    itemIndex++
+                    const idx = itemIndex
+                    const isSelected = idx === selectedIndex
+                    const Icon = command.icon
+
+                    return (
+                      <div
+                        key={command.id}
+                        data-index={idx}
+                        className={cn(
+                          'cursor-pointer select-none px-4 py-2.5 flex items-center justify-between group transition-colors duration-75',
+                          isSelected
+                            ? 'bg-[var(--primary)] text-white'
+                            : 'hover:bg-[var(--background-secondary)]'
+                        )}
+                        onClick={() => executeCommand(command)}
+                        onMouseMove={() => setSelectedIndex(idx)}
+                      >
+                        <div className="flex items-center gap-3">
+                          {Icon && (
+                            <Icon className={cn('h-5 w-5 flex-shrink-0', isSelected ? 'text-white' : 'text-[var(--text-tertiary)]')} />
+                          )}
+                          <div>
+                            <p className={cn('font-medium', isSelected ? 'text-white' : 'text-[var(--text)]')}>
+                              {command.title}
+                            </p>
+                            {command.description && (
+                              <p className={cn('text-xs', isSelected ? 'text-white/80' : 'text-[var(--text-secondary)]')}>
+                                {command.description}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {command.shortcut && (
+                            <kbd className={cn(
+                              'hidden sm:inline-block px-1.5 py-0.5 text-xs rounded',
+                              isSelected ? 'bg-white/20 text-white' : 'bg-[var(--background-tertiary)] text-[var(--text-secondary)]'
+                            )}>
+                              {command.shortcut}
+                            </kbd>
+                          )}
+                          <ArrowRightIcon
+                            className={cn(
+                              'h-4 w-4 transition-opacity duration-75',
+                              isSelected ? 'text-white opacity-100' : 'text-[var(--text-tertiary)] opacity-0 group-hover:opacity-100'
+                            )}
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
                 </div>
-              </div>
-
-              {filteredCommands.length > 0 ? (
-                <ul ref={listRef} className="max-h-80 scroll-py-2 overflow-y-auto py-2 text-sm text-[var(--text)]">
-                  {Object.entries(groupedCommands).map(([category, commands]) => (
-                    <li key={category}>
-                      <h2 className="bg-[var(--background-secondary)] px-4 py-2 text-xs font-semibold text-[var(--text-secondary)]">
-                        {category}
-                      </h2>
-                      <ul className="text-sm">
-                        {commands.map((command) => {
-                          currentIndex++
-                          const isSelected = currentIndex === selectedIndex
-                          const Icon = command.icon
-
-                          return (
-                            <li
-                              key={command.id}
-                              data-command-index={currentIndex}
-                              className={cn(
-                                'cursor-pointer select-none px-4 py-2 flex items-center justify-between group',
-                                isSelected
-                                  ? 'bg-[var(--primary)] text-white'
-                                  : 'hover:bg-[var(--background-secondary)]'
-                              )}
-                              onClick={() => executeCommand(command)}
-                              onMouseEnter={() => setSelectedIndex(currentIndex)}
-                            >
-                              <div className="flex items-center gap-3">
-                                {Icon && (
-                                  <Icon
-                                    className={cn(
-                                      'h-5 w-5 flex-shrink-0',
-                                      isSelected
-                                        ? 'text-white'
-                                        : 'text-[var(--text-tertiary)]'
-                                    )}
-                                  />
-                                )}
-                                <div>
-                                  <p className={cn(
-                                    'font-medium',
-                                    isSelected ? 'text-white' : 'text-[var(--text)]'
-                                  )}>
-                                    {command.title}
-                                  </p>
-                                  {command.description && (
-                                    <p className={cn(
-                                      'text-xs',
-                                      isSelected ? 'text-white/80' : 'text-[var(--text-secondary)]'
-                                    )}>
-                                      {command.description}
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                {command.shortcut && (
-                                  <kbd className={cn(
-                                    'hidden sm:inline-block px-1.5 py-0.5 text-xs rounded',
-                                    isSelected
-                                      ? 'bg-white/20 text-white'
-                                      : 'bg-[var(--background-tertiary)] text-[var(--text-secondary)]'
-                                  )}>
-                                    {command.shortcut}
-                                  </kbd>
-                                )}
-                                <ArrowRightIcon
-                                  className={cn(
-                                    'h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity',
-                                    isSelected ? 'text-white opacity-100' : 'text-[var(--text-tertiary)]'
-                                  )}
-                                />
-                              </div>
-                            </li>
-                          )
-                        })}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <div className="px-6 py-14 text-center text-sm sm:px-14">
-                  <CommandLineIcon
-                    className="mx-auto h-6 w-6 text-[var(--text-tertiary)]"
-                    aria-hidden="true"
-                  />
-                  <p className="mt-4 font-medium text-[var(--text)]">
-                    {search ? `No results for "${search}"` : 'No commands found'}
-                  </p>
-                  {search && (
-                    <p className="mt-2 text-xs text-[var(--text-secondary)]">
-                      Try searching for: projects, about, resume, or theme
-                    </p>
-                  )}
-                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="px-6 py-14 text-center text-sm sm:px-14">
+              <CommandLineIcon className="mx-auto h-6 w-6 text-[var(--text-tertiary)]" aria-hidden="true" />
+              <p className="mt-4 font-medium text-[var(--text)]">
+                {search ? `No results for "${search}"` : 'No commands found'}
+              </p>
+              {search && (
+                <p className="mt-2 text-xs text-[var(--text-secondary)]">
+                  Try searching for: projects, about, resume, or theme
+                </p>
               )}
+            </div>
+          )}
 
-              <div className="flex items-center justify-between border-t border-[var(--border)] bg-[var(--background-secondary)] px-4 py-2.5 text-xs text-[var(--text-secondary)]">
-                <div className="flex gap-2">
-                  <span>Navigate</span>
-                  <kbd className="px-1.5 py-0.5 bg-[var(--background)] rounded">↑↓</kbd>
-                </div>
-                <div className="flex gap-2">
-                  <span>Select</span>
-                  <kbd className="px-1.5 py-0.5 bg-[var(--background)] rounded">Enter</kbd>
-                </div>
-                <div className="flex gap-2">
-                  <span>Close</span>
-                  <kbd className="px-1.5 py-0.5 bg-[var(--background)] rounded">ESC</kbd>
-                </div>
-              </div>
-            </Dialog.Panel>
-          </Transition.Child>
+          {/* Footer */}
+          <div className="flex items-center justify-between border-t border-[var(--border)] bg-[var(--background-secondary)] px-4 py-2.5 text-xs text-[var(--text-secondary)]">
+            <div className="flex gap-2">
+              <span>Navigate</span>
+              <kbd className="px-1.5 py-0.5 bg-[var(--background)] rounded">↑↓</kbd>
+            </div>
+            <div className="flex gap-2">
+              <span>Select</span>
+              <kbd className="px-1.5 py-0.5 bg-[var(--background)] rounded">Enter</kbd>
+            </div>
+            <div className="flex gap-2">
+              <span>Close</span>
+              <kbd className="px-1.5 py-0.5 bg-[var(--background)] rounded">ESC</kbd>
+            </div>
+          </div>
         </div>
-      </Dialog>
-    </Transition.Root>
+      </div>
+    </div>
   )
 }
 
@@ -541,7 +420,6 @@ export function useCommandPalette() {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault()
         setIsOpen(true)
-        // Mark that user has used the command palette
         localStorage.setItem('command-palette-used', 'true')
       }
     }
@@ -552,10 +430,7 @@ export function useCommandPalette() {
 
   return {
     isOpen,
-    open: () => {
-      setIsOpen(true)
-      localStorage.setItem('command-palette-used', 'true')
-    },
+    open: () => { setIsOpen(true); localStorage.setItem('command-palette-used', 'true') },
     close: () => setIsOpen(false),
     toggle: () => setIsOpen(prev => !prev),
   }

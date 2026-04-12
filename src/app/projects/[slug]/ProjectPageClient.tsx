@@ -2,9 +2,12 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeftIcon, ArrowRightIcon, ArrowTopRightOnSquareIcon, CodeBracketIcon, CalendarIcon } from '@heroicons/react/24/outline'
+import { useState } from 'react'
+import { ArrowLeftIcon, ArrowRightIcon, ArrowTopRightOnSquareIcon, CodeBracketIcon, CalendarIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
 import { DynamicReactMarkdown } from '@/lib/dynamic-imports'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
+import ShareButtons from '@/components/ui/ShareButtons'
+import BackToTop from '@/components/ui/BackToTop'
 
 interface Project {
   slug: string
@@ -32,254 +35,104 @@ interface ProjectPageClientProps {
 }
 
 export default function ProjectPageClient({ project, adjacentProjects }: ProjectPageClientProps) {
+  const projectUrl = `https://tayyabmanan.com/projects/${project.slug}`
+  const [showTech, setShowTech] = useState(false)
+
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      {/* Hero Section */}
-      <div className="bg-[var(--background)] pt-8 pb-16">
+    <>
+      <div className="min-h-screen py-16 sm:py-24 bg-[var(--background)]">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div>
-            <div className="mb-6">
-              <Breadcrumbs
-                items={[
-                  { label: 'Home', href: '/' },
-                  { label: 'Projects', href: '/projects' },
-                  { label: project.category, current: true },
-                ]}
-                size="sm"
-                animated={false}
-              />
-            </div>
+          {/* Breadcrumbs */}
+          <div className="mb-8">
+            <Breadcrumbs
+              items={[
+                { label: 'Home', href: '/' },
+                { label: 'Projects', href: '/projects' },
+                { label: project.category, current: true },
+              ]}
+              size="sm"
+              animated={false}
+            />
+          </div>
 
-            <div className="flex flex-col lg:flex-row gap-8 items-start">
-              <div className="flex-1 order-2 lg:order-1">
-                {project.featured && (
-                  <div className="mb-4">
-                    <span className="inline-flex items-center rounded-full bg-[var(--warning)]/10 px-3 py-1 text-sm font-medium text-[var(--warning)]">
-                      Featured
-                    </span>
-                  </div>
-                )}
+          <article>
+            {/* Header */}
+            <header className="mb-8">
+              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-[var(--text)] mb-4">
+                {project.title}
+              </h1>
 
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text)] mb-4">
-                  {project.title}
-                </h1>
-
-                {project.subtitle && (
-                  <p className="text-lg sm:text-xl text-[var(--text-secondary)] mb-6">
-                    {project.subtitle}
-                  </p>
-                )}
-
-                <p className="text-base sm:text-lg text-[var(--text-secondary)] mb-8">
-                  {project.description}
+              {project.subtitle && (
+                <p className="text-xl text-[var(--text-secondary)] mb-6">
+                  {project.subtitle}
                 </p>
-
-                <div className="flex items-center gap-4 text-[var(--text-tertiary)] mb-8">
-                  <div className="flex items-center gap-2">
-                    <CalendarIcon className="h-5 w-5" />
-                    <span className="text-sm sm:text-base">{new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</span>
-                  </div>
-                </div>
-
-                <div className="flex flex-row gap-2 sm:gap-4 lg:hidden">
-                  {project.demoUrl && (
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center bg-[var(--primary)] text-white px-3 xs:px-4 sm:px-6 py-3 rounded-lg text-xs xs:text-sm sm:text-base font-medium hover:bg-[var(--primary-hover)] transition-colors whitespace-nowrap"
-                    >
-                      <ArrowTopRightOnSquareIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" />
-                      <span className="hidden xs:inline">Live </span>Demo
-                    </a>
-                  )}
-                  {project.githubUrl && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center border border-[var(--border)] text-[var(--text)] px-3 xs:px-4 sm:px-6 py-3 rounded-lg text-xs xs:text-sm sm:text-base font-medium hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors whitespace-nowrap"
-                    >
-                      <CodeBracketIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" />
-                      <span className="hidden xs:inline">Source </span>Code
-                    </a>
-                  )}
-                </div>
-              </div>
-              
-              {project.image && (
-                <div className="w-full lg:w-80 order-1 lg:order-2">
-                  <div className="relative rounded-xl overflow-hidden shadow-2xl mx-auto max-w-sm lg:max-w-none">
-                    <Image
-                      src={project.image}
-                      alt={`${project.title} - ${project.category} project using ${project.techStack.slice(0, 3).join(', ')}`}
-                      width={320}
-                      height={240}
-                      className="object-cover w-full h-48 sm:h-60"
-                    />
-                  </div>
-                </div>
               )}
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Content Section */}
-      <div className="relative py-16 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Sidebar */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-8 space-y-6">
-                {/* Tech Stack */}
-                <div className="bg-[var(--background-secondary)] backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[var(--border)]">
-                  <h3 className="text-lg font-semibold text-[var(--text)] mb-4 flex items-center">
-                    <div className="w-2 h-2 bg-[var(--primary)] rounded-full mr-3"></div>
-                    Tech Stack
-                  </h3>
-                  <div className="space-y-3">
-                    {project.techStack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="flex items-center w-full bg-[var(--background-tertiary)] text-[var(--text)] px-4 py-3 rounded-lg text-sm font-medium border border-[var(--border)] hover:shadow-md transition-all duration-200"
-                      >
-                        <div className="w-2 h-2 bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] rounded-full mr-3"></div>
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+              <p className="text-base sm:text-lg text-[var(--text-secondary)] mb-6">
+                {project.description}
+              </p>
 
-                {/* Project Links - Desktop only */}
-                <div className="hidden lg:block bg-[var(--background-secondary)] backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[var(--border)]">
-                  <h3 className="text-lg font-semibold text-[var(--text)] mb-4 flex items-center">
-                    <div className="w-2 h-2 bg-[var(--accent)] rounded-full mr-3"></div>
-                    Project Links
-                  </h3>
-                  <div className="space-y-3">
-                    {project.demoUrl && (
-                      <a
-                        href={project.demoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center text-[var(--primary)] hover:text-[var(--primary-hover)] transition-colors bg-[var(--primary-light)] px-4 py-3 rounded-lg border border-[var(--border)] hover:shadow-md"
-                      >
-                        <ArrowTopRightOnSquareIcon className="h-5 w-5 mr-3" />
-                        <span className="font-medium">Live Demo</span>
-                      </a>
-                    )}
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center text-[var(--text)] hover:text-[var(--text-secondary)] transition-colors bg-[var(--background-tertiary)] px-4 py-3 rounded-lg border border-[var(--border)] hover:shadow-md"
-                      >
-                        <CodeBracketIcon className="h-5 w-5 mr-3" />
-                        <span className="font-medium">Source Code</span>
-                      </a>
-                    )}
-                  </div>
+              {/* Meta row */}
+              <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--text-tertiary)] pb-6 border-b border-[var(--border)]">
+                {project.featured && (
+                  <span className="inline-flex items-center rounded-full bg-[var(--warning)]/10 px-3 py-1 text-sm font-medium text-[var(--warning)]">
+                    Featured
+                  </span>
+                )}
+                <div className="flex items-center gap-2">
+                  <CalendarIcon className="h-4 w-4" />
+                  <span>{new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</span>
                 </div>
+                <button
+                  onClick={() => setShowTech(!showTech)}
+                  className="flex items-center gap-1 text-[var(--text-tertiary)] hover:text-[var(--primary)] transition-colors cursor-pointer"
+                >
+                  <span>{project.techStack.length} technologies</span>
+                  <ChevronDownIcon className={`h-3.5 w-3.5 transition-transform duration-200 ${showTech ? 'rotate-180' : ''}`} />
+                </button>
               </div>
-            </div>
 
-            {/* Main Content */}
-            <div className="col-span-1 lg:col-span-3">
-              <div className="bg-[var(--background-secondary)] backdrop-blur-sm rounded-xl shadow-lg border border-[var(--border)] overflow-hidden">
-                <div className="p-6 sm:p-8 lg:p-12">
-                  <div className="prose prose-lg max-w-none"
-                  >
-                    <DynamicReactMarkdown
-                      components={{
-                        h1: ({ children }) => (
-                          <h1 className="text-2xl sm:text-3xl font-bold mb-6 pb-3 border-b border-[var(--border)] text-[var(--text)]">
-                            {children}
-                          </h1>
-                        ),
-                        h2: ({ children }) => (
-                          <h2 className="text-xl sm:text-2xl font-semibold mt-10 mb-4 text-[var(--primary)] flex items-center">
-                            <div className="w-1 h-6 bg-gradient-to-b from-[var(--primary)] to-[var(--accent)] rounded-full mr-3"></div>
-                            {children}
-                          </h2>
-                        ),
-                        h3: ({ children }) => (
-                          <h3 className="text-lg sm:text-xl font-semibold mt-8 mb-3 text-[var(--accent)] flex items-center">
-                            <div className="w-1 h-5 bg-[var(--accent)] rounded-full mr-3"></div>
-                            {children}
-                          </h3>
-                        ),
-                        ul: ({ children }) => (
-                          <ul className="space-y-3 my-6">
-                            {children}
-                          </ul>
-                        ),
-                        li: ({ children }) => (
-                          <li className="flex items-start text-[var(--text-secondary)]">
-                            <div className="w-2 h-2 bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                            <span>{children}</span>
-                          </li>
-                        ),
-                        p: ({ children }) => (
-                          <p className="text-[var(--text-secondary)] leading-relaxed mb-4">
-                            {children}
-                          </p>
-                        ),
-                        strong: ({ children }) => (
-                          <strong className="font-semibold text-[var(--text)]">
-                            {children}
-                          </strong>
-                        ),
-                        a: ({ href, children }) => (
-                          <a
-                            href={href}
-                            className="text-[var(--primary)] hover:text-[var(--primary-hover)] underline underline-offset-2 transition-colors"
-                          >
-                            {children}
-                          </a>
-                        ),
-                        table: ({ children }) => (
-                          <div className="overflow-x-auto my-6 rounded-lg border border-[var(--border)]">
-                            <table className="w-full text-sm">{children}</table>
-                          </div>
-                        ),
-                        thead: ({ children }) => (
-                          <thead className="bg-[var(--background-tertiary)]">{children}</thead>
-                        ),
-                        th: ({ children }) => (
-                          <th className="px-4 py-3 text-left font-semibold text-[var(--text)] border-b border-[var(--border)]">{children}</th>
-                        ),
-                        td: ({ children }) => (
-                          <td className="px-4 py-3 text-[var(--text-secondary)] border-b border-[var(--border)]">{children}</td>
-                        ),
-                      }}
+              {/* Tech Stack — collapsible */}
+              <div className={`overflow-hidden transition-all duration-200 ${showTech ? 'max-h-40 mt-4 opacity-100' : 'max-h-0 opacity-0'}`}>
+                <div className="flex flex-wrap gap-2">
+                  {project.techStack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1 text-xs font-medium bg-[var(--background-secondary)] text-[var(--text-secondary)] rounded-full border border-[var(--border)]"
                     >
-                      {project.content}
-                    </DynamicReactMarkdown>
-                  </div>
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </div>
-          </div>
+            </header>
 
-          {/* Mobile Project Links - At the bottom */}
-          <div className="lg:hidden mt-12">
-            <div className="bg-[var(--background-secondary)] backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[var(--border)]">
-              <h3 className="text-lg font-semibold text-[var(--text)] mb-4 flex items-center">
-                <div className="w-2 h-2 bg-[var(--accent)] rounded-full mr-3"></div>
-                Project Links
-              </h3>
-              <div className="flex flex-row gap-3 flex-wrap">
+            {/* Project Image */}
+            {project.image && (
+              <div className="mb-12 rounded-2xl overflow-hidden border border-[var(--border)]">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} - ${project.category} project`}
+                  width={960}
+                  height={540}
+                  className="w-full h-auto"
+                  priority
+                />
+              </div>
+            )}
+
+            {/* Action Buttons — after image, before content */}
+            {(project.demoUrl || project.githubUrl) && (
+              <div className="flex flex-wrap gap-3 mb-12">
                 {project.demoUrl && (
                   <a
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center text-[var(--primary)] hover:text-[var(--primary-hover)] transition-colors bg-[var(--primary-light)] px-4 py-3 rounded-lg border border-[var(--border)] hover:shadow-md whitespace-nowrap"
+                    className="inline-flex items-center bg-[var(--primary)] text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-[var(--primary-hover)] transition-colors"
                   >
-                    <ArrowTopRightOnSquareIcon className="h-5 w-5 mr-3" />
-                    <span className="font-medium">Live Demo</span>
+                    <ArrowTopRightOnSquareIcon className="h-4 w-4 mr-2" />
+                    Live Demo
                   </a>
                 )}
                 {project.githubUrl && (
@@ -287,50 +140,140 @@ export default function ProjectPageClient({ project, adjacentProjects }: Project
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center text-[var(--text)] hover:text-[var(--text-secondary)] transition-colors bg-[var(--background-tertiary)] px-4 py-3 rounded-lg border border-[var(--border)] hover:shadow-md whitespace-nowrap"
+                    className="inline-flex items-center border border-[var(--border)] text-[var(--text)] px-6 py-3 rounded-lg text-sm font-medium hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
                   >
-                    <CodeBracketIcon className="h-5 w-5 mr-3" />
-                    <span className="font-medium">Source Code</span>
+                    <CodeBracketIcon className="h-4 w-4 mr-2" />
+                    Source Code
                   </a>
                 )}
               </div>
+            )}
+
+            {/* Content */}
+            <div className="prose prose-lg max-w-none">
+              <DynamicReactMarkdown
+                components={{
+                  h1: ({ children }) => (
+                    <h1 className="text-3xl font-bold tracking-tight text-[var(--text)] mt-8 mb-4">
+                      {children}
+                    </h1>
+                  ),
+                  h2: ({ children }) => (
+                    <h2 className="text-2xl font-bold tracking-tight text-[var(--text)] mt-8 mb-4">
+                      {children}
+                    </h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="text-xl font-bold tracking-tight text-[var(--text)] mt-6 mb-3">
+                      {children}
+                    </h3>
+                  ),
+                  p: ({ children }) => (
+                    <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-4">
+                      {children}
+                    </p>
+                  ),
+                  ul: ({ children }) => (
+                    <ul className="list-disc list-inside space-y-2 mb-4 text-[var(--text-secondary)]">
+                      {children}
+                    </ul>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="list-decimal list-inside space-y-2 mb-4 text-[var(--text-secondary)]">
+                      {children}
+                    </ol>
+                  ),
+                  li: ({ children }) => (
+                    <li className="text-base leading-relaxed">{children}</li>
+                  ),
+                  strong: ({ children }) => (
+                    <strong className="font-semibold text-[var(--text)]">{children}</strong>
+                  ),
+                  a: ({ href, children }) => (
+                    <a
+                      href={href}
+                      className="text-[var(--primary)] hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {children}
+                    </a>
+                  ),
+                  table: ({ children }) => (
+                    <div className="overflow-x-auto my-6 rounded-lg border border-[var(--border)]">
+                      <table className="w-full text-sm">{children}</table>
+                    </div>
+                  ),
+                  thead: ({ children }) => (
+                    <thead className="bg-[var(--background-tertiary)]">{children}</thead>
+                  ),
+                  th: ({ children }) => (
+                    <th className="px-4 py-3 text-left font-semibold text-[var(--text)] border-b border-[var(--border)]">{children}</th>
+                  ),
+                  td: ({ children }) => (
+                    <td className="px-4 py-3 text-[var(--text-secondary)] border-b border-[var(--border)]">{children}</td>
+                  ),
+                }}
+              >
+                {project.content}
+              </DynamicReactMarkdown>
             </div>
-          {/* Previous / Next Project Navigation */}
-          {adjacentProjects && (adjacentProjects.prev || adjacentProjects.next) && (
-            <nav className="mt-12" aria-label="Adjacent projects">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {adjacentProjects.prev ? (
-                  <Link
-                    href={`/projects/${adjacentProjects.prev.slug}`}
-                    className="group flex flex-col gap-1 p-4 rounded-lg border border-[var(--border)] hover:border-[var(--primary)] transition-colors"
-                  >
-                    <span className="text-xs text-[var(--text-tertiary)] flex items-center gap-1">
-                      <ArrowLeftIcon className="h-3 w-3" /> Previous project
-                    </span>
-                    <span className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--primary)] transition-colors">
-                      {adjacentProjects.prev.title}
-                    </span>
-                  </Link>
-                ) : <div />}
-                {adjacentProjects.next && (
-                  <Link
-                    href={`/projects/${adjacentProjects.next.slug}`}
-                    className="group flex flex-col items-end gap-1 p-4 rounded-lg border border-[var(--border)] hover:border-[var(--primary)] transition-colors sm:col-start-2"
-                  >
-                    <span className="text-xs text-[var(--text-tertiary)] flex items-center gap-1">
-                      Next project <ArrowRightIcon className="h-3 w-3" />
-                    </span>
-                    <span className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--primary)] transition-colors text-left">
-                      {adjacentProjects.next.title}
-                    </span>
-                  </Link>
-                )}
+
+            {/* Previous / Next Project Navigation */}
+            {adjacentProjects && (adjacentProjects.prev || adjacentProjects.next) && (
+              <nav className="mt-12 pt-8 border-t border-[var(--border)]" aria-label="Adjacent projects">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {adjacentProjects.prev ? (
+                    <Link
+                      href={`/projects/${adjacentProjects.prev.slug}`}
+                      className="group flex flex-col gap-1 p-4 rounded-lg border border-[var(--border)] hover:border-[var(--primary)] transition-colors"
+                    >
+                      <span className="text-xs text-[var(--text-tertiary)] flex items-center gap-1">
+                        <ArrowLeftIcon className="h-3 w-3" /> Previous project
+                      </span>
+                      <span className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--primary)] transition-colors">
+                        {adjacentProjects.prev.title}
+                      </span>
+                    </Link>
+                  ) : <div />}
+                  {adjacentProjects.next && (
+                    <Link
+                      href={`/projects/${adjacentProjects.next.slug}`}
+                      className="group flex flex-col items-end gap-1 p-4 rounded-lg border border-[var(--border)] hover:border-[var(--primary)] transition-colors sm:col-start-2"
+                    >
+                      <span className="text-xs text-[var(--text-tertiary)] flex items-center gap-1">
+                        Next project <ArrowRightIcon className="h-3 w-3" />
+                      </span>
+                      <span className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--primary)] transition-colors text-left">
+                        {adjacentProjects.next.title}
+                      </span>
+                    </Link>
+                  )}
+                </div>
+              </nav>
+            )}
+
+            {/* Footer: Back + Share */}
+            <div className="mt-8 pt-8 border-t border-[var(--border)]">
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <Link
+                  href="/projects"
+                  className="inline-flex items-center gap-2 text-[var(--primary)] hover:text-[var(--primary-hover)] transition-colors font-medium"
+                >
+                  <ArrowLeftIcon className="h-4 w-4" />
+                  <span>Back to all projects</span>
+                </Link>
+                <ShareButtons
+                  title={project.title}
+                  url={projectUrl}
+                />
               </div>
-            </nav>
-          )}
-          </div>
+            </div>
+          </article>
         </div>
       </div>
-    </div>
+
+      <BackToTop />
+    </>
   )
 }
