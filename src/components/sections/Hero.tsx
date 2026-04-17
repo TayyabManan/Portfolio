@@ -28,6 +28,12 @@ const itemVariants: Variants = {
   },
 }
 
+// No animation variant — renders instantly for LCP-critical elements on mobile
+const instantVariants: Variants = {
+  initial: { opacity: 1, y: 0 },
+  animate: { opacity: 1, y: 0 },
+}
+
 const ruleVariants: Variants = {
   initial: { scaleX: 0, opacity: 0 },
   animate: {
@@ -50,9 +56,11 @@ const specializations = [
 
 export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(true) // Default true so SSR renders without animation delay
+  const [hydrated, setHydrated] = useState(false)
 
   useEffect(() => {
+    setHydrated(true)
     const update = () => setIsMobile(window.innerWidth < 768)
     update()
     window.addEventListener('resize', update)
@@ -87,13 +95,13 @@ export default function Hero() {
       <div className="relative flex-1 flex items-center px-4 sm:px-6 lg:px-8 overflow-hidden">
         <motion.div
           className="mx-auto max-w-4xl w-full py-12 sm:py-16"
-          variants={containerVariants}
-          initial="initial"
+          variants={isMobile ? undefined : containerVariants}
+          initial={isMobile ? "animate" : "initial"}
           animate="animate"
         >
           {/* Greeting: lighter weight, sets human tone before the big title */}
           <motion.p
-            variants={itemVariants}
+            variants={isMobile ? instantVariants : itemVariants}
             className="text-base sm:text-lg font-medium text-[var(--text-secondary)] tracking-wide"
           >
             Hello, I&apos;m Tayyab Manan
@@ -101,7 +109,7 @@ export default function Hero() {
 
           {/* Title: large, tight tracking, commands the page */}
           <motion.h1
-            variants={itemVariants}
+            variants={isMobile ? instantVariants : itemVariants}
             className="mt-3 text-[2.75rem] leading-[1.08] font-bold tracking-tight text-[var(--text)] sm:text-6xl md:text-7xl"
           >
             AI/ML Engineer
@@ -133,9 +141,9 @@ export default function Hero() {
             aria-hidden="true"
           />
 
-          {/* Bio: concise, human, not marketing copy */}
+          {/* Bio: concise, human, not marketing copy — LCP element on mobile, skip animation */}
           <motion.p
-            variants={itemVariants}
+            variants={isMobile ? instantVariants : itemVariants}
             className="mt-7 text-base sm:text-lg leading-relaxed text-[var(--text-secondary)] max-w-xl"
           >
             Graduate student at{' '}

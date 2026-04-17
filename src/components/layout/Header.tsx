@@ -353,6 +353,7 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
+                    role="menuitem"
                     className={`flex items-center justify-between px-4 py-3 rounded-xl font-medium transition-all duration-200 active:scale-[0.98] ${
                       active
                         ? 'text-[var(--primary)]'
@@ -369,6 +370,7 @@ export default function Header() {
               {/* Resume Button */}
               <Link
                 href="/resume"
+                role="menuitem"
                 className="flex items-center justify-center px-4 py-3 mt-2 text-white font-medium rounded-xl transition-all duration-200 active:scale-[0.98] gap-2 bg-[var(--primary)] active:bg-[var(--primary-hover)]"
                 onClick={() => setMobileMenuOpen(false)}
               >
