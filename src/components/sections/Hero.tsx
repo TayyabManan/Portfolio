@@ -57,10 +57,7 @@ const specializations = [
 export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isMobile, setIsMobile] = useState(true) // Default true so SSR renders without animation delay
-  const [hydrated, setHydrated] = useState(false)
-
   useEffect(() => {
-    setHydrated(true)
     const update = () => setIsMobile(window.innerWidth < 768)
     update()
     window.addEventListener('resize', update)
