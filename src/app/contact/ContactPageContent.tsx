@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Github, Linkedin } from "lucide-react";
 import { toast } from "@/components/ui/Toast";
+import ObfuscatedEmail from "@/components/ui/ObfuscatedEmail";
 
 interface ContactForm {
   name: string;
@@ -22,8 +23,9 @@ const contactInfo = [
   {
     icon: EnvelopeIcon,
     label: "Email",
-    value: "m.tayyab.manan@gmail.com",
-    href: "mailto:m.tayyab.manan@gmail.com",
+    value: null,
+    href: null,
+    obfuscated: true,
   },
   {
     icon: MapPinIcon,
@@ -124,7 +126,9 @@ export default function ContactPageContent() {
                     <p className="text-sm font-medium text-[var(--text)]">
                       {item.label}
                     </p>
-                    {item.href ? (
+                    {'obfuscated' in item && item.obfuscated ? (
+                      <ObfuscatedEmail className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors" />
+                    ) : item.href ? (
                       <a
                         href={item.href}
                         className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors"

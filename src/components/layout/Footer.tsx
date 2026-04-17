@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { MapPinIcon, EnvelopeIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import { Github, Linkedin } from 'lucide-react'
+import ObfuscatedEmail from '@/components/ui/ObfuscatedEmail'
 
 const UpworkIcon = ({ className }: { className?: string }) => (
   <svg
@@ -77,10 +78,10 @@ export default function Footer() {
                     <MapPinIcon className="h-3.5 w-3.5 text-[var(--text-tertiary)]" />
                     <span className="text-sm text-[var(--text-secondary)]">Islamabad, Pakistan</span>
                   </div>
-                  <a href="mailto:m.tayyab.manan@gmail.com" className="text-sm text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors inline-flex items-center gap-2">
+                  <ObfuscatedEmail className="text-sm text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors inline-flex items-center gap-2">
                     <EnvelopeIcon className="h-3.5 w-3.5 text-[var(--text-tertiary)]" />
                     <span>Email Me</span>
-                  </a>
+                  </ObfuscatedEmail>
                 </div>
               </div>
 
@@ -108,9 +109,7 @@ export default function Footer() {
                   </div>
                   <div className="flex items-start gap-3">
                     <EnvelopeIcon className="h-5 w-5 text-[var(--text-tertiary)] mt-0.5 flex-shrink-0" />
-                    <a href="mailto:m.tayyab.manan@gmail.com" className="text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors break-all">
-                      m.tayyab.manan@gmail.com
-                    </a>
+                    <ObfuscatedEmail className="text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors break-all" />
                   </div>
                 </div>
               </div>

@@ -362,9 +362,6 @@ export default function Header() {
                     aria-current={active ? 'page' : undefined}
                   >
                     <span>{item.name}</span>
-                    <span className="text-xs text-[var(--text-tertiary)]">
-                      {item.shortcut}
-                    </span>
                   </Link>
                 )
               })}

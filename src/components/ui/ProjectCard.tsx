@@ -72,11 +72,11 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
           </div>
         )}
         {project.category === 'Full Stack' ? (
-          <div className="absolute top-4 left-4 bg-[var(--primary)] text-white px-2 py-1 rounded-md text-xs font-medium z-10">
+          <div className="absolute top-4 left-4 bg-[var(--primary)] text-white px-2 py-1 rounded-lg text-xs font-medium z-10">
             Full Stack
           </div>
         ) : project.featured ? (
-          <div className="absolute top-4 left-4 bg-[var(--primary)] text-white px-2 py-1 rounded-md text-xs font-medium z-10">
+          <div className="absolute top-4 left-4 bg-[var(--primary)] text-white px-2 py-1 rounded-lg text-xs font-medium z-10">
             Featured
           </div>
         ) : null}

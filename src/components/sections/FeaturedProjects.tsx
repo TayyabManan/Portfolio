@@ -59,7 +59,7 @@ export default function FeaturedProjects() {
             </p>
             <button
               onClick={loadProjects}
-              className="bg-[var(--primary)] text-white px-6 py-2 rounded-lg font-medium hover:bg-[var(--primary-hover)] transition-colors"
+              className="bg-[var(--primary)] text-white px-6 py-3 rounded-lg font-medium hover:bg-[var(--primary-hover)] transition-colors"
             >
               Load projects
             </button>

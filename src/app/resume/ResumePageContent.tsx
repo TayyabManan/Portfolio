@@ -6,6 +6,7 @@ import { resumeData, formatDate } from '@/lib/resume-data'
 import { generateResumePDF } from '@/lib/pdf-utils'
 import { DynamicResumeChatbot } from '@/lib/dynamic-imports'
 import { toast } from '@/components/ui/Toast'
+import ObfuscatedEmail from '@/components/ui/ObfuscatedEmail'
 
 export default function ResumePageContent() {
   const [downloading, setDownloading] = useState(false)
@@ -35,7 +36,7 @@ export default function ResumePageContent() {
             <button
               onClick={downloadPDF}
               disabled={downloading}
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[var(--primary)] hover:bg-[var(--primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary)] disabled:opacity-50 transition-colors"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-[var(--primary)] hover:bg-[var(--primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary)] disabled:opacity-50 transition-colors"
             >
               {downloading ? (
                 <>
@@ -65,9 +66,7 @@ export default function ResumePageContent() {
               {resumeData.personalInfo.title}
             </p>
             <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-2 sm:gap-6 text-sm text-[var(--text-secondary)]">
-              <a href={`mailto:${resumeData.personalInfo.email}`} className="hover:text-[var(--primary)] break-all transition-colors">
-                {resumeData.personalInfo.email}
-              </a>
+              <ObfuscatedEmail className="hover:text-[var(--primary)] break-all transition-colors" />
               <span className="text-center">{resumeData.personalInfo.location}</span>
               <a href={resumeData.personalInfo.website} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--primary)] transition-colors">
                 Portfolio

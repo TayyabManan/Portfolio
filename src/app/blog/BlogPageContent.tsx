@@ -30,26 +30,26 @@ export default function BlogPageContent({ posts }: BlogPageContentProps) {
   return (
     <div className="min-h-screen py-16 sm:py-24 bg-[var(--background)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold tracking-tight text-[var(--text)] sm:text-5xl md:text-6xl">
+        {/* Header - Left aligned */}
+        <div className="mb-12 max-w-4xl">
+          <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text)] mb-4">
             Blog
           </h1>
-          <p className="mt-4 text-lg text-[var(--text-secondary)] max-w-3xl">
+          <p className="text-lg sm:text-xl text-[var(--text-secondary)]">
             Sharing my learning journey in AI Engineering, insights from ML projects, and experiences with Computer Vision, NLP, and Deep Learning.
           </p>
         </div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap gap-2 mb-12">
+        {/* Category Filter - Left aligned */}
+        <div className="flex flex-wrap gap-3 mb-12">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+              className={`px-4 py-2 min-h-[44px] rounded-lg font-medium transition-all text-sm sm:text-base cursor-pointer ${
                 selectedCategory === category
-                  ? 'bg-[var(--primary)] text-white shadow-lg'
-                  : 'bg-[var(--background-secondary)] text-[var(--text-secondary)] hover:bg-[var(--background-tertiary)] hover:text-[var(--text)]'
+                  ? 'bg-[var(--primary)] text-white shadow-lg sm:scale-105'
+                  : 'bg-[var(--background-secondary)] text-[var(--text)] hover:bg-[var(--background-tertiary)] border border-[var(--border)] hover:border-[var(--primary)]'
               }`}
             >
               {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -87,7 +87,7 @@ export default function BlogPageContent({ posts }: BlogPageContentProps) {
               <article key={post.slug}>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="group block bg-[var(--background-secondary)] border border-[var(--border)] rounded-2xl overflow-hidden hover:border-[var(--primary)] transition-all duration-300 hover:shadow-xl h-full"
+                  className="group block bg-[var(--background)] border border-[var(--border)] rounded-xl overflow-hidden hover:border-[var(--primary)] transition-[transform,box-shadow] duration-300 hover:shadow-xl hover:-translate-y-1 h-full"
                 >
                   {/* Image */}
                   {post.image && (
@@ -115,7 +115,7 @@ export default function BlogPageContent({ posts }: BlogPageContentProps) {
                     </div>
 
                     {/* Title */}
-                    <h2 className="text-xl font-bold text-[var(--text)] mb-2 group-hover:text-[var(--primary)] transition-colors line-clamp-2">
+                    <h2 className="text-xl font-semibold text-[var(--text)] mb-2 group-hover:text-[var(--primary)] transition-colors line-clamp-2">
                       {post.title}
                     </h2>
 
