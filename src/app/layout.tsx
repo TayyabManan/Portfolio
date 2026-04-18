@@ -267,7 +267,7 @@ const jsonLd = [
     '@type': 'ProfilePage',
     '@id': 'https://tayyabmanan.com/#profilepage',
     url: 'https://tayyabmanan.com',
-    name: 'Tayyab Manan — AI/ML Engineer',
+    name: 'Tayyab Manan',
     description: 'Professional portfolio and profile of Tayyab Manan, AI/ML Engineer specializing in Computer Vision, Multi-Agent Systems, and Production ML.',
     mainEntity: {
       '@id': 'https://tayyabmanan.com/#person'
