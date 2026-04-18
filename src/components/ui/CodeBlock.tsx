@@ -37,7 +37,7 @@ export default function CodeBlock({ children, className }: CodeBlockProps) {
     <div className="relative group">
       <button
         onClick={handleCopy}
-        className="absolute top-3 right-3 p-2 rounded-lg bg-[var(--background)] border border-[var(--border)] hover:bg-[var(--background-secondary)] transition-colors cursor-pointer flex items-center justify-center"
+        className="absolute top-3 right-3 p-2.5 min-h-[44px] min-w-[44px] rounded-lg bg-[var(--background)] border border-[var(--border)] hover:bg-[var(--background-secondary)] transition-colors cursor-pointer flex items-center justify-center"
         title={copied ? 'Copied!' : 'Copy code'}
       >
         {copied ? (

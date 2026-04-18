@@ -86,7 +86,7 @@ export function Breadcrumbs({
               {item.icon && <span className="flex-shrink-0">{item.icon}</span>}
               <span className={cn(
                 'truncate max-w-[200px]',
-                variant === 'minimal' && 'sr-only sm:not-sr-only'
+                variant === 'minimal' && 'max-w-[120px] sm:max-w-[200px]'
               )}>
                 {item.label}
               </span>

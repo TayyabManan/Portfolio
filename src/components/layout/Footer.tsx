@@ -29,13 +29,17 @@ export default function Footer() {
 
   useEffect(() => {
     measure()
-    window.addEventListener('resize', measure)
-    return () => window.removeEventListener('resize', measure)
-  }, [measure])
 
-  // Re-measure after fonts load (large name text can shift)
-  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    const observer = new ResizeObserver(() => measure())
+    observer.observe(el)
+
+    // Re-measure after fonts load (large name text can shift)
     document.fonts?.ready?.then(measure)
+
+    return () => observer.disconnect()
   }, [measure])
 
   return (

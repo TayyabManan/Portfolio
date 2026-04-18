@@ -181,6 +181,18 @@ export default function TableOfContents({ content, variant = 'both' }: TableOfCo
     if (tocItems.length === 0) return
     if (!tocContainerRef.current || !asideRef.current) return
 
+    let ticking = false
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll()
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
     const handleScroll = () => {
       if (!tocContainerRef.current || !asideRef.current) return
 
@@ -242,15 +254,15 @@ export default function TableOfContents({ content, variant = 'both' }: TableOfCo
     }
 
     // Listen to scroll events
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    window.addEventListener('resize', handleScroll, { passive: true })
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
 
     // Initial check
     handleScroll()
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('resize', handleScroll)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
     }
   }, [tocItems.length])
 
@@ -331,9 +343,9 @@ export default function TableOfContents({ content, variant = 'both' }: TableOfCo
           ref={asideRef}
           className={`transition-all duration-200 ${
             isFixed
-              ? 'fixed top-[6rem] w-[300px] z-10'
+              ? 'fixed top-[6rem] w-full max-w-[300px] z-10'
               : isAbsolute
-              ? 'absolute w-[300px] z-10'
+              ? 'absolute w-full max-w-[300px] z-10'
               : 'relative'
           }`}
           style={isAbsolute ? { top: `${absoluteTop}px` } : undefined}

@@ -240,8 +240,8 @@ const jsonLd = [
     '@type': 'WebSite',
     '@id': 'https://tayyabmanan.com/#website',
     url: 'https://tayyabmanan.com',
-    name: 'Tayyab Manan — AI/ML Engineer',
-    alternateName: 'Tayyab Manan Portfolio',
+    name: 'Tayyab Manan',
+    alternateName: ['Tayyab Manan Portfolio', 'Tayyab Manan — AI/ML Engineer'],
     description: 'AI/ML Engineer portfolio showcasing production machine learning systems, computer vision applications, multi-agent workflows, and geospatial AI solutions built with PyTorch, TensorFlow, and LangChain.',
     about: {
       '@id': 'https://tayyabmanan.com/#person'
@@ -279,38 +279,39 @@ const jsonLd = [
   },
   {
     '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    '@id': 'https://tayyabmanan.com/#breadcrumb',
-    itemListElement: [
+    '@type': 'SiteNavigationElement',
+    '@id': 'https://tayyabmanan.com/#navigation',
+    name: 'Main Navigation',
+    hasPart: [
       {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://tayyabmanan.com'
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
+        '@type': 'WebPage',
         name: 'About',
-        item: 'https://tayyabmanan.com/about'
+        description: 'About Tayyab Manan — AI/ML Engineer',
+        url: 'https://tayyabmanan.com/about'
       },
       {
-        '@type': 'ListItem',
-        position: 3,
+        '@type': 'WebPage',
         name: 'Projects',
-        item: 'https://tayyabmanan.com/projects'
+        description: 'ML & AI Projects Portfolio',
+        url: 'https://tayyabmanan.com/projects'
       },
       {
-        '@type': 'ListItem',
-        position: 4,
+        '@type': 'WebPage',
+        name: 'Blog',
+        description: 'AI/ML Engineering Insights & Tutorials',
+        url: 'https://tayyabmanan.com/blog'
+      },
+      {
+        '@type': 'WebPage',
         name: 'Resume',
-        item: 'https://tayyabmanan.com/resume'
+        description: 'AI/ML Engineer Resume',
+        url: 'https://tayyabmanan.com/resume'
       },
       {
-        '@type': 'ListItem',
-        position: 5,
+        '@type': 'WebPage',
         name: 'Contact',
-        item: 'https://tayyabmanan.com/contact'
+        description: 'Get in touch for collaboration',
+        url: 'https://tayyabmanan.com/contact'
       }
     ]
   },

@@ -134,14 +134,14 @@ export default function Header() {
           >
             <div className="text-[var(--primary)]">
               <Logo
-                className={`transition-all duration-300 ${
-                  isScrolled ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-6 h-6 sm:w-7 sm:h-7'
+                className={`w-6 h-6 sm:w-7 sm:h-7 transition-transform duration-300 origin-left ${
+                  isScrolled ? 'scale-[0.85]' : ''
                 }`}
               />
             </div>
             <span
-              className={`whitespace-nowrap transition-all duration-300 text-[var(--text)] ${
-                isScrolled ? 'text-sm sm:text-base' : 'text-base sm:text-lg'
+              className={`whitespace-nowrap text-base sm:text-lg text-[var(--text)] transition-transform duration-300 origin-left ${
+                isScrolled ? 'scale-[0.9]' : ''
               }`}
             >
               Tayyab Manan
@@ -156,9 +156,7 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`relative px-3 lg:px-4 py-2 rounded-lg font-medium transition-all duration-200 group ${
-                    isScrolled ? 'text-sm' : 'text-sm lg:text-base'
-                  } ${
+                  className={`relative px-3 lg:px-4 py-2 rounded-lg font-medium text-sm lg:text-base transition-all duration-200 group ${
                     active
                       ? 'text-[var(--primary)]'
                       : 'text-[var(--text-secondary)] hover:text-[var(--primary)] hover:bg-[var(--background-secondary)]'
@@ -204,12 +202,10 @@ export default function Header() {
             {/* Resume Button */}
             <Link
               href="/resume"
-              className={`ml-2 px-4 lg:px-5 py-2 text-white font-medium rounded-lg transition-all duration-200 flex items-center gap-2 bg-[var(--primary)] hover:bg-[var(--primary-hover)] ${
-                isScrolled ? 'text-sm' : 'text-sm lg:text-base'
-              }`}
+              className="ml-2 px-4 lg:px-5 py-2 text-white font-medium text-sm lg:text-base rounded-lg transition-all duration-200 flex items-center gap-2 bg-[var(--primary)] hover:bg-[var(--primary-hover)]"
             >
               Resume
-              <ChatBubbleLeftRightIcon className={`${isScrolled ? 'h-3.5 w-3.5' : 'h-4 w-4'}`} />
+              <ChatBubbleLeftRightIcon className="h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -240,6 +236,8 @@ export default function Header() {
             className={`transition-all duration-300 ease-out ${
               isScrolled
                 ? 'rounded-full shadow-lg border border-[var(--border)] bg-[var(--background)] opacity-95'
+                : mobileMenuOpen
+                ? 'bg-[var(--background)]'
                 : 'bg-transparent'
             }`}
             style={{
@@ -320,10 +318,7 @@ export default function Header() {
           className={`fixed inset-0 bg-black/60 transition-opacity duration-300 ${
             mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
-          style={{
-            top: isScrolled ? 'calc(4rem + 1.5rem)' : '4rem',
-            zIndex: 90
-          }}
+          style={{ zIndex: 90 }}
           onClick={() => setMobileMenuOpen(false)}
           aria-hidden="true"
         />

@@ -259,10 +259,10 @@ export default function ResumeChatbot() {
                 {isLoading && (
                   <div className="flex justify-start">
                     <div className="bg-[var(--background-secondary)] rounded-lg px-4 py-2">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-[var(--text-tertiary)] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                        <div className="w-2 h-2 bg-[var(--text-tertiary)] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                        <div className="w-2 h-2 bg-[var(--text-tertiary)] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                      <div className="flex space-x-1.5">
+                        <div className="w-2 h-2 bg-[var(--text-tertiary)] rounded-full animate-pulse" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-2 h-2 bg-[var(--text-tertiary)] rounded-full animate-pulse" style={{ animationDelay: '150ms' }}></div>
+                        <div className="w-2 h-2 bg-[var(--text-tertiary)] rounded-full animate-pulse" style={{ animationDelay: '300ms' }}></div>
                       </div>
                     </div>
                   </div>
@@ -286,7 +286,7 @@ export default function ResumeChatbot() {
                       <button
                         key={index}
                         onClick={() => handleQuickQuestion(question)}
-                        className="text-xs px-3 py-1 bg-[var(--background-secondary)] text-[var(--text-secondary)] rounded-full hover:bg-[var(--background-tertiary)] transition-colors"
+                        className="text-xs px-3 py-2 min-h-[44px] bg-[var(--background-secondary)] text-[var(--text-secondary)] rounded-full hover:bg-[var(--background-tertiary)] transition-colors"
                       >
                         {question}
                       </button>
@@ -303,13 +303,14 @@ export default function ResumeChatbot() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Ask about my experience..."
+                    aria-label="Ask about my experience"
                     className="flex-1 px-3 py-2 bg-[var(--background-secondary)] text-[var(--text)] rounded-lg border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] text-sm"
                     disabled={isLoading}
                   />
                   <button
                     type="submit"
                     disabled={isLoading || !input.trim()}
-                    className="p-2 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="p-2.5 min-h-[44px] min-w-[44px] bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                   >
                     <PaperAirplaneIcon className="h-5 w-5" />
                   </button>

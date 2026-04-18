@@ -40,19 +40,10 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
     return () => window.removeEventListener('resize', checkTextClamping)
   }, [project.description, isExpanded])
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
-    e.currentTarget.style.willChange = 'transform, box-shadow'
-  }
-
-  const handleMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
-    e.currentTarget.style.willChange = 'auto'
-  }
-
   return (
     <article
       className="group relative bg-[var(--background)] rounded-xl shadow-sm hover:shadow-xl transition-[transform,box-shadow] duration-300 overflow-hidden border border-[var(--border)] hover:-translate-y-1"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      style={{ willChange: 'transform' }}
       aria-label={`${project.title} - ${project.category} project`}
     >
       <div className="aspect-video relative overflow-hidden bg-[var(--border)]">

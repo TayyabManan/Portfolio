@@ -116,6 +116,8 @@ export default function Hero() {
           <motion.div
             variants={itemVariants}
             className="mt-5 h-8 sm:h-9 relative overflow-hidden"
+            aria-live="polite"
+            aria-atomic="true"
           >
             <AnimatePresence mode="wait">
               <motion.p
@@ -239,9 +241,10 @@ export default function Hero() {
       {/* Tech stack marquee */}
       <div className="mt-auto overflow-hidden border-t border-[var(--border)] py-5 select-none" aria-hidden="true">
         <motion.div
+          key={isMobile ? 'mobile' : 'desktop'}
           className="flex whitespace-nowrap"
           animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: isMobile ? 8 : 25, ease: 'linear', repeat: Infinity }}
+          transition={{ duration: isMobile ? 15 : 40, ease: 'linear', repeat: Infinity }}
         >
           {[0, 1].map((i) => (
             <div key={i} className="flex shrink-0 items-center">

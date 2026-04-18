@@ -145,11 +145,14 @@ input[type="search"]::-webkit-search-decoration {
 /* Typography — heading/body font split */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading), system-ui, sans-serif;
-  font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.2;
   text-wrap: balance;
 }
+
+h1 { font-weight: 700; }
+h2 { font-weight: 600; }
+h3, h4, h5, h6 { font-weight: 500; }
 
 p {
   text-wrap: pretty;
@@ -212,33 +215,15 @@ select {
 }
 
 
-/* Fade in animation */
+/* Fade in animation (scale variant — used by .animate-fadeIn) */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-/* Loading animation */
-/* Fade animations */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Fade in animation (slide-up variant — used by .animate-fade-in) */
 .animate-fade-in {
-  animation: fade-in 600ms ease-out;
+  animation: fadeIn 600ms ease-out;
 }
 
 /* Screen reader only content */
