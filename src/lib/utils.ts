@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 
 // Email obfuscation: encoded so bots can't scrape plaintext from HTML/JS source
 // Decoded client-side only via the ObfuscatedEmail component
-export const ENCODED_EMAIL = [104,101,108,108,111,64,116,97,121,121,97,98,109,97,110,97,110,46,99,111,109]
+export const ENCODED_EMAIL = [109,46,116,97,121,121,97,98,46,109,97,110,97,110,64,103,109,97,105,108,46,99,111,109]
 export function decodeEmail(): string {
   return String.fromCharCode(...ENCODED_EMAIL)
 }

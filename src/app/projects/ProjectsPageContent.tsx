@@ -67,7 +67,7 @@ export default function ProjectsPageContent() {
   }, [selectedCategory])
 
   return (
-    <div className="relative py-16 sm:py-24 min-h-screen bg-[var(--background)]">
+    <div className="relative py-16 sm:py-24 min-h-[100dvh] bg-[var(--background)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header - Left aligned */}
         <div className="mb-12 max-w-4xl">

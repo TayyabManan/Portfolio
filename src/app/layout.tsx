@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Bricolage_Grotesque, Inter } from 'next/font/google'
+import { Bricolage_Grotesque, Geist } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { ProgressBarProvider } from '@/components/ProgressBar'
@@ -22,9 +22,8 @@ const bricolageGrotesque = Bricolage_Grotesque({
   adjustFontFallback: true,
 })
 
-const inter = Inter({
+const geist = Geist({
   subsets: ['latin'],
-  weight: ['400', '500'],
   variable: '--font-body',
   display: 'swap',
   preload: true,
@@ -123,7 +122,7 @@ export const metadata: Metadata = {
       {
         rel: 'mask-icon',
         url: '/logo.svg',
-        color: '#3b82f6',
+        color: '#3568d4',
       },
     ],
   },
@@ -383,7 +382,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
       </head>
-      <body className={`${inter.variable} ${bricolageGrotesque.variable} ${inter.className}`} suppressHydrationWarning>
+      <body className={`${geist.variable} ${bricolageGrotesque.variable} ${geist.className}`} suppressHydrationWarning>
         {/* Page transition progress bar */}
         <ProgressBarProvider />
         {/* Skip to main content link for screen readers */}

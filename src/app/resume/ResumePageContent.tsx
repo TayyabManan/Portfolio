@@ -24,7 +24,7 @@ export default function ResumePageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
+    <div className="min-h-[100dvh] bg-[var(--background)]">
       {/* Header with Download Button */}
       <div className="bg-[var(--background)] border-b border-[var(--border)] print:hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

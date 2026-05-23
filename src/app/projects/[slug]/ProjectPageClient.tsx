@@ -40,7 +40,7 @@ export default function ProjectPageClient({ project, adjacentProjects }: Project
 
   return (
     <>
-      <div className="min-h-screen py-16 sm:py-24 bg-[var(--background)]">
+      <div className="min-h-[100dvh] py-16 sm:py-24 bg-[var(--background)]">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           {/* Breadcrumbs */}
           <div className="mb-8">

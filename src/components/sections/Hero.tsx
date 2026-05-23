@@ -88,7 +88,7 @@ export default function Hero() {
   )
 
   return (
-    <section className="relative flex flex-col h-[calc(100svh-64px)] overflow-hidden bg-[var(--background)]">
+    <section className="relative flex flex-col min-h-[calc(100dvh-64px)] overflow-hidden bg-[var(--background)]">
       <div className="relative flex-1 flex items-center px-4 sm:px-6 lg:px-8 overflow-hidden">
         <motion.div
           className="mx-auto max-w-4xl w-full py-12 sm:py-16"

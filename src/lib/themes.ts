@@ -1,9 +1,9 @@
 export const themes = {
   light: {
     // Backgrounds — warm stone family
-    primary: '#2563eb',
-    primaryHover: '#1d4ed8',
-    primaryLight: '#eff6ff',
+    primary: '#3568d4',
+    primaryHover: '#2952b3',
+    primaryLight: '#eef2fa',
 
     // Backgrounds
     background: '#fafaf9',
@@ -26,12 +26,12 @@ export const themes = {
 
     // Aliases (for backward compatibility — consolidate later)
     accent: '#16a34a',
-    info: '#2563eb',
+    info: '#3568d4',
     highlight: '#d97706',
 
     // Hero background (same as base — no special gradient)
     heroBackground: '#fafaf9',
-    heroGradientStart: '#eff6ff',
+    heroGradientStart: '#eef2fa',
     heroGradientMid: '#fafaf9',
     heroGradientEnd: '#fafaf9',
 
@@ -43,9 +43,9 @@ export const themes = {
 
   dark: {
     // Accent — slightly lighter blue, legible on dark surfaces
-    primary: '#3b82f6',
-    primaryHover: '#60a5fa',
-    primaryLight: 'rgba(59, 130, 246, 0.15)',
+    primary: '#5b8cdf',
+    primaryHover: '#7ea5e8',
+    primaryLight: 'rgba(91, 140, 223, 0.18)',
 
     // Backgrounds — warm stone, lifted (library evening, not midnight)
     background: '#1c1917',
@@ -68,7 +68,7 @@ export const themes = {
 
     // Aliases
     accent: '#4ade80',
-    info: '#3b82f6',
+    info: '#5b8cdf',
     highlight: '#fbbf24',
 
     // Hero background

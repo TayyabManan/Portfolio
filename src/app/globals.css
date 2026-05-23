@@ -56,9 +56,9 @@ body {
 /* Theme variables */
 :root {
   /* Default theme variables (will be overridden by JavaScript) */
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-light: #eff6ff;
+  --primary: #3568d4;
+  --primary-hover: #2952b3;
+  --primary-light: #eef2fa;
   --background: #fafaf9;
   --background-secondary: #f5f5f4;
   --background-tertiary: #e7e5e4;

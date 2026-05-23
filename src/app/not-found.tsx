@@ -5,7 +5,7 @@ import { HomeIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
 
 export default function NotFound() {
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-[var(--background)]">
+    <div className="relative min-h-[100dvh] flex items-center justify-center bg-[var(--background)]">
       {/* Simple subtle background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[var(--background)] via-[var(--background-secondary)] to-[var(--background)] opacity-50" />
 

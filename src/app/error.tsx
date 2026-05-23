@@ -16,7 +16,7 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-[var(--background)]">
+    <div className="relative min-h-[100dvh] flex items-center justify-center bg-[var(--background)]">
       <div className="max-w-md mx-auto px-4 text-center">
         <h1 className="text-6xl font-bold text-[var(--text-tertiary)] mb-4">500</h1>
         <h2 className="text-2xl font-bold text-[var(--text)] mb-3">

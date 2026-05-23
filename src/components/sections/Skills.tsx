@@ -31,7 +31,7 @@ const totalSkills = resumeData.skills.reduce((sum, cat) => sum + cat.items.lengt
 
 export default function Skills() {
   return (
-    <section className="relative min-h-screen flex items-center">
+    <section className="relative min-h-[100dvh] flex items-center">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full py-16 sm:py-24">
         <div className="mb-12 max-w-4xl">
           <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)] mb-4">Skills & Expertise</h2>
