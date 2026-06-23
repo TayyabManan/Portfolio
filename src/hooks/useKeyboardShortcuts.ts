@@ -189,7 +189,7 @@ function showShortcutsHelp() {
   // Create a custom modal to show shortcuts
   const modal = document.createElement('div')
   modal.id = 'keyboard-shortcuts-modal'
-  modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm'
+  modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--overlay)] backdrop-blur-sm'
   modal.innerHTML = `
     <div class="bg-[var(--background)] rounded-lg shadow-xl p-6 max-w-md w-full">
       <h2 class="text-xl font-bold mb-4 text-[var(--text)]">Keyboard Shortcuts</h2>

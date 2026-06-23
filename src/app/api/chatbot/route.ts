@@ -7,7 +7,7 @@ import { rateLimit } from '@/lib/rate-limit'
 // Input validation schema
 const chatMessageSchema = z.object({
   messages: z.array(z.object({
-    role: z.enum(['user', 'assistant', 'system']),
+    role: z.enum(['user', 'assistant']),
     content: z.string().min(1).max(2000, 'Message too long')
   })).min(1).max(50, 'Too many messages in history')
 })

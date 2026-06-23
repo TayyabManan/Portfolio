@@ -70,6 +70,20 @@ body {
   --success: #16a34a;
   --error: #dc2626;
   --warning: #d97706;
+
+  /* Semantic aliases (mirror themes.light — accent=success, info=primary, highlight=warning) */
+  --accent: #16a34a;
+  --info: #3568d4;
+  --highlight: #d97706;
+
+  /* Hero gradient (solid background — no special gradient in light) */
+  --hero-gradient-start: #eef2fa;
+  --hero-gradient-mid: #fafaf9;
+  --hero-gradient-end: #fafaf9;
+
+  /* Themed overlay/scrim for modals and menus */
+  --overlay: rgb(28 25 23 / 0.5);
+
   --shadow-sm: 0 1px 2px 0 rgb(28 25 23 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(28 25 23 / 0.07), 0 2px 4px -2px rgb(28 25 23 / 0.05);
   --shadow-lg: 0 10px 15px -3px rgb(28 25 23 / 0.07), 0 4px 6px -4px rgb(28 25 23 / 0.05);
@@ -285,6 +299,7 @@ select {
     --info: #0066cc;
     --accent: #006666;
     --highlight: #ffcc00;
+    --overlay: rgb(0 0 0 / 0.6);
 
     /* Stronger shadows for better depth perception */
     --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.2);

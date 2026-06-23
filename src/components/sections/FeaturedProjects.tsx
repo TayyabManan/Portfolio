@@ -17,7 +17,7 @@ export default function FeaturedProjects() {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 15000)
 
-    fetch('/api/projects', { signal: controller.signal })
+    fetch('/api/projects', { signal: controller.signal, cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
         const featured = data.filter((project: Project) => project.featured).slice(0, 3)

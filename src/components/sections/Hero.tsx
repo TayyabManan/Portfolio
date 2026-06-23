@@ -212,7 +212,7 @@ export default function Hero() {
             <a
               href="#projects"
               onClick={scrollToProjects}
-              className="group bg-[var(--primary)] px-7 py-3.5 text-sm font-semibold text-white rounded-lg hover:bg-[var(--primary-hover)] active:scale-[0.98] transition-all duration-200 cursor-pointer flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto"
+              className="group bg-[var(--primary)] px-6 sm:px-8 py-3 sm:py-4 text-sm font-semibold text-white rounded-lg hover:bg-[var(--primary-hover)] active:scale-[0.98] transition-all duration-200 cursor-pointer flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto"
             >
               View Projects
               <span
@@ -223,10 +223,10 @@ export default function Hero() {
               </span>
             </a>
             <a
-              href="/resume"
-              className="group text-sm font-semibold text-[var(--text)] hover:text-[var(--primary)] border-2 border-[var(--border)] hover:border-[var(--primary)] px-7 py-3.5 rounded-lg transition-all duration-200 flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto"
+              href="/contact"
+              className="group text-sm font-semibold text-[var(--text)] hover:text-[var(--primary)] border-2 border-[var(--border)] hover:border-[var(--primary)] px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all duration-200 flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto"
             >
-              View Resume
+              Get in touch
               <span
                 aria-hidden="true"
                 className="inline-block transition-transform duration-200 group-hover:translate-x-0.5"

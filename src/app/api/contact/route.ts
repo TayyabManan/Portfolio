@@ -29,6 +29,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Reject oversized payloads before buffering/parsing the body
+    const contentLength = request.headers.get('content-length');
+    if (contentLength && parseInt(contentLength, 10) > 32 * 1024) {
+      return NextResponse.json(
+        { error: 'Request body too large.' },
+        { status: 413 }
+      );
+    }
+
     const body = await request.json();
     const { honeypot, ...formData } = body;
 
@@ -71,7 +80,7 @@ ${validatedData.message}`;
     if (!ntfyTopic) {
       console.error('NTFY_TOPIC environment variable is not set');
       return NextResponse.json(
-        { error: 'Notification service not configured. Please check server configuration.' },
+        { error: 'An unexpected error occurred. Please try again later.' },
         { status: 500 }
       );
     }

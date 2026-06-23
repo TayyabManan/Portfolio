@@ -29,6 +29,9 @@ export const themes = {
     info: '#3568d4',
     highlight: '#d97706',
 
+    // Overlay/scrim for modals and menus
+    overlay: 'rgba(28, 25, 23, 0.5)',
+
     // Hero background (same as base — no special gradient)
     heroBackground: '#fafaf9',
     heroGradientStart: '#eef2fa',
@@ -70,6 +73,9 @@ export const themes = {
     accent: '#4ade80',
     info: '#5b8cdf',
     highlight: '#fbbf24',
+
+    // Overlay/scrim for modals and menus
+    overlay: 'rgba(0, 0, 0, 0.6)',
 
     // Hero background
     heroBackground: '#1c1917',

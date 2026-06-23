@@ -90,19 +90,19 @@ export default function CurrentlyLearning() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {learningItems.map((section, index) => {
             const colors = colorClasses[section.color as keyof typeof colorClasses]
             return (
               <div
                 key={index}
-                className="bg-[var(--background-secondary)] border border-[var(--border)] rounded-2xl p-6 sm:p-8 hover:border-[var(--primary)] transition-all duration-200 hover:shadow-md"
+                className="bg-[var(--background-secondary)] border border-[var(--border)] rounded-xl p-6 sm:p-8 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--primary)]"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className={`p-3 ${colors.bg} rounded-xl border ${colors.border}`}>
                     <section.icon className={`h-6 w-6 ${colors.text}`} />
                   </div>
-                  <h3 className="text-xl font-bold text-[var(--text)]">
+                  <h3 className="text-lg sm:text-xl font-semibold text-[var(--text)]">
                     {section.category}
                   </h3>
                 </div>

@@ -42,7 +42,7 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
 
   return (
     <article
-      className="group relative bg-[var(--background)] rounded-xl shadow-sm hover:shadow-xl transition-[transform,box-shadow] duration-300 overflow-hidden border border-[var(--border)] hover:-translate-y-1"
+      className="group relative bg-[var(--background)] rounded-xl shadow-sm overflow-hidden border border-[var(--border)] transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--primary)]"
       style={{ willChange: 'transform' }}
       aria-label={`${project.title} - ${project.category} project`}
     >
@@ -75,21 +75,21 @@ const ProjectCard = React.memo(function ProjectCard({ project }: ProjectCardProp
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--text)]/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
-      <div className="p-6 transition-all duration-300">
+      <div className="p-6 sm:p-8 transition-all duration-300">
         <div className="flex items-center gap-2 mb-2">
           <span className="inline-flex items-center rounded-md bg-[var(--accent)]/10 px-2 py-1 text-xs font-medium text-[var(--accent)]">
             {project.category}
           </span>
         </div>
 
-        <h3 className="text-xl font-semibold text-[var(--text)] mb-2 group-hover:text-[var(--primary)] transition-colors">
+        <h3 className="text-lg sm:text-xl font-semibold text-[var(--text)] mb-2 group-hover:text-[var(--primary)] transition-colors">
           {project.title}
         </h3>
 
         <div className="mb-4">
           <p
             ref={textRef}
-            className={`text-[var(--text-secondary)] transition-all duration-300 ${isExpanded ? '' : 'line-clamp-2'}`}
+            className={`text-sm text-[var(--text-secondary)] transition-all duration-300 ${isExpanded ? '' : 'line-clamp-2'}`}
           >
             {project.description}
           </p>

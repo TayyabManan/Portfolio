@@ -278,7 +278,7 @@ export function CommandPalette({ isOpen, onClose, additionalCommands = [] }: Com
       {/* Backdrop */}
       <div
         className={cn(
-          'absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-200',
+          'absolute inset-0 bg-[var(--overlay)] backdrop-blur-sm transition-opacity duration-200',
           visible ? 'opacity-100' : 'opacity-0'
         )}
         onClick={onClose}

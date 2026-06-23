@@ -302,13 +302,14 @@ export const resumeData: ResumeData = {
       ]
     },
     {
-      degree: "Bachelor of Science in Geography/GIS",
+      degree: "Bachelor of Science in Geographic Information Science",
       institution: "University of the Punjab",
       location: "Lahore, Pakistan",
       startDate: "2021",
       endDate: "2025",
       gpa: "3.0/4.0",
       achievements: [
+        "Quantitative coursework in remote sensing, spatial statistics, and Python-based satellite-data modeling",
         "Outstanding performance in GIS and Remote Sensing"
       ]
     },

@@ -312,10 +312,16 @@ export default function Header() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay + Dropdown — kept OUTSIDE the transformed navbar above.
+          The navbar has transform: translate3d(...), which would otherwise become the
+          containing block for these position:fixed children, shrinking the scrim to the
+          navbar height and breaking tap-anywhere-to-close. */}
+      <div className="md:hidden">
+        {/* Mobile Menu Overlay (tap anywhere to close) */}
         <div
-          className={`fixed inset-0 bg-black/60 transition-opacity duration-300 ${
+          className={`fixed inset-0 bg-[var(--overlay)] transition-opacity duration-300 ${
             mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
           style={{ zIndex: 90 }}

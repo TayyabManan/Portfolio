@@ -16,14 +16,14 @@ export default function Education() {
       ]
     },
     {
-      degree: "Bachelor of Science in GIS",
+      degree: "Bachelor of Science in Geographic Information Science",
       institution: "University of the Punjab, Lahore",
       period: "2021 - 2025",
       status: "Completed",
       icon: BookOpenIcon,
       highlights: [
-        "Outstanding performance in GIS and Remote Sensing",
-        "Strong foundation in geospatial analysis and environmental data"
+        "Quantitative coursework in remote sensing, spatial statistics, and Python-based satellite-data modeling",
+        "Strong foundation in geospatial analysis applied to ML problems"
       ]
     }
   ]
@@ -40,11 +40,11 @@ export default function Education() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {education.map((edu, index) => (
             <div
               key={index}
-              className="relative bg-[var(--background-secondary)] border border-[var(--border)] rounded-2xl p-6 sm:p-8 hover:border-[var(--primary)] transition-all duration-200 hover:shadow-md"
+              className="relative bg-[var(--background-secondary)] border border-[var(--border)] rounded-xl p-6 sm:p-8 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--primary)]"
             >
               {/* Status Badge */}
               <div className="absolute top-6 right-6">
@@ -66,7 +66,7 @@ export default function Education() {
                   <edu.icon className="h-8 w-8 text-[var(--primary)]" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-lg sm:text-xl font-bold text-[var(--text)] break-words">
+                  <h3 className="text-lg sm:text-xl font-semibold text-[var(--text)] break-words">
                     {edu.degree}
                   </h3>
                   <p className="text-sm sm:text-base text-[var(--text-secondary)] font-medium">
@@ -81,7 +81,7 @@ export default function Education() {
               </p>
 
               {/* Highlights */}
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {edu.highlights.map((highlight, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
                     <span className="text-[var(--accent)] mt-1">•</span>

@@ -27,7 +27,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       </div>
       <Toaster />
       {isOpen && (
-        <Suspense fallback={<div className="fixed inset-0 z-50 bg-black/50" />}>
+        <Suspense fallback={<div className="fixed inset-0 z-50 bg-[var(--overlay)]" />}>
           <CommandPalette isOpen={isOpen} onClose={close} />
         </Suspense>
       )}

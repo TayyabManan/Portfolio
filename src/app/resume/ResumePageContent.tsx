@@ -36,7 +36,7 @@ export default function ResumePageContent() {
             <button
               onClick={downloadPDF}
               disabled={downloading}
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-[var(--primary)] hover:bg-[var(--primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary)] disabled:opacity-50 transition-colors"
+              className="inline-flex items-center px-6 py-3 border border-transparent text-sm sm:text-base font-semibold rounded-lg text-white bg-[var(--primary)] hover:bg-[var(--primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary)] disabled:opacity-50 transition-colors"
             >
               {downloading ? (
                 <>
@@ -56,7 +56,7 @@ export default function ResumePageContent() {
 
       {/* Resume Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-[var(--background)] rounded-lg border border-[var(--border)] p-6 sm:p-8" id="resume-content">
+        <div className="bg-[var(--background)] rounded-xl border border-[var(--border)] shadow-sm p-6 sm:p-8 transition-all duration-200 hover:border-[var(--primary)] hover:shadow-md" id="resume-content">
           {/* Header Section */}
           <div className="text-center mb-8 pb-6 border-b-2 border-[var(--primary)]">
             <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text)] mb-2">
@@ -114,7 +114,7 @@ export default function ResumePageContent() {
                   ))}
                 </ul>
                 <div className="mt-2">
-                  <p className="text-xs text-[var(--text-secondary)]">
+                  <p className="text-sm text-[var(--text-secondary)]">
                     <strong>Technologies:</strong> {job.technologies.join(', ')}
                   </p>
                 </div>
@@ -162,7 +162,7 @@ export default function ResumePageContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {resumeData.skills.map((skillGroup, index) => (
                 <div key={index}>
-                  <h3 className="text-sm font-bold text-[var(--text)] mb-1">
+                  <h3 className="text-base font-bold text-[var(--text)] mb-1">
                     {skillGroup.category}:
                   </h3>
                   <p className="text-sm text-[var(--text-secondary)] mb-3 break-words">
@@ -182,7 +182,7 @@ export default function ResumePageContent() {
               <div key={index} className="mb-6">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
                   <h3 className="text-base font-bold text-[var(--text)] mb-2 sm:mb-0">{project.name}</h3>
-                  <div className="text-xs text-[var(--text-secondary)] sm:text-right space-x-3">
+                  <div className="text-sm text-[var(--text-secondary)] sm:text-right space-x-3">
                     {project.url && (
                       <a href={project.url} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--primary)] inline-block">
                         {project.urlText || 'View Project'}
@@ -201,7 +201,7 @@ export default function ResumePageContent() {
                     <li key={hlIndex} className="text-sm">{highlight}</li>
                   ))}
                 </ul>
-                <p className="text-xs text-[var(--text-secondary)]">
+                <p className="text-sm text-[var(--text-secondary)]">
                   <strong>Technologies:</strong> {project.technologies.join(', ')}
                 </p>
               </div>
@@ -218,7 +218,7 @@ export default function ResumePageContent() {
                 <div key={index} className="mb-3">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
                     <div className="mb-1 sm:mb-0">
-                      <h3 className="text-sm font-bold text-[var(--text)]">{cert.name}</h3>
+                      <h3 className="text-base font-bold text-[var(--text)]">{cert.name}</h3>
                       <p className="text-sm text-[var(--text-secondary)]">
                         <span className="font-bold">{cert.issuer}</span>
                       </p>
@@ -240,7 +240,7 @@ export default function ResumePageContent() {
                 <div key={index} className="mb-3">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
                     <div className="mb-1 sm:mb-0">
-                      <h3 className="text-sm font-bold text-[var(--text)]">{achievement.title}</h3>
+                      <h3 className="text-base font-bold text-[var(--text)]">{achievement.title}</h3>
                       <p className="text-sm text-[var(--text-secondary)]">{achievement.description}</p>
                     </div>
                     <p className="text-sm text-[var(--text-secondary)] sm:text-right">{achievement.date}</p>

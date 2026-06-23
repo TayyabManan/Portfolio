@@ -22,7 +22,7 @@ export default function ProjectsPageContent() {
     // Fetch projects from API
     const loadProjects = async () => {
       try {
-        const res = await fetch('/api/projects')
+        const res = await fetch('/api/projects', { cache: 'no-store' })
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`)
         }
@@ -106,7 +106,7 @@ export default function ProjectsPageContent() {
             onRetry={() => {
               setLoading(true)
               setError(null)
-              fetch('/api/projects')
+              fetch('/api/projects', { cache: 'no-store' })
                 .then(res => res.json())
                 .then(data => {
                   setProjects(data)

@@ -19,16 +19,16 @@ const skills = [
 
 const education = [
   {
-    degree: 'Bachelor of Science in Geographic Information Systems(GIS)',
-    school: 'University of the Punjab, Lahore',
-    year: '2025',
-    description: 'Developing GIS solutions using Python, QGIS, and Google Earth Engine to transform satellite data into actionable insights.'
-  },
-  {
     degree: 'Masters in Artificial Intelligence Engineering',
     school: 'COMSATS Islamabad',
     year: '2027 (Expected)',
     description: 'Graduate student specializing in computer vision, deep learning architectures, and practical AI system deployment.'
+  },
+  {
+    degree: 'Bachelor of Science in Geographic Information Science',
+    school: 'University of the Punjab, Lahore',
+    year: '2025',
+    description: 'Built quantitative skills in remote sensing, spatial statistics, and Python — turning satellite data into ML-ready datasets and models.'
   }
 ]
 
@@ -65,7 +65,7 @@ export default function AboutPage() {
           {/* Bio & Skills - Left side on desktop, order-1 on mobile */}
           <div className="lg:col-span-2 space-y-8 order-2 lg:order-1">
             <section>
-              <h2 className="text-2xl font-bold text-[var(--text)] mb-4">About My Journey</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)] mb-4">About My Journey</h2>
               <div className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed space-y-4">
                 <p>
                   I got into AI through an unusual path: geography. During my Bachelor&apos;s in GIS at Punjab University,
@@ -89,7 +89,7 @@ export default function AboutPage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-[var(--text)] mb-4">Core Competencies</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)] mb-4">Core Competencies</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {skills.map((skill) => (
                   <div key={skill} className="flex items-center gap-3">
@@ -133,7 +133,7 @@ export default function AboutPage() {
           <section>
             <div className="flex items-center gap-3 mb-6">
               <AcademicCapIcon className="h-6 w-6 text-[var(--primary)]" />
-              <h2 className="text-2xl font-bold text-[var(--text)]">Education</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)]">Education</h2>
             </div>
             <div className="space-y-6">
               {education.map((edu, index) => (
@@ -153,7 +153,7 @@ export default function AboutPage() {
           <section>
             <div className="flex items-center gap-3 mb-6">
               <BriefcaseIcon className="h-6 w-6 text-[var(--primary)]" />
-              <h2 className="text-2xl font-bold text-[var(--text)]">Experience</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)]">Experience</h2>
             </div>
             <div className="space-y-6">
               {experience.map((exp, index) => (
@@ -174,7 +174,7 @@ export default function AboutPage() {
         <section className="mt-12">
           <div className="flex items-center gap-3 mb-6">
             <CheckBadgeIcon className="h-6 w-6 text-[var(--primary)]" />
-            <h2 className="text-2xl font-bold text-[var(--text)]">Certifications</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)]">Certifications</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {resumeData.certifications.map((cert, index) => (
@@ -195,7 +195,7 @@ export default function AboutPage() {
 
         {/* Call to Action */}
         <div className="mt-16 bg-[var(--background-secondary)] rounded-2xl p-8 lg:p-12 border border-[var(--border)]">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text)] mb-4">Let&apos;s Work Together</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)] mb-4">Let&apos;s Work Together</h2>
           <p className="text-[var(--text-secondary)] mb-6 text-base sm:text-lg max-w-2xl">
             I&apos;m always interested in discussing new opportunities, collaborating on innovative
             ML projects, or sharing insights about machine learning engineering, computer vision, and MLOps.

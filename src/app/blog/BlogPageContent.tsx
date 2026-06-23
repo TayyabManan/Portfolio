@@ -87,7 +87,7 @@ export default function BlogPageContent({ posts }: BlogPageContentProps) {
               <article key={post.slug}>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="group block bg-[var(--background)] border border-[var(--border)] rounded-xl overflow-hidden hover:border-[var(--primary)] transition-[transform,box-shadow] duration-300 hover:shadow-xl hover:-translate-y-1 h-full"
+                  className="group block bg-[var(--background)] border border-[var(--border)] rounded-xl overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-[var(--primary)] h-full"
                 >
                   {/* Image */}
                   {post.image && (
@@ -101,7 +101,7 @@ export default function BlogPageContent({ posts }: BlogPageContentProps) {
                   )}
 
                   {/* Content */}
-                  <div className="p-6">
+                  <div className="p-6 sm:p-8">
                     {/* Category & Date */}
                     <div className="flex items-center gap-4 text-xs text-[var(--text-tertiary)] mb-3">
                       <div className="flex items-center gap-1">
@@ -115,7 +115,7 @@ export default function BlogPageContent({ posts }: BlogPageContentProps) {
                     </div>
 
                     {/* Title */}
-                    <h2 className="text-xl font-semibold text-[var(--text)] mb-2 group-hover:text-[var(--primary)] transition-colors line-clamp-2">
+                    <h2 className="text-lg sm:text-xl font-semibold text-[var(--text)] mb-2 group-hover:text-[var(--primary)] transition-colors line-clamp-2">
                       {post.title}
                     </h2>
 

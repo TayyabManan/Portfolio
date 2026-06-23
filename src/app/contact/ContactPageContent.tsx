@@ -87,7 +87,7 @@ export default function ContactPageContent() {
       reset();
     } catch {
       setSubmitStatus("error");
-      toast.error("Couldn't send your message", "Try again or email me directly at m.tayyab.manan@gmail.com");
+      toast.error("Couldn't send your message", "Please try again, or use the email link below.");
     } finally {
       clearTimeout(timeout);
       setIsSubmitting(false);
@@ -112,7 +112,7 @@ export default function ContactPageContent() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div>
-            <h2 className="text-2xl font-bold text-[var(--text)] mb-6">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)] mb-6">
               Contact Information
             </h2>
 
@@ -155,7 +155,7 @@ export default function ContactPageContent() {
                   href="https://www.linkedin.com/in/tayyabmanan"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-[border-color,color] text-[var(--primary)] hover:text-[var(--primary-hover)]"
+                  className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--primary)] transition-[border-color,color] text-[var(--primary)] hover:text-[var(--primary-hover)]"
                   aria-label="LinkedIn (opens in new window)"
                 >
                   <Linkedin className="h-6 w-6" />
@@ -165,7 +165,7 @@ export default function ContactPageContent() {
                   href="https://github.com/TayyabManan"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-[border-color,color] text-[var(--text)] hover:text-[var(--text-secondary)]"
+                  className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--primary)] transition-[border-color,color] text-[var(--text)] hover:text-[var(--text-secondary)]"
                   aria-label="GitHub (opens in new window)"
                 >
                   <Github className="h-6 w-6" />
@@ -175,7 +175,7 @@ export default function ContactPageContent() {
                   href="https://www.upwork.com/users/~0155edcc7d42fc5b51"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--border-hover)] transition-[border-color,color] text-[var(--success)] hover:text-[var(--success)]/80"
+                  className="relative p-3 rounded-lg border border-[var(--border)] hover:border-[var(--primary)] transition-[border-color,color] text-[var(--success)] hover:text-[var(--success)]/80"
                   aria-label="Upwork (opens in new window)"
                 >
                   <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -201,8 +201,8 @@ export default function ContactPageContent() {
 
           {/* Contact Form */}
           <div>
-            <div className="bg-[var(--background-secondary)] p-8 rounded-xl">
-              <h2 className="text-2xl font-bold text-[var(--text)] mb-6">
+            <div className="bg-[var(--background-secondary)] p-6 sm:p-8 rounded-xl">
+              <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)] mb-6">
                 Send a Message
               </h2>
 
@@ -217,7 +217,8 @@ export default function ContactPageContent() {
               {submitStatus === "error" && (
                 <div className="mb-6 p-4 bg-[var(--error)]/10 border border-[var(--error)]/20 rounded-lg">
                   <p className="text-[var(--error)]">
-                    Couldn&apos;t send your message. Try again or email me directly at m.tayyab.manan@gmail.com.
+                    Couldn&apos;t send your message. Try again or email me directly at{' '}
+                    <ObfuscatedEmail className="underline hover:text-[var(--error)]/80" />.
                   </p>
                 </div>
               )}
@@ -360,7 +361,7 @@ export default function ContactPageContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[var(--primary)] text-white px-6 py-3 rounded-lg font-medium hover:bg-[var(--primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 active:scale-[0.98] transition-[colors,transform]"
+                  className="w-full bg-[var(--primary)] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium hover:bg-[var(--primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 active:scale-[0.98] transition-[colors,transform]"
                 >
                   {isSubmitting && (
                     <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
