@@ -86,7 +86,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   // Generate Article schema for SEO
   const articleSchema = {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    '@type': ['BlogPosting', 'TechArticle'],
     headline: post.title,
     description: post.description,
     image: post.image || 'https://tayyabmanan.com/images/profile-picture.webp',

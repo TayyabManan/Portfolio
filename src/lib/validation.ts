@@ -29,7 +29,7 @@ export const projectSlugSchema = z.string()
 
 // Environment variables validation
 export const envSchema = z.object({
-  NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: z.string().optional(),
+  NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string().optional(),
   NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: z.string().optional(),
   NTFY_TOPIC: z.string().optional(),
 })

@@ -203,6 +203,20 @@ export const resumeData: ResumeData = {
 
   projects: [
     {
+      name: "Urdu LLM Fine-Tuning",
+      description: "QLoRA fine-tuning of Qwen 2.5 7B Instruct for natural Urdu, Roman Urdu, and Urdu/English code-mixed chat",
+      technologies: ["Python", "PyTorch", "Unsloth", "QLoRA / PEFT", "Hugging Face", "Modal", "Gradio", "Haystack"],
+      url: "https://huggingface.co/spaces/TayyabManan/urdu-llm-chat",
+      urlText: "Live Demo",
+      github: "https://github.com/TayyabManan/Urdu-LLM",
+      githubText: "GitHub",
+      highlights: [
+        "Fine-tuned Qwen 2.5 7B with QLoRA (154 MB adapter, 0.82% of parameters, 8.56 GB peak VRAM), built end-to-end for under $50",
+        "Achieved 66% median pairwise win rate over the base model across 3 independent LLM judges on a 100-prompt evaluation set",
+        "Diagnosed and fixed catastrophic forgetting via data-centric iteration, lifting code-mixed task win rate from 0% to 80%"
+      ]
+    },
+    {
       name: "US Visa Approval Prediction",
       description: "ML system predicting PERM labor certification outcomes with SHAP explainability",
       technologies: ["Python", "Scikit-learn", "XGBoost", "LightGBM", "CatBoost", "SHAP", "FastAPI", "Docker"],
