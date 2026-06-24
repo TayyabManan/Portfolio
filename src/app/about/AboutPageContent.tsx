@@ -66,7 +66,7 @@ export default function AboutPage() {
           <div className="lg:col-span-2 space-y-8 order-2 lg:order-1">
             <section>
               <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text)] mb-4">About My Journey</h2>
-              <div className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed space-y-4">
+              <div className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed space-y-4 text-justify hyphens-auto">
                 <p>
                   I got into AI through an unusual path: geography. During my Bachelor&apos;s in GIS at Punjab University,
                   I spent a lot of time working with satellite imagery and spatial data. At some point I realized the most

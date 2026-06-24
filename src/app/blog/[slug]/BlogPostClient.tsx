@@ -166,7 +166,7 @@ export default function BlogPostClient({ post, adjacentPosts }: BlogPostClientPr
                 )
               },
               p: ({ children }) => (
-                <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-4">
+                <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-4 text-justify hyphens-auto">
                   {children}
                 </p>
               ),
