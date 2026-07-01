@@ -8,7 +8,7 @@ techStack: ["React", "Flask", "Pandas", "Scikit-learn", "Google Earth Engine", "
 image: "/projects/watertrace.webp"
 demoUrl: "https://watertrace.vercel.app"
 githubUrl: "https://github.com/TayyabManan/WaterTrace"
-featured: true
+featured: false
 date: "2025-01-09"
 ---
 

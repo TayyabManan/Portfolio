@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Bars3Icon, XMarkIcon, MagnifyingGlassIcon, ChatBubbleLeftRightIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline'
 import Logo from '@/components/ui/Logo'
-import { useCommandPalette } from '@/components/ui/CommandPaletteProvider'
+import { useCommandPalette, preloadCommandPalette } from '@/components/ui/CommandPaletteProvider'
 import { useTheme } from '@/contexts/ThemeContext'
 
 const navigationItems = [
@@ -178,6 +178,8 @@ export default function Header() {
             {/* Search Button */}
             <button
               onClick={openCommandPalette}
+              onMouseEnter={preloadCommandPalette}
+              onFocus={preloadCommandPalette}
               type="button"
               className="p-2 min-h-[44px] min-w-[44px] rounded-lg transition-all duration-200 group flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--primary)] hover:bg-[var(--background-secondary)]"
               aria-label="Open command palette"
@@ -272,6 +274,8 @@ export default function Header() {
                 {/* Mobile Search */}
                 <button
                   onClick={openCommandPalette}
+                  onMouseEnter={preloadCommandPalette}
+                  onFocus={preloadCommandPalette}
                   type="button"
                   className="p-2 min-h-[44px] min-w-[44px] transition-colors rounded-lg flex items-center justify-center text-[var(--text-secondary)] active:text-[var(--primary)] active:bg-[var(--background-secondary)]"
                   aria-label="Open search"

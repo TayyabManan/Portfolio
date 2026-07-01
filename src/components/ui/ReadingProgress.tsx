@@ -30,7 +30,7 @@ export default function ReadingProgress() {
   }, [])
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-[var(--background-secondary)]">
+    <div className="fixed top-0 left-0 right-0 z-[110] h-1 pointer-events-none">
       <div
         ref={progressRef}
         className="h-full bg-[var(--primary)] origin-left"

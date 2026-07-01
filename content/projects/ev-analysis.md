@@ -8,7 +8,7 @@ techStack: ["Python", "QGIS", "ArcGIS", "Open Street Map", "Demographic Data"]
 image: "/projects/ev-analysis.webp"
 demoUrl: "https://ev-analysis.netlify.app/"
 githubUrl: "https://github.com/TayyabManan/ev-suitability-analysis"
-featured: true
+featured: false
 date: "2024-11-20"
 ---
 

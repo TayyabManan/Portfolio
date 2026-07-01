@@ -1,18 +1,18 @@
 ---
 slug: "building-urdu-llm-fine-tuning"
 title: "Building an Urdu LLM: From Data Curation to Deployment"
-description: "A technical deep-dive into fine-tuning Qwen 2.5 7B for Urdu: curating a bilingual Urdu/Roman-Urdu corpus, QLoRA training on a rented H100, diagnosing and fixing catastrophic forgetting, building a blinded multi-judge evaluation harness (including a free Claude-Code-CLI judge), a RAG experiment that didn't work and why, and shipping a live demo on Gradio + Modal."
-date: "2026-06-07"
+description: "A technical deep-dive into fine-tuning Qwen 2.5 7B for Urdu across three versions: curating a bilingual Urdu/Roman-Urdu corpus, QLoRA training on a rented H100, diagnosing and fixing catastrophic forgetting, building a blinded multi-judge evaluation harness (including a free Claude-Code-CLI judge), fixing the regressions a data change caused, RAG-aware retraining that fixed retrieval's structural failure without turning it into a blanket win, and shipping a live demo on Gradio + Modal."
+date: "2026-06-28"
 author: "Tayyab Manan"
 category: "Machine Learning"
-tags: ["Machine Learning", "LLM Fine-Tuning", "QLoRA", "Low-Resource NLP", "LLM-as-Judge", "Modal", "MLOps"]
+tags: ["Machine Learning", "LLM Fine-Tuning", "QLoRA", "Low-Resource NLP", "LLM-as-Judge", "RAG", "Synthetic Data", "Modal", "MLOps"]
 image: "/projects/urdu-llm-fine-tuning.webp"
-readTime: "16 min read"
+readTime: "20 min read"
 ---
 
 # Building an Urdu LLM: From Data Curation to Deployment
 
-This post is the technical deep-dive behind the [Urdu LLM Fine-Tuning](/projects/urdu-llm-fine-tuning) project. I'll walk through the full pipeline: curating a bilingual Urdu corpus, QLoRA training, a multi-judge evaluation harness, a RAG layer that didn't work, and a live demo that did. It was my first end-to-end fine-tuning project, built in public over 30 days for about $50, and a lot of what I learned came from getting things wrong on a public timeline.
+This post is the technical deep-dive behind the [Urdu LLM Fine-Tuning](/projects/urdu-llm-fine-tuning) project. I'll walk through the full pipeline across three versions: curating a bilingual Urdu corpus, QLoRA training, a multi-judge evaluation harness, a RAG layer that failed and the retraining that fixed it, and a live demo that works. It was my first end-to-end fine-tuning project, built in public for about $60, and a lot of what I learned came from getting things wrong on a public timeline. Three versions in, the current model wins about 79.5% of blind comparisons against the base.
 
 ## The Problem: Urdu Is Demographically Huge, Computationally Tiny
 
@@ -39,7 +39,7 @@ The training corpus draws from four sources, deliberately covering both Urdu scr
 | Existing Roman-Urdu Q&A set | Roman coverage | Roman |
 | My own LLM transliterations | Roman coverage at scale | Roman |
 
-After cleaning and formatting, the final v2 corpus was 63,322 examples.
+After cleaning and formatting, the v2 corpus was 63,322 examples. (Version 3 later grew this with synthetic data; more on that below.)
 
 ### Cleaning
 
@@ -178,17 +178,73 @@ The *why* is the most valuable thing the experiment produced, and it's a real ar
 
 You can't bolt RAG onto a model that wasn't trained for it. On factual questions, retrieval surfaced the right answer but the model often ignored it; on non-factual tasks (summarize this, fix this grammar), the chunks were pure distraction. Consider a question like "which is the largest province by area?": the plain fine-tune answers confidently and sometimes wrongly, and even when the correct answer is sitting in a retrieved chunk, the model frequently talks past it.
 
-There was also a tempting shortcut that failed worse: use the *base* model (which handles prepended context better) with retrieval, skipping the fine-tune. But the base model, fed Urdu context, falls back to its pretraining and leaks Chinese. So neither side wins cleanly: the fine-tune has the Urdu fluency but can't use context; the base can use context but loses the Urdu. That's the catch-22 at 7B.
+There was also a tempting shortcut that failed worse: use the *base* model (which handles prepended context better) with retrieval, skipping the fine-tune. But the base model, fed Urdu context, falls back to its pretraining and leaks Chinese, on 45 of 100 answers. So neither side wins cleanly: the fine-tune has the Urdu fluency but can't use context; the base can use context but loses the Urdu. That's the catch-22 at 7B.
 
-The fix is upstream, and it's the headline feature of the next version: add `(query, context, grounded-answer)` triples to the training mix, formatted exactly the way the retriever serves them, including deliberately noisy examples where the right answer *isn't* in the context, so the model learns to ignore irrelevant chunks instead of forcing them into the answer. RAG ships when the model is trained to use it, not before. I'd rather defer a feature than ship a worse one.
+The fix is upstream: add `(query, context, grounded-answer)` triples to the training mix, formatted exactly the way the retriever serves them, including deliberately noisy examples where the right answer *isn't* in the context, so the model learns to ignore irrelevant chunks instead of forcing them into the answer. That's what version 3 does, and the result was more honest than the headline I'd hoped for.
 
 (One small process win from this stage: before paying to re-index the whole corpus on a hunch that my embeddings were mismatched, I ran a ten-cent diagnostic that compared stored vectors against freshly-encoded ones. They were identical. The ten-cent check saved a multi-dollar reindex. Diagnose before you spend.)
+
+## Version 3: Fixing the Regressions and Making RAG Real
+
+v2 left two debts. Three categories had regressed (summarization, reasoning, grammar), and the RAG layer couldn't use the context it was handed. v3 paid both down with the same lever that fixed catastrophic forgetting: better data, not a new optimizer. I generated about 5,700 new synthetic examples for around $0.63 and folded them into the existing corpus.
+
+### The New Data, and Letting Python Own the Answer
+
+The theme of the v3 data is *not trusting the language model with anything a program can verify*:
+
+- **Grammar pairs.** GPT-4o-mini *corrupts* a trusted, human-written Urdu sentence with one labelled error. The gold answer is the original trusted sentence, never a model rewrite. That way the model's own imperfect Urdu can't poison the grammar target.
+- **Summarization.** The prompt asks for an exact sentence count, and I verify the count in Python (retry once, else discard).
+- **Reasoning.** Python owns *all* the arithmetic. It generates the numbers and the answer, and the model only narrates the steps in Urdu. I then check that the computed digits actually appear in the output. The model never does math.
+- **RAG triples.** Grounded on real Urdu Wikipedia chunks, formatted *byte-for-byte* like the retrieval endpoint serves them. Three kinds: a single gold chunk, a gold chunk plus two distractors, and "noise" (three unrelated chunks where the right move is to say the context doesn't help).
+
+A quick detour on knowing when *not* to build something: while assembling this data I read FAIR's "Agentic Self-Instruct" paper, which has an agent generate, test, and refine training data in a loop. Good idea, but it's built for reinforcement learning with verifiable rewards, and I'm doing plain supervised fine-tuning; I'd also already done its core moves a cheaper way (grounding, deterministic checks, a human review gate). So I wrote down *why* I was skipping it and moved on. Reading a paper and deciding it doesn't fit is also engineering.
+
+### The Spot-Check That Earned Its Keep
+
+Before spending money on training, I reviewed 200 of the generated examples by hand. Two systemic bugs turned up that my automated self-tests had completely missed:
+
+1. **One reasoning template was 100% broken.** The "sum of three ages" problems rendered the scenario but dropped the actual question, *"Ayesha is 33, Tariq is 5 older, Imran is 2 younger."* and then nothing. My validator only checked that the right digits appeared, not that a question existed, so it waved every one of them through.
+2. **The RAG "noise" answers were confidently wrong.** For the noise examples, the gold answer said "not in the context, but generally…" and then asserted a fact from GPT-4o-mini's own knowledge. Unverified. Across all 282 noise rows, about 18% asserted something wrong or unverifiable, concentrated alarmingly in religious questions (Urdu Wikipedia is religion-heavy, so the noise questions skewed that way, so the model confabulated exactly where a wrong confident answer does the most harm).
+
+I fixed both at the generator level. Python now owns the *question* the same way it owns the arithmetic, and the noise answers just decline instead of fabricating. Then I regenerated the affected slices and verified them clean: zero missing questions, zero confabulations. The lesson I keep relearning: a deterministic check beats an LLM judge for the things it can actually check, and a human still beats both for the things neither can.
+
+### Training v3
+
+68,997 examples (the 63k from v2 plus the ~5,700 new ones), same QLoRA recipe, two epochs, with the sequence length bumped to 4096 so the RAG context fits without truncation. Final train loss 0.5738, about $5–6 of H100 time.
+
+### Results: The Regressions Recovered
+
+I judged v3 with Claude and GPT-5.3 (Gemini's free tier caps at 20 requests a day, too few for a 100-prompt set, so it sat this one out). Against the base model, v3 wins 79.5% overall, up from v2's 66%, and all three regressions recovered:
+
+| Category | v2 vs base | v3 vs base |
+|----------|-----------|-----------|
+| Creative writing | 91% | 100% |
+| Translation | 80% | 97% |
+| Summarization | 46% | **82%** |
+| Grammar correction | 36% | **82%** |
+| Question answering | 71% | 79% |
+| Code explanation | 60% | 75% |
+| Code-mixed | 80% | 70% |
+| Reasoning | 31% | **53%** |
+| **Overall vs base** | **66%** | **79.5%** |
+
+On its own, that's the result I wanted. But there's an honest caveat, and it's the kind that a "v3 > v2" headline would hide: judged head-to-head, **v3 only wins 43% of direct matchups against v2.** It clearly wins summarization, grammar, and code-mixed, but *loses* translation, code-explanation, reasoning, and qa. Pouring in RAG, grammar, and summarization data traded away strength elsewhere. There is no free lunch in the data mix. v3 is better at the things I targeted and worse at some things I didn't, and that's worth saying out loud.
+
+### RAG, The Honest Result
+
+This is where I was most wrong, and the correction is the most useful thing in v3.
+
+The structural fix worked completely. **0 of 100 RAG answers leaked Chinese**, where v2's base-plus-RAG leaked on 45 of 100. And on the questions that actually need a fact, RAG *corrects* the model: asked for Pakistan's largest province by area, plain v3 says "Punjab" (wrong), and RAG says "Balochistan, 347,190 km²" straight out of the retrieved article.
+
+But when I judged RAG-v3 against plain v3 across all 100 prompts, **RAG won only 15.5%**, basically the same as v2's 17%. My hypothesis that RAG-aware training would flip retrieval into a net win was just wrong, and here's why: 79 of the 100 eval prompts are creative writing, grammar, reasoning, translation, and code, where retrieved Wikipedia context is pure noise. RAG *should* lose those. Even on factual QA it only won 31%, because plain v3 often already knows the answer and phrases it more cleanly than a context-stitched response, and a preference judge rewards "fluent and right" over "grounded but clunky."
+
+So RAG didn't become a blanket upgrade. What it became is *safe*, a deployable grounding tool you can point a factual query at without it collapsing into Chinese word-salad. v2 never had that. That's a smaller, truer claim than the one I started with, and I'll take a true small claim over an oversold big one.
 
 ## Deployment: A 7B Model on Free Infrastructure
 
 The demo had to be free to host and good enough to show. A 7B model can't run on the free Hugging Face Spaces CPU tier: you're looking at tens of seconds per token, effectively unusable. So I split the stack:
 
-- **Backend:** a Modal app serves the fine-tuned model behind a `/generate` endpoint on an H100 that scales to zero (so it costs nothing when idle) and stays warm for five minutes after a call (so a demo session stays snappy). The adapter loads once per warm container.
+- **Backend:** a Modal app serves the fine-tuned model behind a `/generate` endpoint (and a `/rag` endpoint for grounded queries) on an H100 that scales to zero (so it costs nothing when idle) and stays warm for five minutes after a call (so a demo session stays snappy). The adapter loads once per warm container.
 - **Frontend:** a lightweight Gradio Space that's a thin proxy: it reads the Modal URL from a secret and POSTs to it. Free to host on Spaces, pay-per-second to run on Modal.
 
 Two details made the demo feel finished rather than broken:
@@ -202,29 +258,35 @@ Two details made the demo feel finished rather than broken:
 | Decision | Chosen | Alternative | Why |
 |----------|--------|-------------|-----|
 | Base model | Qwen 2.5 7B Instruct | Smaller 0.5–1.5B / Llama | Usable Urdu prior, Apache-2.0, runs in 4-bit |
-| Fine-tune method | QLoRA (Unsloth) | Full fine-tuning | 0.82% of params, 154 MB adapter, ~$10–15/run |
+| Fine-tune method | QLoRA (Unsloth) | Full fine-tuning | 0.82% of params, 154 MB adapter, ~$5–15/run |
 | Roman Urdu generation | LLM "WhatsApp" rewrite | Character mapping | Natural spellings, not robotic transliteration |
 | Epochs | 2 | 3 | Eval loss bottomed at epoch 2; epoch 3 overfit |
 | Forgetting fix | Add code/Roman data | Tune hyperparameters | Data-centric; took code-mixed 0% → 80% |
-| Evaluation | Median across 3 cross-model judges | Single judge | Exposes the 48–67% spread, controls bias |
+| Regression fix (v3) | Add grammar/summ/reasoning data | Accept the trade-off | Recovered all three; summ 46% → 82%, grammar 36% → 82% |
+| Verifiable data | Let Python own the answer | Trust the generator | Deterministic checks caught two systemic bugs |
+| Evaluation | Median across cross-model judges | Single judge | Exposes the spread, controls position bias |
 | Serving | Gradio Space + Modal H100 | Model on Spaces CPU | 7B is unusable on the free CPU tier |
-| RAG | Deferred to next version | Ship it now | Plain fine-tune can't use prepended context |
+| RAG | RAG-aware retraining (v3) | Bolt onto v2 | Retrieval must be in the training distribution; fixed the structural failure |
 
 ## What I Learned
 
 **Catastrophic forgetting is real, and it's a data problem.** Specializing on Urdu script alone silently erased the base model's coding ability. I didn't fix it by tuning the optimizer; I fixed it by putting code and code-mixed examples back into the data. For specialization on a strong base model, the data mix is the highest-leverage knob there is.
 
-**Single-judge evaluation will lie to you, mostly through position bias.** The first numbers I trusted came from one judge with fixed ordering and didn't survive a cross-model, position-randomized re-run. Now I report a median and a range across at least three model families, and I randomize A/B on every comparison. The 8–14 point gap I measured between biased and unbiased judging is the whole reason.
+**Data mixes rebalance; they don't strictly improve.** v3 beat the base 79.5% and recovered every regression, but head-to-head it only beat v2 43% of the time. The grammar, summarization, and RAG data I poured in traded away some translation and reasoning. There's no free lunch in the mix, and it's worth knowing before you tell anyone "v3 > v2."
 
-**You can't bolt RAG onto a model that wasn't trained for it.** The retrieval stack was fine; the model was the bottleneck. A fine-tune trained on direct Q→A pairs treats prepended context as out-of-distribution noise. The lesson (fix it upstream in the training data, in the exact serving format) is worth more than a RAG layer that half-worked.
+**Single-judge evaluation will lie to you, mostly through position bias.** The first numbers I trusted came from one judge with fixed ordering and didn't survive a cross-model, position-randomized re-run. Now I report a median and a range across multiple model families, and I randomize A/B on every comparison. The 8–14 point gap I measured between biased and unbiased judging is the whole reason.
 
-**A 7B QLoRA fine-tune is lighter than its name.** Peaking at 8.56 GB of VRAM and shipping as a 154 MB adapter, this kind of work is accessible to anyone with a few dollars of GPU time. The infrastructure story (Modal for training and serving, a free Spaces frontend, Claude Code as a zero-cost judge) kept the whole project under $50.
+**The cheap, boring quality gates catch the expensive bugs.** A Python digit-check and a human reading 200 rows found two systemic failures, a 100%-broken reasoning template and a batch of confabulated RAG answers, that a clean-looking automated test suite waved straight through. Spend the ten cents on the diagnostic; read the two hundred rows.
 
-Most of all: keeping the failures in the writeup, with the numbers attached, is the part I'd defend hardest. The overfit epoch, the forgetting, the RAG layer that lost: those are the parts that taught me something, and they're the parts a clean success story would have hidden.
+**You can't bolt RAG onto a model that wasn't trained for it, and training for it fixes the breakage, not the win rate.** v2's retrieval stack was fine; the model was the bottleneck, treating prepended context as out-of-distribution noise. v3 put retrieval-format triples in the training data and the structural failure vanished, Chinese leakage went 45/100 → 0. But RAG still only won 15.5% of comparisons, because most prompts don't need a looked-up fact. Training for RAG makes it *safe*, not universally better. Measuring it on a blanket eval buries the signal under all the prompts that never needed retrieval.
+
+**A 7B QLoRA fine-tune is lighter than its name.** Peaking at 8.56 GB of VRAM and shipping as a 154 MB adapter, this kind of work is accessible to anyone with a few dollars of GPU time. The infrastructure story (Modal for training and serving, a free Spaces frontend, Claude Code as a zero-cost judge) kept the whole project, three model versions and two RAG attempts, under $60.
+
+Most of all: keeping the failures in the writeup, with the numbers attached, is the part I'd defend hardest. The overfit epoch, the forgetting, the RAG layer that lost and then only half-won: those are the parts that taught me something, and they're the parts a clean success story would have hidden. A negative result you instrumented well, like knowing *exactly why* RAG wins only 15.5%, is still a result.
 
 ## Links
 
 - [Live Demo](https://huggingface.co/spaces/TayyabManan/urdu-llm-chat)
-- [Model on Hugging Face](https://huggingface.co/TayyabManan/qwen2.5-7b-urdu-v2)
+- [Model on Hugging Face](https://huggingface.co/TayyabManan/qwen2.5-7b-urdu-v3)
 - [Source Code](https://github.com/TayyabManan/Urdu-LLM)
 - [Project Page](/projects/urdu-llm-fine-tuning)

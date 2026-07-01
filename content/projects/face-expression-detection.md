@@ -8,7 +8,7 @@ techStack: ["Python", "PyTorch", "Flask", "MTCNN", "OpenCV", "ResNet-18", "Docke
 image: "/projects/face-expression-detection.webp"
 demoUrl: "https://huggingface.co/spaces/TayyabManan/face-expression-detection"
 githubUrl: "https://github.com/TayyabManan/Face-Expression-Detection"
-featured: true
+featured: false
 date: "2025-12-08"
 ---
 

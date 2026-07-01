@@ -8,7 +8,7 @@ techStack: ["React", "TypeScript", "Supabase", "TanStack Query", "React Router",
 image: "/projects/teacher-rank.png"
 demoUrl: "https://teacherrank.vercel.app/"
 githubUrl: "https://github.com/TayyabManan/TeacherRank"
-featured: true
+featured: false
 date: "2025-01-06"
 ---
 
