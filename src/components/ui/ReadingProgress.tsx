@@ -33,7 +33,7 @@ export default function ReadingProgress() {
     <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-[var(--background-secondary)]">
       <div
         ref={progressRef}
-        className="h-full bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] origin-left"
+        className="h-full bg-[var(--primary)] origin-left"
         style={{
           transform: 'scaleX(0)',
           willChange: 'transform'

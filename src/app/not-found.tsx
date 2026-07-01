@@ -35,7 +35,13 @@ export default function NotFound() {
             </Link>
 
             <button
-              onClick={() => window.history.back()}
+              onClick={() => {
+                if (window.history.length > 1) {
+                  window.history.back()
+                } else {
+                  window.location.href = '/'
+                }
+              }}
               className="inline-flex items-center justify-center gap-2 bg-[var(--background-secondary)] text-[var(--text)] px-6 py-3 rounded-lg font-semibold hover:bg-[var(--background-tertiary)] transition-colors border border-[var(--border)]"
             >
               <ArrowLeftIcon className="h-5 w-5" />

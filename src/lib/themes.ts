@@ -24,8 +24,8 @@ export const themes = {
     error: '#dc2626',
     warning: '#d97706',
 
-    // Aliases (for backward compatibility — consolidate later)
-    accent: '#16a34a',
+    // Aliases — single blue accent; green/amber reserved for semantics only
+    accent: '#3568d4',
     info: '#3568d4',
     highlight: '#d97706',
 
@@ -69,8 +69,8 @@ export const themes = {
     error: '#f87171',
     warning: '#fbbf24',
 
-    // Aliases
-    accent: '#4ade80',
+    // Aliases — single blue accent; green/amber reserved for semantics only
+    accent: '#5b8cdf',
     info: '#5b8cdf',
     highlight: '#fbbf24',
 

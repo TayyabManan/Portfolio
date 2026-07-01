@@ -1,23 +1,19 @@
 'use client'
 
-import { lazy, Suspense } from 'react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { Toaster } from '@/components/ui/Toast'
-import { useCommandPalette } from '@/components/ui/CommandPalette'
+import OfflineBanner from '@/components/ui/OfflineBanner'
+import { CommandPaletteProvider } from '@/components/ui/CommandPaletteProvider'
 import { useGlobalKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 import { useSkipToContent } from '@/hooks/useFocusManagement'
 
-// Lazy load the CommandPalette component for better performance
-const CommandPalette = lazy(() => import('@/components/ui/CommandPalette').then(mod => ({ default: mod.CommandPalette })))
-
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
-  const { isOpen, close } = useCommandPalette()
   useGlobalKeyboardShortcuts()
   useSkipToContent()
 
   return (
-    <>
+    <CommandPaletteProvider>
       <div className="bg-[var(--background)] min-h-[100dvh] transition-colors">
         <Header />
         <main id="main-content" className="min-h-[100dvh] focus:outline-none">
@@ -26,11 +22,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         <Footer />
       </div>
       <Toaster />
-      {isOpen && (
-        <Suspense fallback={<div className="fixed inset-0 z-50 bg-[var(--overlay)]" />}>
-          <CommandPalette isOpen={isOpen} onClose={close} />
-        </Suspense>
-      )}
-    </>
+      <OfflineBanner />
+    </CommandPaletteProvider>
   )
 }

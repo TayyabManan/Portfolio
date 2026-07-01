@@ -42,7 +42,6 @@ function getSystemTheme(): ThemeKey {
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<ThemeKey>('light');
   const [preference, setPreferenceState] = useState<ThemePreference>('system');
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('theme') as ThemePreference | null;
@@ -56,7 +55,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setTheme(resolved);
       applyTheme(resolved);
     }
-    setMounted(true);
   }, []);
 
   // Listen for system preference changes when preference is 'system'
@@ -91,10 +89,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const next = theme === 'light' ? 'dark' : 'light';
     setPreference(next);
   }, [theme, setPreference]);
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <ThemeContext.Provider value={{ theme, preference, setPreference, toggleTheme }}>

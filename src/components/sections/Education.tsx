@@ -1,5 +1,3 @@
-'use client'
-
 import { AcademicCapIcon, BookOpenIcon } from '@heroicons/react/24/outline'
 
 export default function Education() {

@@ -89,7 +89,9 @@ export default function ResumeChatbot() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to get response')
+        const err = new Error(`Failed to get response (${response.status})`) as Error & { status?: number }
+        err.status = response.status
+        throw err
       }
 
       const reader = response.body?.getReader()

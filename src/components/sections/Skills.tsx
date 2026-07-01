@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { CheckCircleIcon, CodeBracketIcon, GlobeAltIcon, CircleStackIcon, CloudIcon, BeakerIcon } from '@heroicons/react/24/solid'
 import { resumeData } from '@/lib/resume-data'

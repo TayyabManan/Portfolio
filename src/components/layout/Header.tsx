@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Bars3Icon, XMarkIcon, MagnifyingGlassIcon, ChatBubbleLeftRightIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline'
 import Logo from '@/components/ui/Logo'
-import { CommandPalette, useCommandPalette } from '@/components/ui/CommandPalette'
+import { useCommandPalette } from '@/components/ui/CommandPaletteProvider'
 import { useTheme } from '@/contexts/ThemeContext'
 
 const navigationItems = [
@@ -19,7 +19,7 @@ const navigationItems = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const { isOpen, open: openCommandPalette, close: closeCommandPalette } = useCommandPalette()
+  const { open: openCommandPalette } = useCommandPalette()
   const { theme, toggleTheme } = useTheme()
 
   const pathname = usePathname()
@@ -385,9 +385,6 @@ export default function Header() {
 
       {/* Spacer to prevent content from hiding under fixed header */}
       <div className="h-16" />
-
-      {/* Command Palette */}
-      <CommandPalette isOpen={isOpen} onClose={closeCommandPalette} />
     </>
   )
 }

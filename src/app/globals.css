@@ -71,8 +71,8 @@ body {
   --error: #dc2626;
   --warning: #d97706;
 
-  /* Semantic aliases (mirror themes.light — accent=success, info=primary, highlight=warning) */
-  --accent: #16a34a;
+  /* Semantic aliases (mirror themes.light — accent=primary blue, info=primary, highlight=warning) */
+  --accent: #3568d4;
   --info: #3568d4;
   --highlight: #d97706;
 
@@ -297,7 +297,7 @@ select {
     --error: #cc0000;
     --warning: #cc6600;
     --info: #0066cc;
-    --accent: #006666;
+    --accent: #0000ff;
     --highlight: #ffcc00;
     --overlay: rgb(0 0 0 / 0.6);
 

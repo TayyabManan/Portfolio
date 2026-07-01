@@ -1,5 +1,3 @@
-'use client'
-
 import {
   BookOpenIcon,
   BeakerIcon,
@@ -28,7 +26,7 @@ export default function CurrentlyLearning() {
         "Diffusion Models for Satellite Imagery Super-Resolution",
         "RAG Pipelines with Vector Databases",
       ],
-      color: "accent"
+      color: "primary"
     },
     {
       icon: BookOpenIcon,
@@ -37,7 +35,7 @@ export default function CurrentlyLearning() {
         "Chip Huyen's 'AI Engineering: Building Applications with Foundation Models'",
         "Aur\u00E9lien G\u00E9ron's 'Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow'"
       ],
-      color: "info"
+      color: "primary"
     },
     {
       icon: RocketLaunchIcon,
@@ -47,7 +45,7 @@ export default function CurrentlyLearning() {
         "Publish geospatial forecasting research from Master's thesis",
         "Contribute to LangChain or AutoGen open-source projects",
       ],
-      color: "warning"
+      color: "primary"
     }
   ]
 

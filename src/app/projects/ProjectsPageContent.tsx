@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import ProjectCard from '@/components/ui/ProjectCard'
 import { type Project } from '@/lib/projects'
 import { LoadingError } from '@/components/ui/ErrorState'
@@ -18,28 +18,36 @@ export default function ProjectsPageContent() {
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
 
-  useEffect(() => {
-    // Fetch projects from API
-    const loadProjects = async () => {
-      try {
-        const res = await fetch('/api/projects', { cache: 'no-store' })
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`)
-        }
-        const data = await res.json()
-        setProjects(data)
-        setError(null)
-      } catch (err) {
-        setError(err as Error)
-        setProjects([])
-        toast.error('Couldn\'t load projects', 'Try refreshing the page')
-      } finally {
-        setLoading(false)
+  const loadProjects = useCallback(async () => {
+    setLoading(true)
+    setError(null)
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 15000)
+    try {
+      const res = await fetch('/api/projects', { cache: 'no-store', signal: controller.signal })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`)
       }
+      const data = await res.json()
+      setProjects(data)
+      setError(null)
+    } catch (err) {
+      setError(err as Error)
+      setProjects([])
+      const offline = typeof navigator !== 'undefined' && !navigator.onLine
+      toast.error(
+        offline ? 'You\'re offline' : 'Couldn\'t load projects',
+        offline ? 'Reconnect and try again.' : 'Try refreshing the page'
+      )
+    } finally {
+      clearTimeout(timeout)
+      setLoading(false)
     }
-    
-    loadProjects()
   }, [])
+
+  useEffect(() => {
+    loadProjects()
+  }, [loadProjects])
 
   const filteredProjects = selectedCategory === 'All' 
     ? projects 
@@ -101,23 +109,9 @@ export default function ProjectsPageContent() {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary)]"></div>
           </div>
         ) : error ? (
-          <LoadingError 
-            resource="projects" 
-            onRetry={() => {
-              setLoading(true)
-              setError(null)
-              fetch('/api/projects', { cache: 'no-store' })
-                .then(res => res.json())
-                .then(data => {
-                  setProjects(data)
-                  setError(null)
-                })
-                .catch(err => {
-                  setError(err)
-                  toast.error('Couldn\'t load projects')
-                })
-                .finally(() => setLoading(false))
-            }}
+          <LoadingError
+            resource="projects"
+            onRetry={loadProjects}
           />
         ) : (
           <>

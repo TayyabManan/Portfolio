@@ -35,6 +35,8 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: '1mb', // Limit server action body size
     },
+    // Barrel-optimize large icon/util libraries so only used exports are bundled
+    optimizePackageImports: ['@heroicons/react', 'lucide-react', 'date-fns', 'framer-motion'],
   },
   
   // Headers for security and SEO
