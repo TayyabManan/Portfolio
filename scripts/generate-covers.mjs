@@ -80,6 +80,16 @@ const PROJECTS = [
     repo: 'github.com/TayyabManan/TeacherRank',
   },
   {
+    slug: 'do-spikes-fail-differently',
+    eyebrow: 'NEUROMORPHIC COMPUTING / SNN VS ANN · DVS128GESTURE',
+    title: 'Do Spikes Fail Differently?',
+    subtitle: 'A spiking network and its ReLU twin, matched in everything but the neuron.',
+    metric: '+28 pts under noise',
+    metricLabel: '· 18.7x energy on paper',
+    chart: 'crossing',
+    repo: 'tayyabmanan.com/demo/spikes',
+  },
+  {
     slug: 'ev-analysis',
     eyebrow: 'GEOSPATIAL AI / LAHORE SITE SELECTION',
     title: 'EV Suitability',
@@ -122,6 +132,11 @@ const CHART_BODIES = {
   coverage: `
     <path d="M38 78 C50 73 62 65 74 62 C92 57.5 104 60 122 52 C146 41.5 170 38 222 33 L222 96 L38 96 Z" fill="${LIME}" fill-opacity="0.13"/>
     <path d="M38 78 C50 73 62 65 74 62 C92 57.5 104 60 122 52 C146 41.5 170 38 222 33" stroke="${LIME}" stroke-width="2.1" fill="none" stroke-linecap="round"/>`,
+  // SNN vs ANN accuracy under event noise (the spikes study): the ANN falls
+  // steadily in quiet ink, the SNN holds and dips late in lime; they cross.
+  crossing: `
+    <path d="M40 17 C68 22 100 40 132 52 C162 62 194 70 222 76" stroke="${AXIS}" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.85"/>
+    <path d="M40 24 C80 24.5 130 25.5 172 31 C194 34.5 210 42 222 50" stroke="${LIME}" stroke-width="2.3" fill="none" stroke-linecap="round"/>`,
 }
 
 function chartDataUri(variant) {
@@ -283,14 +298,20 @@ async function main() {
   const fonts = await loadFonts()
   await mkdir(OUT_DIR, { recursive: true })
 
-  for (const p of PROJECTS) {
+  // Optional slug filter: `node scripts/generate-covers.mjs <slug>` renders
+  // one cover without touching the others' files.
+  const only = process.argv[2]
+  const targets = only ? PROJECTS.filter((p) => p.slug === only) : PROJECTS
+  if (only && targets.length === 0) throw new Error(`no cover config for slug ${only}`)
+
+  for (const p of targets) {
     const svg = await satori(coverTree(p), { width: W, height: H, fonts })
     const png = new Resvg(svg, { fitTo: { mode: 'width', value: W } }).render().asPng()
     const out = path.join(OUT_DIR, `${p.slug}.webp`)
     await writeFile(out, await sharp(png).webp({ quality: 82 }).toBuffer())
     console.log('wrote', out)
   }
-  console.log('Done - 5 covers generated (urdu-llm-fine-tuning.webp is the owner-made original, untouched).')
+  console.log(`Done - ${targets.length} cover(s) generated (urdu-llm-fine-tuning.webp is the owner-made original, untouched).`)
 }
 
 main().catch((e) => {

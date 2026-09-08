@@ -58,7 +58,8 @@ color utilities (`bg-primary` and friends); one convention only.
 > `--accent-ink`) appears ONLY on: the hero `production` highlight, eyebrow index
 > numerals, project-cover chart data ink (CoverChart — this slot absorbed the old
 > metric-chip sparklines), the ScatterOutlier circle, and the HeroReadout
-> chart line, Education's home bullet markers, and the 404/500 hand-drawn
+> chart line, the SNN data ink on the live-demo page (/demo/spikes: the spiking
+> series in its charts, bars, and rasters), Education's home bullet markers, and the 404/500 hand-drawn
 > ellipses — plus `::selection`, where the marker literally highlights
 > selected text (background wash only, 45% light / 30% dark; foreground is
 > never restyled). Anything else is a no. It floods only the 404 (`.flood-404` scope in
@@ -485,7 +486,8 @@ imported in `globals.css`); the in-place `sending → sent/failed` morph
 - **Nav underline** — `rest → handoff-out → handoff-in → rest'`: old bar scaleX→0 120ms ease-in toward the new link; new bar scaleX→1 180ms power3.out from the facing side, +60ms; GSAP `loadCore()`, desktop-only, `clearProps` at rest (`useNavUnderline.ts`).
 - **Toast lifecycle** — `hidden → sending → sent|failed → dismissed`: one Radix Root updated in place (`toast.promise`); height morph 300ms ease-morph + content rise 180ms via WAAPI; icon pop on variant change; auto-dismiss 5s after settle.
 - **Palette rows** — `shell-open → populating → settled`: first 10 rows rise 4px + fade, 150ms each, 30ms stagger, first open only; filtering never staggers.
-- **Hero focus readout** (`HeroReadout.tsx`, desktop `xl:` beside the pill index) — `hidden → drawn → morphing → hidden`. At rest the panel is `opacity:0` (empty). Pointer/focus on a pill fades the panel in (WAAPI) while the pen draws that area's notebook chart left-to-right (`strokeDashoffset`); moving to another pill MorphSVGs the single data line into the next chart (0.55s power2.inOut) and crossfades the scatter dots; leaving the stack fades the panel out, keeping its last contents. `d` is React-rendered once, then owned imperatively (setAttribute / MorphSVG) so re-renders never fight the tween. Fail-visible: no MorphSVG chunk → hard-swap. Charts map area→shape: CV→accuracy curve, Explainable→SHAP bars, Production→win-rate bars, Geospatial→regression scatter (the only one with dots). Kept deliberately clean — a detailed-charts variant was built and reverted.
+- **Hero focus readout** (`HeroReadout.tsx`, desktop `xl:` beside the pill index) — `hidden → drawn → morphing → hidden`. At rest the panel is `opacity:0` (empty). Pointer/focus on a pill fades the panel in (WAAPI) while the pen draws that area's notebook chart left-to-right (`strokeDashoffset`); moving to another pill MorphSVGs the single data line into the next chart (0.55s power2.inOut) and crossfades the scatter dots; leaving the stack fades the panel out, keeping its last contents. `d` is React-rendered once, then owned imperatively (setAttribute / MorphSVG) so re-renders never fight the tween. Fail-visible: no MorphSVG chunk → hard-swap. Charts map area→shape: CV→accuracy curve, Production→win-rate bars, Geospatial→regression scatter (the only one with dots), Neuromorphic→two
+  crossing accuracy lines (the study's `crossing` cover chart). Kept deliberately clean — a detailed-charts variant was built and reverted.
 
 ### Personality layer (kill-boring pass)
 

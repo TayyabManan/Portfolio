@@ -92,6 +92,7 @@ export type MetricChart =
   | 'accuracy'
   | 'coverage'
   | 'roc'
+  | 'crossing'
 
 // Stroke paths carry data-draw + pathLength=100 so the .metric-chart hover
 // rule in globals.css can re-sketch them left-to-right; fills (dots, area)
@@ -116,6 +117,7 @@ export const COVER_CAPTIONS: Record<MetricChart, string> = {
   coverage: 'spatial coverage',
   roc: 'roc curve',
   line: 'loss vs steps',
+  crossing: 'accuracy vs noise',
 }
 
 function coverChartBody(variant: MetricChart) {
@@ -197,6 +199,31 @@ function coverChartBody(variant: MetricChart) {
           {...DRAW}
           strokeWidth="1.75"
         />
+      )
+    case 'crossing': // REAL SHAPE: SNN vs ANN accuracy under event noise
+      // (the spikes study). The ANN starts higher and falls steadily; the
+      // SNN holds and dips late; they cross near the mildest severity. The
+      // ANN is the quiet reference line in tertiary ink (solid: the
+      // re-sketch rule owns stroke-dasharray), the SNN carries the data ink.
+      return (
+        <>
+          <path
+            d="M40 17 C68 22 100 40 132 52 C162 62 194 70 222 76"
+            stroke="var(--text-tertiary)"
+            strokeWidth="1.25"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            fill="none"
+            {...DRAW}
+          />
+          <path
+            d="M40 24 C80 24.5 130 25.5 172 31 C194 34.5 210 42 222 50"
+            {...PEN}
+            {...DRAW}
+            strokeWidth="1.75"
+          />
+        </>
       )
     case 'line':
     default: // descending loss with noise

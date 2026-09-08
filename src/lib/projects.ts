@@ -22,7 +22,7 @@ export interface Project {
   metric?: string
   /** Which notebook chart the card cover draws (see CoverChart):
       'scatter-fit' | 'bars-up' | 'bars-down' | 'hbars' | 'accuracy' |
-      'coverage' | 'roc' | 'line'. Defaults to 'line' when unset. */
+      'coverage' | 'roc' | 'line' | 'crossing'. Defaults to 'line' when unset. */
   metricChart?: string
 }
 

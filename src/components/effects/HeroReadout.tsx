@@ -24,19 +24,13 @@ import { motionOK } from '@/lib/motion-tokens'
  * imperative (setAttribute or MorphSVG), so re-renders never fight the tween.
  */
 
-export type HeroReadoutVariant = 'accuracy' | 'hbars' | 'bars-up' | 'scatter-fit'
+export type HeroReadoutVariant = 'accuracy' | 'bars-up' | 'scatter-fit' | 'crossing'
 
 const CHARTS: Record<HeroReadoutVariant, { d: string; caption: string; dots: boolean }> = {
   // Validation accuracy climbing to a plateau (Computer Vision)
   accuracy: {
     d: 'M26 76 C38 74 46 42 68 33 C92 25 120 22 146 21',
     caption: 'acc vs epochs',
-    dots: false,
-  },
-  // Feature-importance bars (Explainable ML / SHAP)
-  hbars: {
-    d: 'M26 28 C56 27.5 88 28.4 118 27.8 M26 50 C46 49.6 66 50.3 86 49.8 M26 72 C64 71.4 102 72.4 138 71.7',
-    caption: 'feature importance',
     dots: false,
   },
   // Win-rate comparison bars climbing base -> tuned (Production ML)
@@ -50,6 +44,14 @@ const CHARTS: Record<HeroReadoutVariant, { d: string; caption: string; dots: boo
     d: 'M28 74 C68 59 108 38 148 19',
     caption: 'predicted vs observed',
     dots: true,
+  },
+  // SNN vs ANN accuracy under event noise (Neuromorphic ML): two subpaths,
+  // the ANN falling steadily and the SNN holding then dipping late, crossing
+  // near the mildest severity - the shape on the study's card cover.
+  crossing: {
+    d: 'M28 20 C56 24 84 42 108 52 C124 59 136 64 146 68 M28 27 C60 27.5 96 28.5 116 33 C130 36.5 140 42 146 48',
+    caption: 'accuracy vs noise',
+    dots: false,
   },
 }
 

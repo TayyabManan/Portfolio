@@ -12,13 +12,13 @@ import { desktopMotionOK } from '@/lib/gsap'
 // shown by the fill layer that rises on hover - keep these terse so the pill width
 // (sized to the wider of label/metric) stays close to today's. Every metric
 // carries its baseline or context (bare accuracy invites skepticism from
-// anyone who knows ML): 7-class task, denied-class recall, vs-base win rate,
+// anyone who knows ML): 7-class task, vs-base win rate, vs-the-ReLU-twin under noise,
 // district count. Numbers must match the project pages verbatim.
 const focusAreas: { label: string; metric: string; href: string; readout: HeroReadoutVariant }[] = [
   { label: 'Computer Vision', metric: '80% acc · 7 classes', href: '/projects/face-expression-detection', readout: 'accuracy' },
-  { label: 'Explainable ML', metric: '73.2% acc · 61% recall', href: '/projects/us-visa-prediction', readout: 'hbars' },
   { label: 'Production ML', metric: '79.5% win vs base', href: '/projects/urdu-llm-fine-tuning', readout: 'bars-up' },
   { label: 'Geospatial AI', metric: 'R²=0.89 · 145 districts', href: '/projects/watertrace', readout: 'scatter-fit' },
+  { label: 'Neuromorphic ML', metric: '+28 pts under noise', href: '/projects/do-spikes-fail-differently', readout: 'crossing' },
 ]
 
 // Reused external-link arrow (↗) for affiliation links.
@@ -221,7 +221,7 @@ export default function Hero() {
           {/* 5. Lede - the proof line, verbatim from desktop */}
           <p className="mt-7 max-w-xl text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
             Computer vision, NLP, geospatial AI, and multi-agent workflows.
-            Six deployed projects, every one with a live demo.
+            Seven deployed projects, every one with a live demo.
           </p>
 
           {/* 6. Focus areas - the desktop index pills' stand-in, static, in the
@@ -395,7 +395,7 @@ export default function Hero() {
                   proof line - domains plus a verifiable fact. */}
               <p className="max-w-xl text-lg text-[var(--text-secondary)] sm:text-xl">
                 Computer vision, NLP, geospatial AI, and multi-agent workflows.
-                Six deployed projects, every one with a live demo.
+                Seven deployed projects, every one with a live demo.
               </p>
 
               {/* CTA row */}
