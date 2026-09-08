@@ -140,6 +140,7 @@ export const resumeData: ResumeData = {
         "Neural Networks",
         "Model Training",
         "Transfer Learning",
+        "Spiking Neural Networks",
       ],
       metadata: {
         "Computer Vision": {
@@ -171,6 +172,12 @@ export const resumeData: ResumeData = {
           proficiencyLevel: "Proficient",
           usageFrequency: "Project-based",
           projectCount: 4,
+        },
+        "Spiking Neural Networks": {
+          yearsOfExperience: 1,
+          proficiencyLevel: "Proficient",
+          usageFrequency: "Project-based",
+          projectCount: 1,
         },
       },
     },
@@ -469,6 +476,29 @@ export const resumeData: ResumeData = {
         "Built a self-serve platform where an unedited notebook or an externally trained model file becomes a versioned, evaluated and monitored deployment; 23 model versions across 19 models, 9 serving live in production",
         "Eliminated train/serve version skew by executing uploaded code on the serving image itself, contained in a pod with no service-account token, no secrets, and a 30-minute / 4 Gi fence",
         "Gated every serving change behind a reviewed pull request carrying the requester's identity (Argo CD GitOps), with a seeded 20% holdout scored per run, drift alerting, and MLflow mirroring within 2 minutes",
+      ],
+    },
+    {
+      name: "Do Spikes Fail Differently? SNN vs ANN Reliability Study",
+      description:
+        "Matched-pair reliability study of a spiking neural network and its ReLU twin on DVS128Gesture, with a live demo that runs both models on damaged event-camera recordings",
+      technologies: [
+        "Python",
+        "PyTorch",
+        "SpikingJelly",
+        "NumPy",
+        "Modal",
+        "FastAPI",
+        "Next.js",
+      ],
+      url: "https://tayyabmanan.com/demo/spikes",
+      urlText: "Live Demo",
+      github: "https://github.com/TayyabManan/do-spikes-fail-differently",
+      githubText: "GitHub",
+      highlights: [
+        "Held architecture, parameter count, data, seed, loss, and schedule constant and swapped only the neuron model, then measured accuracy, calibration, robustness under four corruptions, temporal sensitivity, and accounting-model energy, with bootstrap 95% CIs on every number (n=288)",
+        "Found the spiking model gives up 3.5 accuracy points (McNemar p = 0.021) but ties on calibration (ECE 0.040 vs 0.039), leads by up to 28 points under sensor noise with confidence that tracks its accuracy while the ANN stays up to 34 points overconfident, and costs 18.7x less on the standard energy accounting",
+        "Shipped a live demo on Modal (CPU, memory snapshot, scale to zero) behind a keyed proxy in the portfolio, replaying both models frame by frame on 33 held-out recordings with the published curves alongside",
       ],
     },
     {
