@@ -9,7 +9,7 @@ metricChart: "crossing"
 techStack: ["Python", "PyTorch", "SpikingJelly", "NumPy", "Modal", "FastAPI", "Next.js"]
 image: "/projects/do-spikes-fail-differently.webp"
 demoUrl: "/demo/spikes"
-# githubUrl: add when the repository is public
+githubUrl: "https://github.com/TayyabManan/do-spikes-fail-differently"
 featured: true
 date: "2026-09-03"
 ---

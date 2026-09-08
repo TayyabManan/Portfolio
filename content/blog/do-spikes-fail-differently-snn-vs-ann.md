@@ -199,4 +199,4 @@ Keep the failures in. The reseeding bug, the pooling mistake, the dropout confou
 
 - [Live demo](/demo/spikes)
 - [Project page](/projects/do-spikes-fail-differently)
-- Source code: on GitHub once the repository is public
+- [Source code](https://github.com/TayyabManan/do-spikes-fail-differently)

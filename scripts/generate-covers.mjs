@@ -87,7 +87,7 @@ const PROJECTS = [
     metric: '+28 pts under noise',
     metricLabel: '· 18.7x energy on paper',
     chart: 'crossing',
-    repo: 'tayyabmanan.com/demo/spikes',
+    repo: 'github.com/TayyabManan/do-spikes-fail-differently',
   },
   {
     slug: 'ev-analysis',

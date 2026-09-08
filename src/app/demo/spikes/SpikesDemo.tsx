@@ -67,8 +67,7 @@ function Source({ href, className, children }: { href: string; className?: strin
  */
 
 const PROJECT_HREF = '/projects/do-spikes-fail-differently'
-// Set once the study's repository is public.
-const SOURCE_URL = ''
+const SOURCE_URL = 'https://github.com/TayyabManan/do-spikes-fail-differently'
 
 export const KIND_LABELS: Record<SpikesKind, string> = {
   clean: 'No damage',

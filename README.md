@@ -1,299 +1,93 @@
-# Professional Portfolio Website - AI Engineering & Web Development
+# tayyabmanan.com
 
-A modern, high-performance portfolio website showcasing expertise in **Web Development**, **Machine Learning**, **Artificial Intelligence**, and **Geospatial Technologies**. Built with cutting-edge web technologies and optimized for performance, accessibility, and user experience.
+Source for my portfolio: seven ML projects with live demos, the write-ups behind them, a resume, and a live experiment you can run from the browser. Built with Next.js and deployed on Vercel.
 
-## 🚀 Live Demo
-[Visit Portfolio](https://tayyabmanan.com/)
+Live site: [tayyabmanan.com](https://tayyabmanan.com)
 
-## 📋 Overview
+## What is here
 
-This portfolio demonstrates proficiency in both **modern web development** and **AI/ML engineering**. It features:
-- Production-ready web development with responsive design and accessibility
-- ML/AI project showcases and interactive demos
-- AI-powered resume chatbot with streaming responses
-- Seamless cross-device user experience
-- Best practices in code quality, security, and performance
+- **Projects.** Seven case studies in `content/projects/`, each with a headline metric, a notebook-style cover chart, a live demo, and a repo link. The index filters by domain.
+- **Writing.** Six long-form posts in `content/blog/`, with a table of contents, code highlighting, and FAQ and HowTo structured data from the frontmatter.
+- **Live demo.** `/demo/spikes` runs the spiking-vs-ReLU study from [do-spikes-fail-differently](https://github.com/TayyabManan/do-spikes-fail-differently) on real event-camera recordings. The page calls a Modal backend through a server-side proxy that holds the key.
+- **Resume.** Rendered in the browser, downloadable as a PDF, with an assistant that answers questions about it from the OpenAI API.
+- **Contact.** A form with validation, a rate limit per IP, a honeypot field, and a push notification on submission.
+- **Chrome.** Light and dark themes, a command palette on Ctrl+K or Cmd+K, and a design system with a hand-drawn chart motif. Every animation honors the reduced-motion setting.
 
-## 🛠️ Technology Stack
+## Stack
 
-### Frontend Development
-- **Next.js 15.5** - React framework with App Router and Server Components
-- **React 19.2** - Latest React features for modern web applications
-- **TypeScript** - Type-safe development for maintainable code
-- **HTML5 & CSS3** - Semantic markup and modern styling
-- **Responsive Design** - Mobile-first approach with cross-browser compatibility
+| Layer | Choice |
+|---|---|
+| Framework | Next.js 15.5, App Router, React 19, TypeScript in strict mode |
+| Styling | Tailwind CSS v4 over CSS custom-property tokens |
+| Motion | CSS for feedback, GSAP and the Web Animations API for signature moments, scroll reveals on the home page |
+| Content | Markdown with gray-matter frontmatter, rendered by react-markdown and remark-gfm |
+| Forms and APIs | react-hook-form, zod, an in-memory rate limiter, Radix Toast |
+| Integrations | OpenAI (resume assistant), Modal (demo backend), ntfy.sh (contact notifications), Vercel Analytics and Speed Insights |
+| Hosting | Vercel, deployed from `main` |
 
-### Styling & UI
-- **Tailwind CSS v4** - Utility-first CSS framework
-- **GSAP + tiered CSS motion** - Lazy-loaded signature animations with reduced-motion handling
-- **Radix UI Toast** - Accessible notification primitives
-- **Custom CSS Variables** - Dynamic theming system
-- **Hero Icons** - Consistent iconography
+## Running it locally
 
-### JavaScript & Interactivity
-- **ES6+ JavaScript** - Modern JavaScript features
-- **React Hooks** - State management and side effects
-- **Custom Hooks** - Reusable logic abstraction
-- **Event Handling** - Keyboard shortcuts and user interactions
-- **Form Validation** - Real-time validation with Zod
-
-### Backend & APIs
-- **Next.js API Routes** - RESTful API endpoints
-- **OpenAI Integration** - AI chatbot functionality
-- **Rate Limiting** - Custom middleware for security
-- **Server-Side Rendering** - SEO-optimized pages
-- **Static Generation** - Pre-rendered content for performance
-
-### Development Tools
-- **Git & GitHub** - Version control and collaboration
-- **ESLint** - Code quality and consistency
-- **TypeScript Compiler** - Type checking
-- **Chrome DevTools** - Debugging and performance analysis
-- **Turbopack** - Fast development builds
-
-### Performance & Optimization
-- **Image Optimization** - Next.js Image component with lazy loading
-- **Code Splitting** - Dynamic imports for reduced bundle size
-- **Bundle Optimization** - Tree shaking and minification
-- **Caching Strategies** - Static asset caching
-- **SEO Optimization** - Meta tags, structured data, sitemaps
-
-### Testing & Quality
-- **Input Validation** - Zod schema validation
-- **Security Headers** - CSP, HSTS, XSS protection
-- **Accessibility** - WCAG 2.1 Level AA compliance
-- **Cross-browser Testing** - Chrome, Firefox, Safari, Edge
-- **Responsive Testing** - Desktop, tablet, mobile devices
-
-## 🏗️ Project Architecture
-
-### File Structure
+```bash
+npm install
+cp .env.local.example .env.local
+npm run dev
 ```
+
+The site runs without any environment variables. Each integration switches on when its variable is set and degrades to a clear message when it is not.
+
+| Variable | Used by |
+|---|---|
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Search Console verification tag |
+| `OPENAI_API_KEY` | `/api/chatbot`, the resume assistant. Server-side only. |
+| `NTFY_TOPIC` | `/api/contact`, push notification on a new message |
+| `SPIKES_API_URL`, `SPIKES_API_KEY` | `/api/spikes`, the proxy to the demo backend. Server-side only. |
+
+Scripts:
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run start` | Serve the production build |
+| `npm run lint` | ESLint with the Next.js config |
+| `npm run generate:covers` | Render the project cover images. Pass a slug to render one. |
+| `npm run generate:favicons` | Render the favicon set from the logo |
+
+## Layout
+
+```
+content/
+  projects/         one markdown file per project
+  blog/             one markdown file per post
+public/
+  projects/         cover images (generated) and evidence screenshots
+  demo/             assets for the live demo
+  llms.txt          a plain-text index of the site for language models
+scripts/            cover and favicon generators (satori, resvg, sharp)
 src/
-├── app/                    # Next.js App Router pages
-│   ├── api/               # RESTful API endpoints
-│   ├── blog/              # Blog with markdown content
-│   ├── projects/          # Dynamic project pages
-│   └── layout.tsx         # Root layout component
-├── components/
-│   ├── layout/            # Header, Footer, Navigation
-│   ├── sections/          # Page sections (Hero, Projects, etc.)
-│   └── ui/                # Reusable UI components
-├── lib/                   # Utilities and business logic
-│   ├── markdown.ts        # Markdown processing
-│   ├── validation.ts      # Form validation schemas
-│   └── utils.ts           # Helper functions
-├── contexts/              # React Context providers
-├── hooks/                 # Custom React hooks
-└── styles/                # Global styles and themes
+  app/              routes, API routes under app/api, metadata, sitemap
+  components/       layout, home sections, ui, effects (doodles, hero readout)
+  lib/              markdown loader, validation, rate limiting, demo data
+  contexts/, hooks/ theme, command palette, mount transitions
+DESIGN_SYSTEM.md    tokens, type scale, component and motion rules
 ```
 
-### Key Implementation Details
+## Adding a project or a post
 
-#### Responsive Web Design
-- Mobile-first CSS with breakpoints
-- Flexible grid layouts with CSS Grid and Flexbox
-- Touch-friendly UI elements
-- Viewport-based typography scaling
-- Cross-device compatibility testing
+A project is one markdown file in `content/projects/`. The frontmatter carries the card: `title`, `subtitle`, `description`, `category`, `metric`, `metricChart`, `techStack`, `image`, `demoUrl`, `githubUrl`, `featured`, `date`. The home page shows the three newest featured projects. Two conventions matter:
 
-#### WordPress-Ready Skills
-- Content management system integration
-- Dynamic content loading from markdown files
-- Plugin-like architecture with modular components
-- Custom post types and taxonomies approach
-- SEO optimization and meta tag management
+- `metric` is a real published figure with its context, for example `79.5% win vs base` rather than a bare percentage.
+- `image` is the Open Graph cover. Add an entry to `scripts/generate-covers.mjs` and run the generator; do not hand a screenshot to this field. Screenshots and figures go in `public/projects/screens/` and are placed in the markdown body, where they render inside a captioned frame.
 
-#### Performance Optimization
-- Lazy loading for images and components
-- Code splitting for reduced initial load
-- Debounced search and filter operations
-- Optimized bundle size (~250KB gzipped)
-- First Contentful Paint < 1.2s
+A post is one markdown file in `content/blog/` with `title`, `description`, `date`, `category`, `tags`, `image`, `readTime`, and optional `faqs` and `howTo` blocks that become structured data.
 
-#### Security Implementation
-- Input sanitization and XSS prevention
-- Rate limiting on API endpoints
-- CSRF protection measures
-- Content Security Policy headers
-- Secure environment variable handling
+`DESIGN_SYSTEM.md` is the source of truth for anything visible. Read it before adding UI.
 
-## 🎨 Web Development Best Practices
+## Security
 
-### Code Quality
-- **Clean Code** - Readable, maintainable, well-commented
-- **DRY Principles** - Reusable components and utilities
-- **SOLID Principles** - Proper abstraction and separation of concerns
-- **TypeScript Strict Mode** - Full type safety
-- **ESLint Configuration** - Consistent code style
+Security headers and a Content Security Policy are set in `next.config.ts`. Every API route validates its input with zod and rate limits per IP. Keys for OpenAI and the demo backend never reach the browser; the demo page talks only to its same-origin proxy. The contact form carries a honeypot field. Third-party scripts are limited to Google Analytics and Vercel's analytics.
 
-### UI/UX Design
-- **Intuitive Navigation** - Clear information architecture
-- **Accessibility First** - Keyboard navigation, screen reader support
-- **Visual Hierarchy** - Proper use of typography and spacing
-- **Color Contrast** - WCAG AA compliant color schemes
-- **Loading States** - User feedback during async operations
+## License
 
-### Browser Compatibility
-- Tested on Chrome, Firefox, Safari, Edge
-- Graceful degradation for older browsers
-- Progressive enhancement approach
-- Vendor prefix handling
-- Polyfills for older browser support
-
-## 🔧 Technical Highlights
-
-### Advanced Features
-- **Command Palette** - Quick navigation system (Cmd/Ctrl+K)
-- **Keyboard Shortcuts** - Power-user navigation (Alt+H, Alt+P, etc.)
-- **Theme System** - Dark/light mode with system preference detection
-- **AI Chatbot** - Interactive resume assistant with streaming
-- **Table of Contents** - Auto-generated for blog posts
-- **Smooth Scrolling** - Enhanced navigation experience
-- **Modal System** - Accessible focus management
-
-### WordPress-Transferable Skills
-- Content management and dynamic routing
-- Plugin/component architecture
-- Custom fields and metadata handling
-- Media library and image optimization
-- Form handling and validation
-- User authentication concepts
-- Database query optimization patterns
-
-### Debugging & Troubleshooting
-- Chrome DevTools proficiency
-- React DevTools for component debugging
-- Network tab for API debugging
-- Performance profiling
-- Console debugging strategies
-- Error boundary implementation
-
-## 📊 Performance Metrics
-
-- **Lighthouse Score**: 95+ (Performance, Accessibility, Best Practices, SEO)
-- **First Contentful Paint**: <1.2s
-- **Largest Contentful Paint**: <1.5s
-- **Time to Interactive**: <2.2s
-- **Total Bundle Size**: ~250KB gzipped
-- **SEO Score**: 100/100
-
-## 🌟 Portfolio Features
-
-### Project Showcase
-- Dynamic project cards with filtering
-- Dedicated project pages with composed notebook covers
-- Technology stack visualization
-- Live demo links and GitHub repositories
-- Category-based organization
-
-### Interactive Resume
-- Downloadable PDF generation
-- AI-powered chatbot for Q&A
-- Professional timeline layout
-- Skills and certifications display
-- Contact form with validation
-
-### Blog Platform
-- Markdown-based content management
-- Table of contents generation
-- Syntax highlighting for code
-- Social sharing functionality
-- Reading time estimation
-- SEO-optimized articles
-
-### Contact System
-- Real-time form validation
-- Rate limiting and spam protection
-- Push notifications via ntfy.sh
-- Success/error state management
-- Honeypot anti-bot field
-
-## 🚀 Deployment & DevOps
-
-**Hosted on Vercel's Edge Network:**
-- Automatic CI/CD from GitHub
-- Global CDN with edge caching
-- Serverless API functions
-- Real-time analytics and monitoring
-- Environment variable management
-- Zero-downtime deployments
-
-## 🎯 Web Development Skills Demonstrated
-
-### Frontend Technologies
-✅ HTML5 semantic markup
-✅ CSS3 modern styling (Grid, Flexbox, Animations)
-✅ JavaScript ES6+ (async/await, modules, destructuring)
-✅ React.js component architecture
-✅ TypeScript type safety
-✅ Responsive design principles
-✅ Cross-browser compatibility
-
-### WordPress-Related Skills
-✅ Content management concepts
-✅ Dynamic routing and templates
-✅ Custom component architecture
-✅ Plugin-like modular design
-✅ Media optimization
-✅ SEO best practices
-✅ Form handling and validation
-
-### Development Tools
-✅ Git version control
-✅ Chrome DevTools debugging
-✅ Command line proficiency
-✅ Package management (npm)
-✅ Build tools and bundlers
-✅ Code editors (VS Code)
-
-### Performance & Optimization
-✅ Image optimization
-✅ Code splitting
-✅ Lazy loading
-✅ Bundle size optimization
-✅ Caching strategies
-✅ Performance profiling
-
-### Web Standards
-✅ Web accessibility (WCAG 2.1)
-✅ SEO optimization
-✅ Security best practices
-✅ Progressive enhancement
-✅ Mobile-first design
-
-## 📈 Continuous Improvement
-
-### Completed Enhancements
-✅ Blog platform with markdown content
-✅ AI-powered resume chatbot
-✅ Command palette navigation
-✅ Multiple theme support
-✅ Comprehensive SEO optimization
-✅ Full accessibility compliance
-✅ Performance optimization (40% improvement)
-✅ Security hardening (CSP, rate limiting)
-
-### Future Roadmap
-- [ ] Interactive ML model demos
-- [ ] Multi-language support
-- [ ] Project deployment metrics
-- [ ] Advanced analytics dashboard
-- [ ] Progressive Web App features
-
----
-
-## 📞 About This Project
-
-This portfolio website demonstrates proficiency in:
-- **Modern Web Development** - HTML, CSS, JavaScript, React, Next.js
-- **Responsive Design** - Mobile-first, cross-device compatibility
-- **Performance Optimization** - Fast loading, efficient code
-- **Accessibility** - WCAG compliant, keyboard navigation
-- **SEO** - Structured data, meta tags, sitemaps
-- **Security** - Input validation, rate limiting, CSP
-- **AI/ML Integration** - OpenAI API, intelligent features
-
-**Built with best practices in web development, focusing on clean code, user experience, and technical excellence** 🚀
-
-*This portfolio represents expertise in both traditional web development and modern AI technologies, making it adaptable to various development roles.*
+Released under CC0 1.0. See `LICENSE`.
