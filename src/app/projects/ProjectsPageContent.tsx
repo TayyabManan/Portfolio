@@ -7,7 +7,7 @@ import { useGridFlip } from '@/components/effects/useGridFlip'
 import { EmptyAxes } from '@/components/effects/NotebookDoodles'
 import CategoryFilter from '@/components/ui/CategoryFilter'
 
-const categories = ['All', 'Geospatial AI', 'Computer Vision', 'Natural Language Processing', 'Machine Learning & MLOps', 'Web Application']
+const categories = ['All', 'Neuromorphic Computing', 'Geospatial AI', 'Computer Vision', 'Natural Language Processing', 'Machine Learning & MLOps', 'Web Application']
 
 interface ProjectsPageContentProps {
   projects: Project[]
@@ -36,7 +36,7 @@ export default function ProjectsPageContent({ projects }: ProjectsPageContentPro
         <div className="mb-12 max-w-4xl">
           <h1 className="text-4xl sm:text-5xl font-semibold text-[var(--text)] mb-4">ML & AI Projects</h1>
           <p className="text-lg sm:text-xl text-[var(--text-secondary)]">
-            Six deployed ML systems across computer vision, NLP, geospatial AI, and MLOps.
+            Seven deployed ML systems across computer vision, NLP, geospatial AI, neuromorphic computing, and MLOps.
             Each one has a live demo and an open repo.
           </p>
         </div>

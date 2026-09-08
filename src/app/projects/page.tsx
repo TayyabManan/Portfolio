@@ -8,7 +8,7 @@ export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
   title: 'AI/ML Projects',
-  description: 'Six deployed ML/AI projects with live demos and open repos: groundwater prediction (R²=0.89), Urdu LLM fine-tuning, and face-expression detection.',
+  description: 'Seven deployed ML/AI projects with live demos and open repos: groundwater prediction (R²=0.89), Urdu LLM fine-tuning, and face-expression detection.',
   keywords: [
     'ML projects',
     'AI portfolio',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: 'ML & AI Projects Portfolio - Tayyab Manan',
-    description: 'Six deployed ML/AI projects with live demos and open repos: groundwater prediction (R²=0.89), Urdu LLM fine-tuning, and face-expression detection.',
+    description: 'Seven deployed ML/AI projects with live demos and open repos: groundwater prediction (R²=0.89), Urdu LLM fine-tuning, and face-expression detection.',
     url: 'https://tayyabmanan.com/projects',
     type: 'website',
     images: [
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'ML & AI Projects Portfolio - Tayyab Manan',
-    description: 'Six deployed ML/AI projects with live demos and open repos.',
+    description: 'Seven deployed ML/AI projects with live demos and open repos.',
     images: ['/projects/watertrace.webp'],
   },
   alternates: {

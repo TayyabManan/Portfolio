@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     default: 'Tayyab Manan - AI/ML Engineer',
     template: '%s | Tayyab Manan'
   },
-  description: 'AI/ML Engineer shipping production ML, computer vision & multi-agent systems. Six deployed projects with live demos in PyTorch, TensorFlow & LangChain.',
+  description: 'AI/ML Engineer shipping production ML, computer vision & multi-agent systems. Seven deployed projects with live demos in PyTorch, TensorFlow & LangChain.',
   keywords: [
     'AI ML Engineer',
     'Machine Learning Engineer',
@@ -107,7 +107,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Tayyab Manan - AI/ML Engineer',
-    description: 'AI/ML engineer shipping production ML, computer vision, and multi-agent systems. Six deployed projects with live demos.',
+    description: 'AI/ML engineer shipping production ML, computer vision, and multi-agent systems. Seven deployed projects with live demos.',
     url: 'https://tayyabmanan.com',
     siteName: 'Tayyab Manan',
     locale: 'en_US',
@@ -117,7 +117,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Tayyab Manan - AI/ML Engineer',
-    description: 'AI/ML engineer shipping production ML, computer vision, and multi-agent systems. Six deployed projects with live demos.',
+    description: 'AI/ML engineer shipping production ML, computer vision, and multi-agent systems. Seven deployed projects with live demos.',
     creator: '@tayyabmanan',
   },
   robots: {

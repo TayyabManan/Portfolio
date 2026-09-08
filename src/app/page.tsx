@@ -14,7 +14,7 @@ export const dynamic = 'force-static'
 export const metadata: Metadata = {
   // title intentionally omitted: inherits the layout's `title.default`
   // ("Tayyab Manan - AI/ML Engineer") so the brand suffix isn't doubled.
-  description: 'AI/ML Engineer building production ML, computer vision & multi-agent systems. Six live projects with demos in PyTorch, TensorFlow & LangChain.',
+  description: 'AI/ML Engineer building production ML, computer vision & multi-agent systems. Seven live projects with demos in PyTorch, TensorFlow & LangChain.',
   openGraph: {
     title: 'Tayyab Manan - AI/ML Engineer',
     description: 'AI/ML Engineer building production ML systems, computer vision solutions, and multi-agent workflows. PyTorch, TensorFlow, LangChain.',
