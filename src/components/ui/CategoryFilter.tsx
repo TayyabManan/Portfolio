@@ -6,6 +6,10 @@ interface CategoryFilterProps {
   onSelect: (category: string) => void
   /** Optional display transform (e.g. blog capitalizes its lowercase categories). */
   formatLabel?: (category: string) => string
+  /** Accessible group name; the indexes keep the default. */
+  label?: string
+  /** Extra wrapper classes (the demo page overrides the index margin). */
+  className?: string
 }
 
 /**
@@ -21,16 +25,16 @@ interface CategoryFilterProps {
  * on narrow screens (edge-bled so the strip runs to the viewport edge like
  * the nav does), scrollbar hidden - the strip's own hairline is the rail.
  */
-export default function CategoryFilter({ categories, selected, onSelect, formatLabel }: CategoryFilterProps) {
+export default function CategoryFilter({ categories, selected, onSelect, formatLabel, label = 'Filter by category', className }: CategoryFilterProps) {
   return (
     // py-1 on the scroll container: overflow-x:auto makes it clip on BOTH
     // axes, and the global focus ring draws 2px outside the button with a 2px
     // offset - without vertical room the ring's top and bottom edges were
     // clipped away (review 2026-09-03).
-    <div className="-mx-4 -my-1 mb-11 overflow-x-auto px-4 py-1 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className={`-mx-4 -my-1 mb-11 overflow-x-auto px-4 py-1 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${className ?? ''}`}>
       <div
         role="group"
-        aria-label="Filter by category"
+        aria-label={label}
         className="flex w-max min-w-full gap-6 border-b border-[var(--border)] sm:gap-8"
       >
         {categories.map((category) => {
