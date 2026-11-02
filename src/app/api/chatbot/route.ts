@@ -155,7 +155,7 @@ export async function POST(req: NextRequest) {
     
     // Create OpenAI chat completion with streaming
     const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4o-mini',
       stream: true,
       temperature: 0.7,
       max_tokens: 500,
